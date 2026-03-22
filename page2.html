@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>项目详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+        body {
+            background: #f6f8fa;
+            color: #24292f;
+            line-height: 1.6;
+        }
+        .header {
+            background: white;
+            padding: 20px 40px;
+            border-bottom: 1px solid #d0d7de;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 24px;
+            color: #24292f;
+        }
+        .user-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-info {
+            color: #57606a;
+            font-size: 14px;
+        }
+        .btn-logout {
+            padding: 6px 14px;
+            background: #cf222e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-logout:hover {
+            background: #b1202b;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            font-size: 22px;
+            color: #24292f;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 10px;
+        }
+        .card p {
+            color: #57606a;
+            margin-bottom: 12px;
+        }
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            color: #57606a;
+            padding-left: 20px;
+            position: relative;
+        }
+        .feature-list li::before {
+            content: "✓";
+            color: #2ea44f;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .goto-problem {
+            display: inline-block;
+            margin-top:10px;
+            padding:10px 20px;
+            background:#0969da;
+            color:white;
+            border-radius:6px;
+            text-decoration:none;
+        }
+        .goto-problem:hover {
+            background:#085fc2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>项目详情</h1>
+        <div class="user-bar">
+            <span class="user-info" id="userInfo"></span>
+            <button class="btn-logout" onclick="logout()">退出登录</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>项目介绍</h2>
+            <p>这是一个基于 GitHub Pages 搭建的前端演示项目，实现了完整的用户注册、登录与权限控制功能。</p>
+            <p>项目使用纯 HTML + CSS + JavaScript 开发，无需后端服务器，数据存储在浏览器本地（localStorage）。</p>
+        </div>
+
+        <div class="card">
+            <h2>题库练习</h2>
+            <p>点击下方按钮进入题库练习页面：</p>
+            <a href="problem.html" class="goto-problem">进入题库练习</a>
+        </div>
+
+        <div class="card">
+            <h2>核心功能</h2>
+            <ul class="feature-list">
+                <li>邮箱格式校验与重复注册拦截</li>
+                <li>密码强度校验（≥8位）与二次确认</li>
+                <li>登录状态持久化，刷新页面不丢失</li>
+                <li>页面权限控制，未登录用户自动跳转登录页</li>
+                <li>响应式设计，适配手机与电脑访问</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const currentUser = localStorage.getItem('currentUser');
+                if (!currentUser) {
+                    alert('请先登录后访问');
+                    location.href = 'login.html';
+                } else {
+                    document.getElementById('userInfo').textContent = `当前登录：${currentUser}`;
+                }
+            }, 300);
+        });
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            alert('已退出登录');
+            location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
