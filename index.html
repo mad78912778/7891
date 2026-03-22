@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad 工作室 - 首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* 顶部导航栏（与 research.html 完全一致） */
+        .top-bar {
+            background-color: #2d3748;
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .top-bar h1 {
+            font-size: 20px;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .top-bar h1::before {
+            content: "✓";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid white;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 16px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a.active {
+            color: #63b3ed;
+            font-weight: bold;
+        }
+        .nav-links .login-btn {
+            background-color: #3182ce;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+        .nav-links .login-btn:hover {
+            background-color: #2b6cb0;
+        }
+        .refresh-btn {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* 内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .sub-nav {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .sub-nav a {
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+        }
+        .sub-nav a.active {
+            color: #2d3748;
+            border-bottom: 2px solid #2d3748;
+            font-weight: bold;
+        }
+
+        /* 资讯卡片（与 research.html 卡片风格统一） */
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        .info-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #2d3748;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 4px;
+        }
+        .info-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .info-link {
+            font-size: 13px;
+            color: #3182ce;
+            text-decoration: none;
+        }
+        .info-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 编写组信息 */
+        .editor-group {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .editor-group h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #2d3748;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 4px;
+        }
+        .editor-list {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            background-color: #3182ce;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .card-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        /* 注册/登录弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;max-width: 400px;
+             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+         }
+         .modal-content h2 {
+             font-size: 22px;
+             margin-bottom: 20px;
+             color: #2d3748;
+             text-align: center;
+         }
+         .form-group {
+             margin-bottom: 15px;
+         }
+         .form-group label {
+             display: block;
+             font-size: 14px;
+             color: #4a5568;
+             margin-bottom: 5px;
+         }
+         .form-group input {
+             width: 100%;
+             padding: 10px;
+             border: 1px solid #ccc;
+             border-radius: 5px;
+             font-size: 14px;
+         }
+         .form-group input:focus {
+             border-color: #3182ce;
+             outline: none;
+         }
+         .modal-btns {
+             display: flex;
+             gap: 10px;
+             margin-top: 20px;
+         }
+         .modal-btns .card-btn {
+             flex: 1;
+             justify-content: center;
+         }
+         .close-modal {
+             position: absolute;
+             top: 15px;
+             right: 20px;
+             font-size: 24px;
+             color: #666;
+             cursor: pointer;
+         }
+         /* 底部 */
+         footer {
+             text-align: center;
+             padding: 30px 20px;
+             color: #718096;
+             font-size: 14px;
+             margin-top: 50px;
+         }
+     </style>
+ </head>
+ <body>
+     <!-- 顶部栏 -->
+     <div class="top-bar">
+         <h1>Mad 工作室</h1>
+         <div class="nav-links">
+             <a href="index.html" class="active">工作室</a>
+             <a href="research.html">资讯&研究成果</a>
+             <a href="#" class="login-btn" id="openLogin">log in</a>
+             <span class="setting-icon">⚙️</span>
+         </div>
+         <div class="refresh-btn">🔄</div>
+     </div>
+     <!-- 内容区 -->
+     <div class="container">
+         <div class="sub-nav">
+             <a href="#" class="active">Mad</a>
+         </div>
+         <!-- 资讯1 -->
+         <div class="info-card">
+             <h3>《十七班历史》</h3>
+             <p class="info-desc">《十七班历史》是一本基于十一中学2025级十七班逆天历史事件模仿人民教育出版社……（此处为绿色小字）</p>
+             <a href="#" class="info-link">具体信息→</a>
+         </div>
+         <!-- 资讯2 -->
+         <div class="info-card">
+             <h3>《新考向：跨学科融合》</h3>
+             <p class="info-desc">更新中敬请期待……</p>
+         </div>
+         <!-- 编写组信息 -->
+         <div class="editor-group">
+             <h3>编写工作</h3>
+             <div class="editor-list">
+                 <p>编写组: 主任: mad</p>
+                 <p>副主任: 王X, 周X, 张X</p>
+             </div>
+             <a href="more.html" class="card-btn">查看更多项目 →</a>
+         </div>
+     </div>
+     <!-- 注册/登录弹窗 -->
+     <div class="modal" id="authModal">
+         <div class="modal-content">
+             <span class="close-modal" id="closeModal">&times;</span>
+             <h2>登录 / 注册</h2>
+             <form id="authForm">
+                 <div class="form-group">
+                     <label for="username">用户名</label>
+                     <input type="text" id="username" placeholder="请输入用户名" required>
+                 </div>
+                 <div class="form-group">
+                     <label for="password">密码</label>
+                     <input type="password" id="password" placeholder="请输入密码" required>
+                 </div>
+                 <div class="form-group" id="emailGroup" style="display: none;">
+                     <label for="email">邮箱（注册时填写）</label>
+                     <input type="email" id="email" placeholder="请输入邮箱">
+                 </div>
+                 <div class="modal-btns">
+                     <button type="button" class="card-btn" id="loginBtn">登录</button>
+                     <button type="button" class="card-btn" id="registerBtn">注册</button>
+                 </div>
+             </form>
+         </div>
+     </div>
+     <footer>
+         © 2026 Mad 工作室 · 版权所有
+     </footer>
+     <script>
+         // 离开网站提示
+         document.addEventListener('DOMContentLoaded', function() {
+             const externalLinks = document.querySelectorAll('a[href="research.html"], a[href="more.html"]');
+             externalLinks.forEach(link => {
+                 link.addEventListener('click', function(e) {
+                     e.preventDefault();
+                     const confirmLeave = confirm('将要离开mad工作室官方网站，这意味着您将不受我们保护，谢谢您的支持');
+                     if (confirmLeave) {
+                         window.location.href = this.href;
+                     }
+                 });
+             });
+         });
+         // 注册/登录弹窗逻辑
+         const modal = document.getElementById('authModal');
+         const openLoginBtn = document.getElementById('openLogin');
+         const closeModalBtn = document.getElementById('closeModal');
+         const loginBtn = document.getElementById('loginBtn');
+         const registerBtn = document.getElementById('registerBtn');
+         const emailGroup = document.getElementById('emailGroup');
+         // 打开弹窗
+         openLoginBtn.addEventListener('click', () => {
+             modal.style.display = 'flex';
+             emailGroup.style.display = 'none';
+         });
+         // 关闭弹窗
+         closeModalBtn.addEventListener('click', () => {
+             modal.style.display = 'none';
+         });
+         window.addEventListener('click', (e) => {
+             if (e.target === modal) modal.style.display = 'none';
+         });
+         // 登录/注册切换
+         loginBtn.addEventListener('click', () => {
+             emailGroup.style.display = 'none';
+             alert('登录功能待实现');
+         });
+         registerBtn.addEventListener('click', () => {
+             emailGroup.style.display = 'block';
+             alert('注册功能待实现');
+         });
+     </script>
+ </body>
+ </html>
+         
