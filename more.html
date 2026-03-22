@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十七班MAD工作室 - 首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* 顶部导航栏 */
+        .top-bar {
+            background-color: #2d3748;
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .top-bar h1 {
+            font-size: 20px;
+            font-weight: normal;
+        }
+        .nav-links a {
+            color: #e2e8f0;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a.active {
+            color: #63b3ed;
+            font-weight: bold;
+        }
+
+        /* 内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .page-title {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        .page-desc {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        /* 邮箱区域 */
+        .email-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .email-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #444;
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 8px;
+        }
+        .email-list {
+            font-size: 16px;
+            line-height: 2;
+            color: #4a5568;
+        }
+        .email-list a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        .email-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* 项目区域 */
+        .project-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .project-section h2 {
+            font-size: 32px;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #444;
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 8px;
+        }
+        .project-item {
+            margin: 12px 0;
+            font-size: 16px;
+            color: #4a5568;
+        }
+        .project-item a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        .project-item a:hover {
+            text-decoration: underline;
+        }
+        .project-item .coming-soon {
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #718096;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+
+        /* Cookie弹窗样式 */
+        .cookie-modal {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #2d3748;
+            color: #fff;
+            padding: 20px;
+            z-index: 9999;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+        }
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cookie-text {
+            flex: 1;
+            min-width: 280px;
+            font-size: 14px;
+        }
+        .cookie-text a {
+            color: #63b3ed;
+            text-decoration: none;
+        }
+        .cookie-text a:hover {
+            text-decoration: underline;
+        }
+        .cookie-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .cookie-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-accept {
+            background: #3182ce;
+            color: #fff;
+        }
+        .btn-accept:hover {
+            background: #2b6cb0;
+        }
+        .btn-reject {
+            background: #718096;
+            color: #fff;
+        }
+        .btn-reject:hover {
+            background: #4a5568;
+        }
+        .btn-setting {
+            background: transparent;
+            color: #63b3ed;
+            border: 1px solid #63b3ed;
+        }
+        .btn-setting:hover {background: rgba(99,179,237,0.1);
+         }
+     </style>
+ </head>
+ <body>
+     <!-- 顶部栏 -->
+     <div class="top-bar">
+         <h1>十七班MAD工作室</h1>
+         <div class="nav-links">
+             <a href="more.html" class="active">首页</a>
+             <a href="research.html">研究成果</a>
+             <a href="problem.html">题库</a>
+             <a href="#about">关于我们</a>
+         </div>
+     </div>
+     <!-- 内容区 -->
+     <div class="container">
+         <h2 class="page-title">首页</h2>
+         <p class="page-desc">欢迎来到十七班MAD工作室官方网站</p>
+         <!-- 邮箱区域 -->
+         <div class="email-section">
+             <h2>Email</h2>
+             <div class="email-list">
+                 <p>@163.com: <a href="mailto:Wangheran114514@163.com">Wangheran114514@163.com</a></p>
+                 <p>@outlook.com: <a href="mailto:class17no11middleschool@outlook.com">class17no11middleschool@outlook.com</a></p>
+                 <p>@gmail.com:暂无</p>
+                 <p>或 <a href="mailto:Sunxiaochuan114514@zohomail.cn">Sunxiaochuan114514@zohomail.cn</a></p>
+             </div>
+         </div>
+         <!-- 《gal十七》项目 -->
+         <div class="project-section">
+             <h2>《gal 十七》项目</h2>
+             <div class="project-item">
+                 <p>获取 .apk 形式安装包→ <a href="#">点击获取</a></p>
+             </div>
+             <div class="project-item">
+                 <p>项目报告→ <a href="#">查看报告</a></p>
+             </div>
+         </div>
+         <!-- 《yellow 十七》计划 -->
+         <div class="project-section">
+             <h2>《yellow 十七》计划</h2>
+             <div class="project-item">
+                 <p>与一中合作制作，包括除王 X 之外所有十七班同学的关于■■■■■■的文章……</p>
+             </div>
+             <div class="project-item">
+                 <p>获取 .Pdf.文件→ <a href="files/yellow17.pdf">点击下载</a></p>
+             </div>
+         </div>
+         <!-- 《十七班野史暨野史：十七班列传》 -->
+         <div class="project-section">
+             <h2>《十七班野史暨野史：十七班列传》</h2>
+             <div class="project-item">
+                 <p class="coming-soon">敬请期待……</p>
+             </div>
+         </div>
+     </div>
+     <!-- Cookie隐私弹窗 -->
+     <div class="cookie-modal" id="cookieModal">
+         <div class="cookie-content">
+             <div class="cookie-text">
+                 你的隐私对我们很重要。本网站使用cookie来改善网站和您的浏览体验。点击“全部接受”，即表示您同意我们如<a href="#">Cookie 政策</a>中所述使用Cookie。您还可以点击“Cookie 设置”来管理不同的Cookie 或决定仅允许必要的Cookie。
+             </div>
+             <div class="cookie-btns">
+                 <button class="cookie-btn btn-accept" id="acceptCookie">全部接受</button>
+                 <button class="cookie-btn btn-setting" id="cookieSetting">Cookie 设置</button>
+                 <button class="cookie-btn btn-reject" id="rejectCookie">继续而不接受</button>
+             </div>
+         </div>
+     </div>
+     <footer>
+         © 2026 十七班MAD工作室 · 版权所有
+     </footer>
+     <script>
+         // 离开网站提示
+         document.addEventListener('DOMContentLoaded', function() {
+             const externalLinks = document.querySelectorAll('a[href="research.html"], a[href="problem.html"], a[href*="aka.ms"], a[href*="google.com"]');
+             externalLinks.forEach(link => {
+                 link.addEventListener('click', function(e) {
+                     e.preventDefault();
+                     const confirmLeave = confirm('将要离开mad工作室官方网站，这意味着您将不受我们保护，谢谢您的支持');
+                     if (confirmLeave) {
+                         window.location.href = this.href;
+                     }
+                 });
+             });
+         });
+         // Cookie弹窗逻辑
+         const cookieModal = document.getElementById('cookieModal');
+         const acceptBtn = document.getElementById('acceptCookie');
+         const rejectBtn = document.getElementById('rejectCookie');
+         const settingBtn = document.getElementById('cookieSetting');
+         function closeCookieModal() {
+             cookieModal.style.display = 'none';
+             localStorage.setItem('cookieAccepted', 'true');
+         }
+         window.onload = function() {
+             if (localStorage.getItem('cookieAccepted')) {
+                 cookieModal.style.display = 'none';
+             } else {
+                 cookieModal.style.display = 'block';
+             }
+         };
+         acceptBtn.addEventListener('click', closeCookieModal);
+         rejectBtn.addEventListener('click', closeCookieModal);
+         settingBtn.addEventListener('click', function() {
+             alert('Cookie设置功能待开发，您可选择仅允许必要Cookie！');
+         });
+     </script>
+ </body>
+ </html>
+ 
