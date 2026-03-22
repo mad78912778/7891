@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究成果 - 项目平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* 顶部导航栏 */
+        .top-bar {
+            background-color: #2d3748;
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .top-bar h1 {
+            font-size: 20px;
+            font-weight: normal;
+        }
+        .nav-links a {
+            color: #e2e8f0;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a.active {
+            color: #63b3ed;
+            font-weight: bold;
+        }
+
+        /* 内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .page-title {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        .page-desc {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        /* 研究成果卡片 */
+        .result-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        .card-img {
+            width: 100%;
+            height: 220px;
+            background-color: #e2e8f0;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 18px;
+        }
+        .card-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        .card-time {
+            font-size: 13px;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+        .card-btn {
+            display: inline-block;
+            padding: 7px 14px;
+            background-color: #3182ce;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .card-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        /* 图片组样式（多图展示） */
+        .image-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .image-group img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #718096;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部栏 -->
+    <div class="top-bar">
+        <h1>项目研究平台</h1>
+        <div class="nav-links">
+            <a href="more.html">首页</a>
+            <a href="research.html" class="active">研究成果</a>
+            <a href="#">数据资料</a>
+            <a href="#">关于我们</a>
+        </div>
+    </div>
+
+    <!-- 内容区 -->
+    <div class="container">
+        <h2 class="page-title">研究成果</h2>
+        <p class="page-desc">展示本项目相关的实践活动、班级数据与历史研究成果</p>
+
+        <div class="result-list">
+            <!-- 成果1：升旗仪式实践 -->
+            <div class="result-card">
+                <div class="image-group">
+                    <img src="https://picsum.photos/600/400?random=101" alt="升旗仪式出旗">
+                    <img src="https://picsum.photos/600/400?random=102" alt="升旗中">
+                    <img src="https://picsum.photos/600/400?random=103" alt="升旗敬礼">
+                    <img src="https://picsum.photos/600/400?random=104" alt="国旗下讲话">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">升旗仪式实践活动</h3>
+                    <div class="card-time">2026年3月</div>
+                    <p class="card-desc">记录班级参与升旗仪式的完整过程，包括出旗、升旗、敬礼与国旗下讲话，培养爱国主义情怀与集体荣誉感。</p>
+                    <a href="#" class="card-btn">查看完整图集</a>
+                </div>
+            </div>
+
+            <!-- 成果2：班级学习数据统计 -->
+            <div class="result-card">
+                <img class="card-img" src="https://<div class="result-card">
+                 <div class="image-group">
+                     <img src="https://picsum.photos/600/400?random=101" alt="升旗仪式出旗">
+                     <img src="https://picsum.photos/600/400?random=102" alt="升旗中">
+                     <img src="https://picsum.photos/600/400?random=103" alt="升旗敬礼">
+                     <img src="https://picsum.photos/600/400?random=104" alt="国旗下讲话">
+                 </div>
+                 <div class="card-body">
+                     <h3 class="card-title">升旗仪式实践活动</h3>
+                     <div class="card-time">2026年3月</div>
+                     <p class="card-desc">记录班级参与升旗仪式的完整过程，包括出旗、升旗、敬礼与国旗下讲话，培养爱国主义情怀与集体荣誉感。</p>
+                     <a href="#" class="card-btn">查看完整图集</a>
+                 </div>
+             </div>
+             <!-- 成果2：班级学习数据统计 -->
+             <div class="result-card">
+                 <img class="card-img" src="https://picsum.photos/600/400?random=201" alt="十七班卷子分布图">
+                 <div class="card-body">
+                     <h3 class="card-title">十七班学习数据统计</h3>
+                     <div class="card-time">2026年3月</div>
+                     <p class="card-desc">通过饼图分析班级卷子使用情况，80%在学校完成，20%作为家庭作业，直观反映课堂效率与作业负担。</p>
+                     <a href="#" class="card-btn">查看数据分析</a>
+                 </div>
+             </div>
+             <!-- 成果3：中国古代刑罚研究 -->
+             <div class="result-card">
+                 <div class="image-group">
+                     <img src="https://picsum.photos/600/400?random=301" alt="主刑分类">
+                     <img src="https://picsum.photos/600/400?random=302" alt="肉刑分类">
+                     <img src="https://picsum.photos/600/400?random=303" alt="古代火炮">
+                 </div>
+                 <div class="card-body">
+                     <h3 class="card-title">中国古代刑罚制度研究</h3>
+                     <div class="card-time">2026年3月</div>
+                     <p class="card-desc">梳理中国古代主刑与肉刑体系，对比现代刑罚制度，分析刑罚演变背后的社会治理逻辑与文明进步。</p>
+                     <a href="#" class="card-btn">查看研究报告</a>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <footer>
+         © 2026 项目研究平台 · 版权所有
+     </footer></footer>
+ </body>
+</html>
