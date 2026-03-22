@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的项目主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+        .hero-card h1 {
+            font-size: 28px;
+            color: #24292f;
+            margin-bottom: 12px;
+        }
+        .hero-card p {
+            color: #57606a;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .btn {
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            text-align:center;
+        }
+        .btn-login {
+            background: #2ea44f;
+            color: white;
+            border: none;
+        }
+        .btn-login:hover {
+            background: #2c974b;
+            transform: translateY(-2px);
+        }
+        .btn-register {
+            background: white;
+            color: #24292f;
+            border: 1px solid #d0d7de;
+        }
+        .btn-register:hover {
+            background: #f6f8fa;
+            transform: translateY(-2px);
+        }
+        .btn-problem {
+            background: #0969da;
+            color: white;
+            border:none;
+        }
+        .btn-problem:hover {
+            background: #085fc2;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-card">
+        <h1>欢迎来到我的项目</h1>
+        <p>这是一个基于 GitHub Pages 搭建的演示站点，登录后即可查看完整项目详情。</p>
+        <div class="btn-group">
+            <a href="login.html" class="btn btn-login">立即登录</a>
+            <a href="register.html" class="btn btn-register">注册新账号</a>
+            <a href="problem.html" class="btn btn-problem">进入题库练习</a>
+        </div>
+    </div>
+</body>
+</html>
