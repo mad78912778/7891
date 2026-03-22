@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>更多项目</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background: #fff;
+            color: #222;
+            line-height: 1.6;
+        }
+        /* 顶部栏 */
+        .top-bar {
+            background: #2e5ba0;
+            color: white;
+            padding: 10px 20px;
+        }
+        .top-bar h1 {
+            font-size: 32px;
+            font-weight: 500;
+        }
+        /* 导航栏 */
+        .nav {
+            display: flex;
+            background: #2e5ba0;
+            border-top: 1px solid #fff;
+        }
+        .nav a {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .nav a:hover {
+            background: #254a86;
+        }
+        /* 头部信息区 */
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        .login-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .login-area .avatar {
+            width: 36px;
+            height: 36px;
+            background: #4285f4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .login-area a {
+            color: #222;
+            font-size: 22px;
+            text-decoration: underline;
+        }
+        .settings {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .settings .gear {
+            font-size: 24px;
+        }
+        /* 内容区 */
+        .content {
+            padding: 0 20px 40px;
+            max-width: 900px;
+        }
+        .email-section {
+            margin-top: 40px;
+        }
+        .email-section h2 {
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2e5ba0;
+            padding-bottom: 4px;
+        }
+        .email-list {
+            font-size: 15px;
+            color: #444;
+            margin-left: 30px;
+        }
+        .email-list p {
+            margin: 8px 0;
+        }
+        .email-list a {
+            color: #2e5ba0;
+            text-decoration: none;
+            border-bottom: 1px solid #2e5ba0;
+        }
+        .email-list a:hover {
+            color: #1a3d6f;
+            border-bottom-color: #1a3d6f;
+        }
+        .project-item {
+            margin: 25px 0;
+        }
+        .project-item h3 {
+            font-size: 34px;
+            font-style: italic;
+            font-weight: 500;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #2e5ba0;
+            padding-bottom: 4px;
+        }
+        .project-item .sub-desc {
+            font-size: 15px;
+            color: #444;
+            margin: 8px 0;
+            padding-left: 10px;
+        }
+        .link {
+            font-size: 14px;
+            color: #2e5ba0;
+            text-decoration: none;
+            border-bottom: 1px solid #2e5ba0;
+        }
+        .link:hover {
+            color: #1a3d6f;
+            border-bottom-color: #1a3d6f;
+        }
+        .coming-soon {
+            font-size: 14px;
+            color: #666;
+        }
+        .back-link {
+            font-size: 14px;
+            color: #2e5ba0;
+            text-decoration: none;
+            border-bottom: 1px solid #2e5ba0;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .back-link:hover {
+            color: #1a3d6f;
+            border-bottom-color: #1a3d6f;
+        }
+        /* 帮助弹窗样式 */
+        .help-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .help-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+        .help-content h3 {
+            font-size: 28px;
+            color: #444;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #2e5ba0;
+        }
+        .help-arrow {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #2e5ba0;
+            border-radius: 50%;
+            display: flex;
+                  align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+      }
+      .help-arrow span {
+        font-size: 32px;
+        color: #2e5ba0;
+        font-weight: bold;
+      }
+      .help-text {
+        font-size: 16px;
+        color: #444;
+        margin: 12px 0;
+      }
+      .help-text a {
+        color: #792e79;
+        text-decoration: underline;
+      }
+      .close-help {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 24px;
+        color: #666;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <h1>Mad</h1>
+    </div>
+    <div class="nav">
+      <a href="index.html">工作室</a>
+      <a href="news.html">资讯&研究成果</a>
+    </div>
+    <div class="header-info">
+      <div class="login-area">
+        <div class="avatar">👤</div>
+        <a href="login.html">log in</a>
+      </div>
+      <div class="settings" onclick="openHelp()">
+        <span class="gear">⚙️</span>
+        <span>设置</span>
+      </div>
+    </div>
+    <div class="content">
+      <div class="email-section">
+        <h2>Email</h2>
+        <div class="email-list">
+          <p>@163.com: <a href="mailto:Wangheran114514@163.com">Wangheran114514@163.com</a></p>
+          <p>@outlook.com: <a href="https://outlook.live.com" target="_blank">class17no11middleschool@outlook.com</a></p>
+          <p>@gmail.com:<a href="https://www.google.com" target="_blank">暂无</a></p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;或 Sunxiaochuan114514@zohomail.cn</p>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <h3>《gal 十七》项目</h3>
+        <p class="sub-desc"><a href="#" class="link">获取 .apk.形式安装包→</a></p>
+        <p class="sub-desc"><a href="#" class="link">项目报告→</a></p>
+      </div>
+
+      <div class="project-item">
+        <h3>《yellow 十七》计划</h3>
+        <p class="sub-desc">与一中合作制作，包括除王 X 之外所有十七班同学的关于■■■■■■的文章……</p>
+        <p class="sub-desc"><a href="#" class="link">获取。Pdf.文件→</a></p>
+      </div>
+
+      <div class="project-item">
+        <h3>《十七班野史暨野史：十七班列传》</h3>
+        <p class="sub-desc" class="coming-soon">敬请期待……</p>
+      </div>
+
+      <a href="problem.html" class="link" style="margin-right: 20px;">→ 题库练习</a>
+      <a href="index.html" class="back-link">← 返回工作室主页</a>
+    </div>
+
+    <!-- 帮助弹窗 -->
+    <div class="help-modal" id="helpModal">
+      <div class="help-content">
+        <span class="close-help" onclick="closeHelp()">&times;</span>
+        <h3>问题：</h3>
+        <div class="help-arrow">
+          <span>→</span>
+        </div>
+        <p class="help-text">没有电子邮件? 获取 <a href="https://play.google.com/store/apps/details?id=com.microsoft.office.outlook" target="_blank">Outlook for Android</a></p>
+        <p class="help-text">进入官方网站: <a href="https://www.google.com/android" target="_blank">Google for Android</a></p>
+      </div>
+    </div>
+
+    <script>
+      // 打开帮助弹窗
+      function openHelp() {
+        document.getElementById('helpModal').style.display = 'flex';
+      }
+      // 关闭帮助弹窗
+      function closeHelp() {
+        document.getElementById('helpModal').style.display = 'none';
+      }
+      // 点击弹窗外部关闭
+      window.onclick = function(event) {
+        const modal = document.getElementById('helpModal');
+        if (event.target === modal) {
+          closeHelp();
+        }
+      }
+    </script>
+  </body>
+</html>
