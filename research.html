@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究成果 - 十七班MAD工作室</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* 顶部导航栏 */
+        .top-bar {
+            background-color: #2d3748;
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .top-bar h1 {
+            font-size: 20px;
+            font-weight: normal;
+        }
+        .nav-links a {
+            color: #e2e8f0;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a.active {
+            color: #63b3ed;
+            font-weight: bold;
+        }
+
+        /* 内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .page-title {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        .page-desc {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        /* 研究成果卡片 */
+        .result-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        .card-img {
+            width: 100%;
+            height: 220px;
+            background-color: #e2e8f0;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 18px;
+        }
+        .card-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        .card-time {
+            font-size: 13px;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            background-color: #3182ce;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .card-btn:hover {
+            background-color: #2b6cb0;
+        }
+        .card-btn.download {
+            background-color: #28a745;
+        }
+        .card-btn.download:hover {
+            background-color: #218838;
+        }
+        .card-btn.download::before {
+            content: "↓";
+            font-weight: bold;
+        }
+
+        /* 关于我们区域 */
+        .about-section {
+            margin-top: 60px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .about-section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        .about-section p {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .about-section a {
+            color: #3182ce;
+            text-decoration: none;
+        }
+        .about-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #718096;
+            font-size: 14px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部栏 -->
+    <div class="top-bar">
+        <h1>十七班MAD工作室</h1>
+        <div class="nav-links">
+            <a href="more.html">首页</a>
+            <a href="research.html" class="active">研究成果</a>
+            <a href="problem.html">题库</a>
+            <a href="#about">关于我们</a>
+        </div>
+    </div>
+
+    <!-- 内容区 -->
+    <div class="container">
+        <h2 class="page-title">研究成果</h2>
+        <p class="page-desc">展示本项目相关的实践活动、班级数据与研究成果</p>
+
+        <div class="result-list">
+            <!-- 升旗仪式实践活动报告卡片 -->
+            <div class="result-card">
+                <img class="card-img" src="images/flag_cover.jpg" alt="升旗仪式封面">
+                <div class="card-body">
+                    <h3 class="card-title">升旗仪式实践活动报告</h3>
+                     <div class="card-time">2026年3月</div>
+                     <p class="card-desc">
+                         包含完整活动流程、现场照片、班级总结与数据分析的 PDF 文档，记录了十七班爱国主义教育实践成果。
+                     </p>
+                     <embed src="files/sqb202609.pdf" type="application/pdf" width="100%" height="400px" style="margin: 15px 0; border-radius: 8px;">
+                     <a href="files/sqb202609.pdf" class="card-btn download" download>
+                         下载完整报告 PDF
+                     </a>
+                 </div>
+             </div>
+             <!-- 班级学习数据统计卡片 -->
+             <div class="result-card">
+                 <img class="card-img" src="images/class_data.png" alt="十七班卷子分布图">
+                 <div class="card-body">
+                     <h3 class="card-title">十七班学习数据统计</h3>
+                     <div class="card-time">2026年3月</div>
+                     <p class="card-desc">
+                         通过饼图分析班级卷子使用情况，80%在学校完成，20%作为家庭作业，直观反映课堂效率与作业负担。
+                     </p>
+                     <a href="#" class="card-btn">查看数据分析</a>
+                 </div>
+             </div>
+         </div>
+         <!-- 关于我们 -->
+         <div id="about" class="about-section">
+             <h2>关于我们</h2>
+             <p>十七班最大反动派，加入联系：<a href="mailto:sunxiaochuan114514@zohomail.cn">sunxiaochuan114514@zohomail.cn</a></p>
+             <p>在一中设有分部，研究关于如何轰炸十七班。</p>
+         </div>
+     </div>
+     <footer>
+         © 2026 十七班MAD工作室 · 版权所有
+     </footer>
+     <script>
+         // 离开网站提示
+         document.addEventListener('DOMContentLoaded', function() {
+             const externalLinks = document.querySelectorAll('a[href="more.html"], a[href*="aka.ms"], a[href*="google.com"]');
+             externalLinks.forEach(link => {
+                 link.addEventListener('click', function(e) {
+                     e.preventDefault();
+                     const confirmLeave = confirm('将要离开mad工作室官方网站，这意味着您将不受我们保护，谢谢您的支持');
+                     if (confirmLeave) {
+                         window.location.href = this.href;
+                     }
+                 });
+             });
+         });
+     </script>
+ </body>
+</html>
