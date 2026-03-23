@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>议员申请 - MAD工作室</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif;}
+body{background:#f5f7fa;color:#333;line-height:1.6;}
+.navbar{
+  background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  padding:1rem 5%;display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:99;
+}
+.logo{font-size:1.5rem;font-weight:bold;color:#2c3e50;}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{text-decoration:none;color:#2c3e50;font-weight:500;}
+.nav-links a:hover{color:#3498db;}
+.container{max-width:700px;margin:3rem auto;padding:0 5%;}
+.card{
+  background:#fff;border-radius:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  padding:2.5rem;
+}
+.card h2{
+  margin-bottom:1.5rem;color:#2c3e50;
+  border-bottom:2px solid #f1f1f1;padding-bottom:0.5rem;
+}
+.form-group{margin-bottom:1.2rem;}
+.form-group label{
+  display:block;margin-bottom:0.4rem;
+  font-weight:500;color:#2c3e50;
+}
+.form-group input{
+  width:100%;padding:0.9rem;
+  border:1px solid #ddd;border-radius:8px;font-size:1rem;
+}
+.submit-btn{
+  margin-top:1rem;width:100%;padding:1rem;
+  background:#3498db;color:#fff;border:none;
+  border-radius:8px;font-size:1.1rem;font-weight:bold;
+  cursor:pointer;
+}
+.submit-btn:hover{background:#2980b9;}
+.tip{margin-top:0.8rem;font-size:0.9rem;color:#666;}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">MAD工作室</div>
+  <div class="nav-links">
+    <a href="index.html">首页</a>
+    <a href="research.html">研究成果</a>
+    <a href="problem.html">帮助</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>班级MAD工作室 · 议员申请</h2>
+
+    <div class="form-group">
+      <label>证明您是：阜新市第XX中学十七班学生</label>
+      <input type="text" id="studentInfo" placeholder="姓名/学号">
+    </div>
+
+    <div class="form-group">
+      <label>您的职位（大于组长，小于班长）</label>
+      <input type="text" id="position" placeholder="如：课代表、纪律委员">
+    </div>
+
+    <div class="form-group">
+      <label>邀请码</label>
+      <input type="text" id="inviteCodeInput" placeholder="请输入邀请码">
+      <div class="tip">邀请码由官方提供</div>
+    </div>
+
+    <button class="submit-btn" onclick="validate()">提交申请</button>
+  </div>
+</div>
+
+<script>
+function validate() {
+  const code = document.getElementById('inviteCodeInput').value.trim();
+  const correct = "27787891114514ʌɑːɔ:ɜːɜːɒʊɒɒあいうぃ☆3";
+
+  if (code === correct) {
+    window.location.href = "success.html";
+  } else {
+    alert("邀请码错误");
+  }
+}
+</script>
+
+</body>
+</html>
