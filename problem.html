@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+ <html lang="zh-CN">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>问题与帮助 - MAD工作室</title>
+     <style>
+         /* 与 index.html 保持一致的全局样式 */
+         * {
+             margin: 0;
+             padding: 0;
+             box-sizing: border-box;
+             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+         }
+         body {
+             background-color: #f5f7fa;
+             color: #333;
+             line-height: 1.6;
+         }
+         /* 导航栏样式 */
+         .navbar {
+             background: #fff;
+             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+             padding: 1rem 5%;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             position: sticky;
+             top: 0;
+             z-index: 100;
+         }
+         .logo {
+             font-size: 1.5rem;
+             font-weight: bold;
+             color: #2c3e50;
+         }
+         .nav-links {
+             display: flex;
+             gap: 2rem;
+         }
+         .nav-links a {
+             text-decoration: none;
+             color: #2c3e50;
+             font-weight: 500;
+             transition: color 0.3s;
+         }
+         .nav-links a:hover {
+             color: #3498db;
+         }
+         .nav-btn {
+             padding: 0.5rem 1rem;
+             background: #3498db;
+             color: white;
+             border: none;
+             border-radius: 4px;
+             cursor: pointer;
+             font-weight: 500;
+             transition: background 0.3s;
+         }
+         .nav-btn:hover {
+             background: #2980b9;
+         }
+         /* 主容器 */
+         .container {
+             max-width: 1200px;
+             margin: 2rem auto;
+             padding: 0 5%;
+         }
+         /* 卡片样式 */
+         .card {
+             background: white;
+             border-radius: 8px;
+             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+             padding: 2rem;
+             margin-bottom: 2rem;
+         }
+         .card h2 {
+             color: #2c3e50;
+             margin-bottom: 1.5rem;
+             border-bottom: 2px solid #f1f1f1;
+             padding-bottom: 0.5rem;
+         }
+         /* 帮助条目样式 */
+         .help-item {
+             margin-bottom: 1.5rem;
+             padding: 1rem;
+             background: #f8f9fa;
+             border-radius: 6px;
+         }
+         .help-item h3 {
+             color: #3498db;
+             margin-bottom: 0.5rem;
+             font-size: 1.1rem;
+         }
+         .help-item p {
+             color: #555;
+         }
+         /* 特殊样式 - 申请入口 */
+         .special-notice {
+             background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+           border: 1px solid #ffccd5;
+         }
+         .special-notice h3 {
+             color: #e74c3c;
+         }
+         .apply-btn {
+             display: inline-block;
+             margin-top: 1rem;
+             padding: 0.75rem 1.5rem;
+             background: #e74c3c;
+             color: white;
+             border: none;
+             border-radius: 6px;
+             cursor: pointer;
+             font-weight: bold;
+             text-decoration: none;
+             transition: transform 0.2s, background 0.3s;
+         }
+         .apply-btn:hover {
+             background: #c0392b;
+             transform: translateY(-2px);
+         }
+         /* 弹窗样式 (与 index 保持一致) */
+         .modal {
+             display: none;
+             position: fixed;
+             top: 0; left: 0; width: 100%; height: 100%;
+             background: rgba(0,0,0,0.5);
+             z-index: 1000;
+             justify-content: center;
+             align-items: center;
+         }
+         .modal-content {
+             background: white;
+             padding: 2rem;
+             border-radius: 8px;
+             width: 90%;
+             max-width: 500px;
+             position: relative;
+         }
+         .close-btn {
+             position: absolute;
+             top: 1rem; right: 1rem;
+             font-size: 1.5rem;
+             cursor: pointer;
+             color: #777;
+         }
+         .close-btn:hover {
+             color: #e74c3c;
+         }
+         /* Cookie 提示 */
+         .cookie-consent {
+             position: fixed;
+             bottom: 0; left: 0; right: 0;
+             background: #2c3e50;
+             color: white;
+             padding: 1rem 5%;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             z-index: 999;
+         }
+         .cookie-consent button {
+             padding: 0.5rem 1rem;
+             background: #2ecc71;
+             color: white;
+             border: none;
+             border-radius: 4px;
+             cursor: pointer;
+         }
+     </style>
+ </head>
+ <body>
+     <!-- 导航栏 -->
+     <nav class="navbar">
+         <div class="logo">MAD工作室</div>
+         <div class="nav-links">
+             <a href="index.html">首页</a>
+             <a href="research.html">研究成果</a>
+             <a href="#" onclick="confirmLeave()">资讯&研究成果</a>
+             <a href="#" onclick="confirmLeave()">更多项目</a>
+             <a href="problem.html" class="nav-btn">帮助</a>
+         </div>
+         <div>
+             <button class="nav-btn" id="loginBtn">登录</button>
+         </div>
+     </nav>
+     <!-- 主容器 -->
+     <div class="container">
+         <div class="card">
+             <h2>问题与帮助中心</h2>
+             <!-- 问题 1: PDF 下载 -->
+             <div class="help-item">
+                 <h3>📁 PDF 文件下载问题</h3>
+                 <p>由于部分原因，部分 PDF 文件可能无法直接下载。</p>
+                 <p>若您需要获取相关文件，请发送邮件至：<strong>Wangheran114514@outlook.com</strong>，并在邮件中注明具体文件名称。</p>
+             </div>
+             <!-- 问题 2: 特殊内容申请 -->
+             <div class="help-item special-notice">
+                 <h3>🔒 《yellow十七》计划 -权限申请</h3>
+                 <p>《yellow十七》计划部分内容未公开，仅对 <strong>阜新市第XX中学十七班</strong> 核心成员开放观看权限。</p>
+                 <p>若您符合成员身份，可申请成为 <strong>班级 MAD 工作室议员</strong>，获取观看资格。</p>
+                 <a href="member.html" class="apply-btn">🚀 申请成为议员</a>
+             </div>
+             <!-- 其他帮助条目 -->
+             <div class="help-item">
+                 <h3>❓ 账号登录与注册</h3>
+                 <p>本站使用本地存储进行账号管理，注册时请填写有效的邮箱地址。忘记密码可通过邮箱找回功能处理。</p>
+             </div>
+             <div class="help-item">
+                 <h3>🔧 页面显示异常</h3>
+                 <p>若页面显示错乱，请尝试清除浏览器缓存或更换 Chrome / Edge 浏览器重新访问。</p>
+             </div>
+         </div>
+     </div>
+     <!-- 登录弹窗 -->
+     <div class="modal" id="loginModal">
+         <div class="modal-content">
+             <span class="close-btn" onclick="closeModal()">&times;</span>
+             <h2>用户登录</h2>
+             <br>
+             <form id="loginForm">
+                 <p>用户名：</p>
+                 <input type="text" id="loginUsername" required placeholder="请输入用户名">
+                 <br><br>
+                 <p>密码：</p>
+                 <input type="password" id="loginPassword" required placeholder="请输入密码">
+                 <br><br>
+                 <button type="submit" class="nav-btn">登录</button>
+                 <button type="button" class="nav-btn" onclick="switchToRegister()">注册</button>
+             </form>
+         </div>
+     </div>
+     <!-- Cookie 弹窗 -->
+     <div class="cookie-consent" id="cookieConsent">
+         <p>本站使用 Cookie 优化您的体验，继续浏览即表示您同意我们的隐私政策。</p>
+         <button onclick="acceptCookie()">我知道了</button>
+     </div>
+     <script>
+         // 离开页面提示
+         function confirmLeave() {
+             if (confirm('确定要离开当前页面吗？部分数据可能未保存。')) {
+                 window.location.href = 'index.html'; // 实际跳转地址
+             }
+         }
+         // Cookie 相关
+         function acceptCookie() {
+             document.getElementById('cookieConsent').style.display = 'none';
+             localStorage.setItem('cookieAccepted', 'true');
+         }
+         // 弹窗控制
+         function openModal() { document.getElementById('loginModal').style.display = 'flex'; }
+         function closeModal() { document.getElementById('loginModal').style.display = 'none'; }
+         // 登录逻辑 (与 index 保持一致)
+         document.getElementById('loginBtn').addEventListener('click', openModal);
+         
+         document.getElementById('loginForm').addEventListener('submit', function(e) {
+             e.preventDefault();
+             const username = document.getElementById('loginUsername').value;
+             const password = document.getElementById('loginPassword').value;
+             
+             const storedUser = localStorage.getItem('user');
+             if (storedUser) {
+                 const user = JSON.parse(storedUser);
+                 if (user.username === username && user.password === password) {
+                     alert('登录成功！');
+                     localStorage.setItem('isLoggedIn', 'true');
+                     localStorage.setItem('currentUser', username);
+                     document.querySelector('.nav-links').innerHTML = 
+                         `<a href="index.html">首页</a><a href="research.html">研究成果</a><a href="#" onclick="confirmLeave()">资讯&研究成果</a><a href="#" onclick="confirmLeave()">更多项目</a><a href="problem.html">帮助</a>`;
+                     document.querySelector('.navbar').innerHTML = 
+                         `<div class="logo">MAD工作室</div><div class="nav-links"><a href="index.html">首页</a><a href="research.html">研究成果</a><a href="#" onclick="confirmLeave()">资讯&研究成果</a><a href="#" onclick="confirmLeave()">更多项目</a><a href="problem.html">帮助</a></div><div><span style="margin-right:1rem;">Hi, ${username}</span><button class="nav-btn" onclick="logout()">退出</button></div>`;
+                     closeModal();
+                 } else {
+                     alert('用户名或密码错误！');
+                 }
+             } else {
+                 alert('请先注册！');
+             }
+         });
+         // 注册切换 (简化版，与 index 一致)
+         function switchToRegister() {
+             document.querySelector('.modal-content').innerHTML = 
+                 `<span class="close-btn" onclick="closeModal()">&times;</span>
+                 <h2>用户注册</h2><br>
+                 <form id="registerForm">
+                     <p>用户名：</p>
+                     <input type="text" id="regUsername" required placeholder="请输入用户名">
+                     <br><br>
+                     <p>邮箱：</p>
+                     <input type="email" id="regEmail" required placeholder="请输入邮箱">
+                     <br><br>
+                     <p>密码：</p>
+                     <input type="password" id="regPassword" required placeholder="请输入密码">
+                     <br><br>
+                     <button type="submit" class="nav-btn">注册</button>
+                     <button type="button" class="nav-btn" onclick="switchToLogin()">返回登录</button>
+                 </form>`;
+             
+             document.getElementById('registerForm').addEventListener('submit', function(e) {
+               e.preventDefault();
+                 const user = {
+                     username: document.getElementById('regUsername').value,
+                     email: document.getElementById('regEmail').value,
+                     password: document.getElementById('regPassword').value
+                 };
+                 localStorage.setItem('user', JSON.stringify(user));
+                 alert('注册成功！请登录。');
+                 switchToLogin();
+             });
+         }
+         function switchToLogin() {
+             document.querySelector('.modal-content').innerHTML = 
+                 `<span class="close-btn" onclick="closeModal()">&times;</span>
+                 <h2>用户登录</h2><br>
+                 <form id="loginForm">
+                     <p>用户名：</p>
+                     <input type="text" id="loginUsername" required placeholder="请输入用户名">
+                     <br><br>
+                     <p>密码：</p>
+                     <input type="password" id="loginPassword" required placeholder="请输入密码">
+                     <br><br>
+                     <button type="submit" class="nav-btn">登录</button>
+                     <button type="button" class="nav-btn" onclick="switchToRegister()">注册</button>
+                 </form>`;
+             
+             document.getElementById('loginForm').addEventListener('submit', function(e) {
+                 e.preventDefault();
+                 const username = document.getElementById('loginUsername').value;
+                 const password = document.getElementById('loginPassword').value;
+                 
+                 const storedUser = localStorage.getItem('user');
+                 if (storedUser) {
+                     const user = JSON.parse(storedUser);
+                     if (user.username === username && user.password === password) {
+                         alert('登录成功！');
+                         localStorage.setItem('isLoggedIn', 'true');
+                         localStorage.setItem('currentUser', username);
+                         document.querySelector('.nav-links').innerHTML = 
+                             `<a href="index.html">首页</a><a href="research.html">研究成果</a><a href="#" onclick="confirmLeave()">资讯&研究成果</a><a href="#" onclick="confirmLeave()">更多项目</a><a href="problem.html">帮助</a>`;
+                         document.querySelector('.navbar').innerHTML = 
+                             `<div class="logo">MAD工作室</div><div class="nav-links"><a href="index.html">首页</a><a href="research.html">研究成果</a><a href="#" onclick="confirmLeave()">资讯&研究成果</a><a href="#" onclick="confirmLeave()">更多项目</a><a href="problem.html">帮助</a></div><div><span style="margin-right:1rem;">Hi, ${username}</span><button class="nav-btn" onclick="logout()">退出</button></div>`;
+                         closeModal();
+                     } else {
+                         alert('用户名或密码错误！');
+                     }
+                 } else {
+                     alert('请先注册！');
+                 }
+             });
+         }
+         // 登出
+         function logout() {
+             localStorage.removeItem('isLoggedIn');
+             localStorage.removeItem('currentUser');
+             location.reload();
+         }
+         // 初始化
+         window.onload = function() {
+             if (!localStorage.getItem('cookieAccepted')) {
+                 document.getElementById('cookieConsent').style.display = 'flex';
+             }
+             if (localStorage.getItem('isLoggedIn')) {
+                 const username = localStorage.getItem('currentUser');
+                 document.querySelector('.nav-links').innerHTML = 
+                     `<a href="index.html">首页</a><a href="research.html">研究成果</a><a href="#" onclick="confirmLeave()">资讯&研究成果</a><a href="#" onclick="confirmLeave()">更多项目</a><a href="problem.html">帮助</a>`;
+                 document.querySelector('.navbar').innerHTML = 
+                     `<div class="logo">MAD工作室</div><div class="nav-links"><a href="index.html">首页</a><a href="research.html">研究成果</a><a href="#" onclick="confirmLeave()">资讯&研究成果</a><a href="#" onclick="confirmLeave()">更多项目</a><a href="problem.html">帮助</a></div><div
