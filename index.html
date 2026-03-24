@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mad 工作室 - 首页</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+body{
+  background:#f5f5f5;
+}
+.top-bar{
+  background:#334155;
+  color:white;
+  padding:12px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.top-bar .title{
+  font-size:18px;
+  font-weight:bold;
+}
+.top-bar .url{
+  font-size:12px;
+  color:#ccc;
+}
+
+  .side-nav{
+  background:#1e293b;
+  color:white;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.side-nav .logo{
+  font-size:14px;
+  font-weight:bold;
+  line-height:1.3;
+}
+.side-nav .menu{
+  display:flex;
+  gap:20px;
+}
+.side-nav .menu-item{
+  color:#ccc;
+  cursor:pointer;
+}
+.side-nav .menu-item.active{
+  color:#4dabf7;
+  border-bottom:2px solid #4dabf7;
+}
+.user-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+#loginLink{
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+}
+.setting-icon{
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+  .content{
+  padding:16px;
+  max-width:800px;
+  margin:0 auto;
+}
+.card{
+  background:white;
+  border-radius:10px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+}
+.card h2{
+  font-size:18px;
+  margin-bottom:8px;
+}
+.card p{
+  font-size:14px;
+  color:#555;
+  line-height:1.5;
+  margin-bottom:10px;
+}
+.card a{
+  color:#4dabf7;
+  text-decoration:none;
+  font-size:14px;
+}
+.btn{
+  display:inline-block;
+  padding:8px 14px;
+  background:#4dabf7;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  margin-top:6px;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+ .modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+}
+.modal-box{
+  background:white;
+  width:90%;
+  max-width:380px;
+  padding:25px;
+  border-radius:12px;
+  position:relative;
+}
+.close{
+  position:absolute;
+  top:15px;
+  right:18px;
+  font-size:18px;
+  cursor:pointer;
+}
+.modal-title{
+  text-align:center;
+  margin-bottom:18px;
+  font-size:18px;
+}
+.account-btn{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  background:white;
+  margin-bottom:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+.account-btn.selected{
+  border:2px solid #ff4d4f;
+}
+
+  .google-btn{ color:#444; }
+.ms-btn{ color:#0078d4; }
+.input-item{ margin:16px 0; }
+.input-item label{
+  display:block;
+  margin-bottom:6px;
+  font-size:14px;
+}
+.input-item input{
+  width:100%;
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  font-size:14px;
+}
+.submit-btn{
+  width:100%;
+  padding:12px;
+  background:#ff4d4f;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:6px;
+}
+.ext-link{
+  text-align:center;
+  margin-top:18px;
+  font-size:13px;
+  color:#666;
+}
+.ext-link a{
+  color:#0078d4;
+  text-decoration:none;
+  margin:0 4px;
+}
+
+ .to-login{
+  text-align:center;
+  margin-top:12px;
+  font-size:13px;
+  color:#666;
+}
+.to-login span{
+  color:#4dabf7;
+  cursor:pointer;
+}
+.footer{
+  text-align:center;
+  margin:20px 0;
+  font-size:12px;
+  color:#999;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <div class="title">Mad 工作室 - 首页</div>
+    <div class="url">mad7891277.github.io</div>
+  </div>
+</div>
+
+  <div class="side-nav">
+  <div class="logo">Mad<br>工作室</div>
+  <div class="menu">
+    <div class="menu-item active">工作室</div>
+    <div class="menu-item" onclick="goInfo()">资讯</div>
+    <div class="menu-item" onclick="goResearch()">研究成果</div>
+    <div class="menu-item" onclick="goMore()">更多项目</div>
+    <div class="menu-item" onclick="openHelpModal()">帮助</div>
+  </div>
+  <div class="user-right">
+    <a href="#" id="loginLink">log in</a>
+    <span class="setting-icon">⚙️</span>
+  </div>
+</div>
+
+  <div class="content">
+  <div class="card">
+    <h2>《十七班历史》</h2>
+    <p>《十七班历史》是一本基于十一中学2025级十七班逆天历史事件模仿人民教育出版社……</p>
+    <a href="javascript:checkLoginAndGo('#')">具体信息 →</a>
+  </div>
+  <div class="card">
+    <h2>《新考向：跨学科融合》</h2>
+    <p>更新中敬请期待……</p>
+  </div>
+  <div class="card">
+    <h2>编写工作</h2>
+    <p>编写组: 主任: mad<br>副主任: 王X,周X,张X</p>
+    <a class="btn" href="javascript:goMember()">查看更多项目 →</a>
+  </div>
+</div>
+
+  <!-- 注册弹窗 -->
+<div id="registerModal" class="modal">
+  <div class="modal-box">
+    <div class="close" onclick="closeReg()">×</div>
+    <div class="modal-title">账号注册</div>
+    <button class="account-btn google-btn" id="btnG" onclick="selType('google')">谷歌账号（@gmail.com）</button>
+    <button class="account-btn ms-btn" id="btnM" onclick="selType('microsoft')">微软账号（outlook / hotmail / live）</button>
+    <div class="input-item">
+      <label>邮箱账号</label>
+      <input type="email" id="regEmail" placeholder="请选择账号类型">
+    </div>
+    <button class="submit-btn" onclick="doReg()">完成注册</button>
+    <div class="ext-link">
+      没有谷歌/微软账号？
+      <a href="https://accounts.google.com/signup" target="_blank">注册谷歌</a>
+      |
+      <a href="https://signup.live.com" target="_blank">注册微软</a>
+    </div>
+    <div class="to-login">已有账号？<span onclick="goLogin()">去登录</span></div>
+  </div>
+</div>
+
+  <!-- 登录弹窗 -->
+<div id="loginModal" class="modal">
+  <div class="modal-box">
+    <div class="close" onclick="closeLogin()">×</div>
+    <div class="modal-title">账号登录</div>
+    <button class="account-btn google-btn" id="lBtnG" onclick="selLoginType('google')">谷歌账号</button>
+    <button class="account-btn ms-btn" id="lBtnM" onclick="selLoginType('microsoft')">微软账号</button>
+    <div class="input-item">
+      <label>邮箱</label>
+      <input type="email" id="loginEmail" placeholder="请输入邮箱">
+    </div>
+    <button class="submit-btn" onclick="doLogin()">登录</button>
+    <div class="to-login">没有账号？<span onclick="goReg()">去注册</span></div>
+  </div>
+</div>
+
+  <!-- 帮助弹窗 -->
+<div id="helpModal" class="modal">
+  <div class="modal-box">
+    <div class="close" onclick="closeHelp()">×</div>
+    <div class="modal-title">使用帮助</div>
+    <p style="margin-bottom:8px">• 支持谷歌、微软账号登录</p>
+    <p style="margin-bottom:8px">• 登录后可查看资讯、研究成果</p>
+    <p style="margin-bottom:8px">• 更多项目需登录后进入会员中心</p>
+    <p>• 管理员可在后台管理账号</p>
+  </div>
+</div>
+
+<div class="footer">© 2026 Mad 工作室</div>
+
+<script>
+let selTypeNow = "";
+function selType(t) {
+  selTypeNow = t;
+  document.getElementById("btnG").classList.remove("selected");
+  document.getElementById("btnM").classList.remove("selected");
+  const inp = document.getElementById("regEmail");
+  if(t=="google"){
+    document.getElementById("btnG").classList.add("selected");
+    inp.placeholder = "请输入@gmail.com邮箱";
+  }else{
+    document.getElementById("btnM").classList.add("selected");
+    inp.placeholder = "请输入outlook/hotmail/live邮箱";
+  }
+}
+
+function checkRegEmail(e){
+  if(selTypeNow=="google") return e.endsWith("@gmail.com");
+  if(selTypeNow=="microsoft") return e.endsWith("@outlook.com")||e.endsWith("@hotmail.com")||e.endsWith("@live.com");
+  return false;
+}
+
+  function doReg(){
+  const email = document.getElementById("regEmail").value.trim();
+  if(!selTypeNow){ alert("请选择谷歌/微软账号"); return; }
+  if(!email){ alert("请输入邮箱"); return; }
+  if(!checkRegEmail(email)){
+    alert(selTypeNow=="google"?"必须是@gmail.com":"必须是outlook/hotmail/live");
+    return;
+  }
+  const user = {
+    email:email,
+    type:selTypeNow=="google"?"谷歌注册":"微软注册",
+    time:new Date().toLocaleString(),
+    status:"正常"
+  };
+  let list = JSON.parse(localStorage.getItem("userList")||"[]");
+  list.unshift(user);
+  localStorage.setItem("userList",JSON.stringify(list));
+  alert("注册成功！请登录");
+  closeReg();
+  openLogin();
+}
+
+  
+  let loginType = "";
+function selLoginType(t){
+  loginType = t;
+  document.getElementById("lBtnG").classList.remove("selected");
+  document.getElementById("lBtnM").classList.remove("selected");
+  t=="google"?document.getElementById("lBtnG").classList.add("selected"):document.getElementById("lBtnM").classList.add("selected");
+}
+
+function doLogin(){
+  const email = document.getElementById("loginEmail").value.trim();
+  if(!loginType){alert("请选择账号类型");return;}
+  if(!email){alert("请输入邮箱");return;}
+  let list = JSON.parse(localStorage.getItem("userList")||"[]");
+  let find = list.find(i=>i.email==email);
+  if(!find){alert("该邮箱未注册");return;}
+  if(find.status=="封禁"){alert("账号已被封禁");return;}
+  localStorage.setItem("isLogin","true");
+  localStorage.setItem("loginEmail",email);
+  alert("登录成功");
+  closeLogin();
+  refreshLoginStatus();
+}
+
+  function openReg(){document.getElementById("registerModal").style.display="flex";}
+function closeReg(){document.getElementById("registerModal").style.display="none";}
+function openLogin(){document.getElementById("loginModal").style.display="flex";}
+function closeLogin(){document.getElementById("loginModal").style.display="none";}
+function goReg(){closeLogin();openReg();}
+function goLogin(){closeReg();openLogin();}
+function openHelpModal(){document.getElementById("helpModal").style.display="flex";}
+function closeHelp(){document.getElementById("helpModal").style.display="none";}
+
+function refreshLoginStatus(){
+  const logBtn = document.getElementById("loginLink");
+  const mail = localStorage.getItem("loginEmail");
+  if(localStorage.getItem("isLogin")=="true" && mail){
+    logBtn.innerText = "Hi,"+mail;
+    logBtn.onclick = function(e){
+      e.preventDefault();
+      if(confirm("退出登录？")){
+        localStorage.removeItem("isLogin");
+        localStorage.removeItem("loginEmail");
+        logBtn.innerText = "log in";
+        logBtn.onclick = function(e){e.preventDefault();openLogin();}
+      }
+    }
+  }
+}
+
+function checkLogin(){
+  if(localStorage.getItem("isLogin")!="true"){
+    alert("请先登录");
+    openLogin();
+    return false;
+  }
+  return true;
+}
+
+function checkLoginAndGo(url){
+  if(checkLogin()) location.href=url;
+}
+function goInfo(){checkLoginAndGo("info.html");}
+function goResearch(){checkLoginAndGo("research.html");}
+function goMore(){checkLoginAndGo("more.html");}
+function goMember(){checkLoginAndGo("member.html");}
+
+document.getElementById("loginLink").onclick = function(e){
+  e.preventDefault();
+  openLogin();
+}
+
+window.onload = function(){refreshLoginStatus();}
+window.onclick = function(e){
+  if(e.target.classList.contains("modal")) e.target.style.display="none";
+}
+</script>
+</body>
+</html>
