@@ -231,11 +231,14 @@ body{
 <div class="side-nav">
   <div class="logo">Mad<br>工作室</div>
   <div class="menu">
-    <div class="menu-item active">首页</div>
-    <div class="menu-item" onclick="toPage('资讯')">资讯</div>
-    <div class="menu-item" onclick="toPage('研究成果')">研究成果</div>
-    <div class="menu-item" onclick="toPage('更多项目')">更多项目</div>
-    <div class="menu-item" onclick="openHelp()">帮助</div>
+    <div class="menu">
+  <div class="menu-item active">首页</div>
+  <div class="menu-item" onclick="goInfo()">资讯</div>
+  <div class="menu-item" onclick="goResearch()">研究成果</div>
+  <div class="menu-item" onclick="goMore()">更多项目</div>
+  <div class="menu-item" onclick="openHelp()">帮助</div>
+</div>
+
   </div>
   <div class="user-right">
     <a href="#" class="login.html" id="login.html">log in</a>
