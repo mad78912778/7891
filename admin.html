@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理员后台 - 用户管理</title>
+<style>
+body{font-family:Arial;background:#f5f5f5;padding:20px;}
+.container{max-width:800px;margin:0 auto;}
+.card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);margin-bottom:20px;}
+.title{font-size:20px;margin-bottom:15px;}
+table{width:100%;border-collapse:collapse;}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #eee;}
+.ban{color:red;background:#ffebee;padding:4px 8px;border-radius:4px;cursor:pointer;font-size:12px;}
+.normal{color:green;background:#e8f5e9;padding:4px 8px;border-radius:4px;font-size:12px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="title">用户注册记录（可封禁异常账号）</div>
+    <table>
+      <thead>
+        <tr>
+          <th>类型</th><th>邀请码</th><th>时间</th><th>状态</th><th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="userList"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function loadUsers(){
+  const list = JSON.parse(localStorage.getItem("userList") || "[]");
+  const tbody = document.getElementById("userList");
+  tbody.innerHTML = "";
+
+  list.forEach((u, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${u.type}</td>
+      <td>${u.inviteCode || '-'}</td>
+      <td>${u.time}</td>
+      <td><span class="${u.status=='正常'?'normal':'ban'}">${u.status}</span></td>
+      <td>
+        ${u.status=='正常' ? `<button onclick="ban(${i})">封禁</button>` : `<button onclick="unban(${i})">解封</button>`}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function ban(index){
+  const list = JSON.parse(localStorage.getItem("userList") || "[]");
+  list[index].status = "封禁";
+  localStorage.setItem("userList", JSON.stringify(list));
+  loadUsers();
+}
+
+function unban(index){
+  const list = JSON.parse(localStorage.getItem("userList") || "[]");
+  list[index].status = "正常";
+  localStorage.setItem("userList", JSON.stringify(list));
+  loadUsers();
+}
+
+loadUsers();
+</script>
+</body>
+</html>
