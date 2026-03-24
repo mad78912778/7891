@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>会员申请</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#f5f5f5;}
+.nav{background:#fff;padding:16px 20px;text-align:center;font-size:18px;font-weight:bold;border-bottom:1px solid #eee;}
+.container{max-width:400px;margin:40px auto;padding:0 20px;}
+.card{background:#fff;padding:30px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.title{text-align:center;font-size:20px;margin-bottom:24px;}
+
+.input-box{margin-bottom:16px;}
+.input-box label{display:block;margin-bottom:6px;font-size:14px;color:#333;}
+.input-box input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:15px;}
+
+.btn{display:block;width:100%;padding:14px;border-radius:8px;margin-bottom:12px;border:none;font-size:16px;cursor:pointer;}
+.google{background:#fff;color:#444;border:1px solid #ddd;}
+.microsoft{background:#00a4ef;color:#fff;}
+.submit{background:#ff4d4f;color:#fff;}
+.selected{border:2px solid #ff4d4f !important;}
+
+.captcha-box{margin:20px 0;display:flex;align-items:center;gap:10px;}
+#captcha{width:100px;height:40px;border:1px solid #ddd;border-radius:6px;background:#f9f9f9;
+display:flex;align-items:center;justify-content:center;font-weight:bold;letter-spacing:2px;user-select:none;}
+#captchaInput{flex:1;padding:10px;border:1px solid #ddd;border-radius:6px;}
+</style>
+</head>
+
+<body>
+<div class="nav">会员申请</div>
+
+<div class="container">
+  <div class="card">
+    <div class="title">选择账号类型</div>
+
+    <button class="btn google" id="btnGoogle" onclick="selectType('google')">
+      谷歌账号（@gmail.com）
+    </button>
+    <button class="btn microsoft" id="btnMicrosoft" onclick="selectType('microsoft')">
+      微软账号（outlook/hotmail/live）
+    </button>
+
+    <div class="input-box">
+      <label>账号邮箱</label>
+      <input type="text" id="email" placeholder="请输入对应账号邮箱">
+    </div>
+
+    <div class="input-box">
+      <label>邀请码</label>
+      <input type="text" id="inviteCode" placeholder="请输入邀请码">
+    </div>
+
+    <div class="captcha-box">
+      <div id="captcha" onclick="refreshCaptcha()">ABCD</div>
+      <input type="text" id="captchaInput" placeholder="输入验证码">
+    </div>
+
+    <button class="btn submit" onclick="submitMember()">提交申请</button>
+  </div>
+</div>
+
+<script>
+let currentCode = "ABCD";
+let accountType = "";
+refreshCaptcha();
+
+// 选择账号类型
+function selectType(type) {
+  accountType = type;
+  document.getElementById("btnGoogle").classList.remove("selected");
+  document.getElementById("btnMicrosoft").classList.remove("selected");
+
+  if (type === "google") {
+    document.getElementById("btnGoogle").classList.add("selected");
+    document.getElementById("email").placeholder = "请输入@gmail.com邮箱";
+  } else {
+    document.getElementById("btnMicrosoft").classList.add("selected");
+    document.getElementById("email").placeholder = "请输入outlook/hotmail/live邮箱";
+  }
+}
+
+// 刷新验证码
+function refreshCaptcha(){
+  const chars = "0123456789ABCDEFGHJKLMNPQRSTWXYZ";
+  let code = "";
+  for(let i=0;i<4;i++){
+    code += chars[Math.floor(Math.random()*chars.length)];
+  }
+  currentCode = code;
+  document.getElementById("captcha").innerText = code;
+  document.getElementById("captchaInput").value = "";
+}
+
+// 邮箱后缀校验
+function checkEmail(email) {
+  if (accountType === "google") {
+    return email.endsWith("@gmail.com");
+  }
+  if (accountType === "microsoft") {
+    return email.endsWith("@outlook.com") || 
+           email.endsWith("@hotmail.com") || 
+           email.endsWith("@live.com");
+  }
+  return false;
+}
+
+// 提交会员申请
+function submitMember() {
+  const email = document.getElementById("email").value.trim();
+  const inviteCode = document.getElementById("inviteCode").value.trim();
+  const input = document.getElementById("captchaInput").value.trim().toUpperCase();
+
+  // 必须选类型
+  if (!accountType) {
+    alert("请先选择谷歌或微软账号类型");
+    return;
+  }
+
+  // 邮箱不能为空
+  if (!email) {
+    alert("请输入账号邮箱");
+    return;
+  }
+
+  // 校验邮箱后缀
+  if (!checkEmail(email)) {
+    if (accountType === "google") {
+      alert("谷歌账号必须是 @gmail.com 后缀");
+    } else {
+      alert("微软账号必须是 outlook / hotmail / live 后缀");
+    }
+    return;
+  }
+
+  // 邀请码不能为空
+  if (!inviteCode) {
+    alert("请输入邀请码");
+    return;
+  }
+
+  // 人机验证
+  if (input !== currentCode) {
+    alert("人机验证错误，请重试");
+    refreshCaptcha();
+    return;
+  }
+
+  // 保存记录到管理员后台
+  const user = {
+    email: email,
+    type: accountType === "google" ? "谷歌会员" : "微软会员",
+    inviteCode: inviteCode,
+    time: new Date().toLocaleString(),
+    status: "正常"
+  };
+
+  let list = JSON.parse(localStorage.getItem("userList") || "[]");
+  list.unshift(user);
+  localStorage.setItem("userList", JSON.stringify(list));
+
+  alert("会员申请成功！");
+  location.href = "success.html";
+}
+</script>
+</body>
+</html>
