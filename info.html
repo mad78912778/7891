@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>资讯 - Mad 工作室</title>
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body{ background:#f8f9fa; color:#202124; }
+
+  /* 顶部深蓝色栏（与首页完全一致） */
+  .top-nav {
+      background: #2c3e50;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+  }
+  .logo-section {
+      display: flex;
+      align-items: center;
+      margin-right: 30px;
+  }
+  .logo-check {
+      width: 20px;
+      height: 20px;
+      border: 2px solid white;
+      margin-right: 10px;
+      position: relative;
+  }
+  .logo-check::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      top: -5px;
+      left: 2px;
+      font-size: 18px;
+  }
+  .logo-text { font-size: 22px; font-weight: bold; }
+  .logo-sub { font-size: 14px; color: #aab3cc; margin-left: 5px; }
+  .v-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      font-size: 16px;
+      padding-top: 5px;
+  }
+  .v-nav a {
+      color: #c5cde0;
+      text-decoration: none;
+      padding: 5px 0;
+  }
+  .v-nav a.active {
+      color: white;
+      font-weight: bold;
+      border-left: 3px solid #3498db;
+      padding-left: 5px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- 顶部栏（与首页一致） -->
+<div class="top-nav">
+  <div class="logo-section">
+    <div class="logo-check"></div>
+    <div>
+      <span class="logo-text">Mad</span>
+      <span class="logo-sub">工作室</span>
+    </div>
+  </div>
+
+  <div class="v-nav">
+    <a href="index.html">工作室</a>
+    <a href="info.html" class="active">资讯</a>
+    <a href="research.html">研究成果</a>
+    <a href="more.html">更多项目</a>
+    <a href="member.html">帮助</a>
+  </div>
+</div>
+
+<!-- 主体内容（卡片布局） -->
+<div class="container" style="max-width: 600px;margin: 40px auto;padding: 0 20px;">
+  <div class="card" style="background: white;border-radius: 12px;padding: 24px;box-shadow: 0 1px 3px rgba(0,0,0,0.1);border: 1px solid #e0e0e0;">
+    <h2 style="font-size: 20px;font-weight: 600;margin-bottom: 16px;color: #d32f2f;">🔴 重要资讯</h2>
+    <p style="font-size: 18px;line-height: 1.8;color: #202124;margin-bottom: 12px;">2026年3月25日，mad同志不幸被数学老师和班主任击杀，享年14岁。</p>
+    <p style="font-size: 16px;line-height: 1.6;color: #5f6368;border-left: 4px solid #e0e0e0;padding-left: 12px;">默哀</p>
+  </div>
+</div>
+</body>
+</html>
+
+  
