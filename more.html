@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十七班MAD工作室</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Google Sans", Roboto, sans-serif;
+}
+body{
+  background:#f7f8fa;
+  color:#202124;
+}
+
+/* 顶部浅蓝导航栏 */
+header{
+  background:#4285f4;
+  color:#fff;
+  padding:14px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:16px;
+  font-weight:500;
+}
+.nav a{
+  color:#e8f0fe;
+  margin-left:18px;
+  text-decoration:none;
+  font-size:14px;
+}
+.nav a.active{
+  color:#fff;
+  font-weight:bold;
+}
+
+/* 搜索栏（只负责搜索内容） */
+.search-section{
+  max-width:800px;
+  margin:24px auto;
+  padding:0 20px;
+}
+.search-section input{
+  width:100%;
+  height:44px;
+  border-radius:22px;
+  border:1px solid #dadce0;
+  padding:0 18px;
+  font-size:14px;
+  outline:none;
+}
+.search-section input:focus{
+  border-color:#4285f4;
+  border-width:2px;
+}
+
+/* 内容卡片 */
+.container{
+  max-width:800px;
+  margin:0 auto;
+  padding:0 20px;
+}
+.card{
+  background:#fff;
+  border-radius:10px;
+  padding:22px;
+  margin-bottom:16px;
+  border:1px solid #dadce0;
+  transition: .2s;
+}
+.card.highlight{
+  border-color:#4285f4;
+  box-shadow:0 0 0 2px rgba(66,133,244,0.2);
+}
+.card h3{
+  margin-bottom:12px;
+  font-size:17px;
+  color:#202124;
+  padding-bottom:8px;
+  border-bottom:1px solid #eee;
+}
+.card p{
+  color:#5f6368;
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:8px;
+}
+
+/* AI 对话模块（独立区域） */
+.ai-section{
+  max-width:800px;
+  margin:40px auto 0;
+  padding:20px;
+  background:#fff;
+  border-radius:12px;
+  border:1px solid #dadce0;
+}
+.ai-title{
+  font-size:16px;
+  font-weight:500;
+  margin-bottom:16px;
+  color:#202124;
+}
+.chat-box{
+  height:280px;
+  overflow-y:auto;
+  margin-bottom:16px;
+  padding-right:8px;
+}
+.msg{
+  padding:10px 14px;
+  border-radius:16px;
+  margin-bottom:10px;
+  max-width:75%;
+  font-size:14px;
+  line-height:1.5;
+}
+.user{
+  background:#4285f4;
+  color:#fff;
+  margin-left:auto;
+}
+.ai{
+  background:#f1f3f4;
+  color:#202124;
+  margin-right:auto;
+}
+.ai-input-row{
+  display:flex;
+  gap:10px;
+}
+.ai-input{
+  flex:1;
+  height:44px;
+  border-radius:22px;
+  border:1px solid #dadce0;
+  padding:0 16px;
+  font-size:14px;
+  outline:none;
+}
+.ai-input:focus{
+  border-color:#4285f4;
+}
+.ai-send{
+  padding:0 20px;
+  height:44px;
+  border-radius:22px;
+  background:#4285f4;
+  color:#fff;
+  border:none;
+  font-weight:500;
+  cursor:pointer;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#888;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">十七班MAD工作室</div>
+  <div class="nav">
+    <a class="active">首页</a>
+    <a>项目</a>
+    <a>文档</a>
+    <a>关于</a>
+  </div>
+</header>
+
+<!-- 独立搜索框（只搜页面内容） -->
+<div class="search-section">
+  <input id="searchInput" placeholder="搜索工作室内容、邮箱、项目...">
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>十七班历史</h3>
+    <p></p>
+    <p></p>
+    <p></p>
+  </div>
+
+  <div class="card">
+    <h3>《gal 十七》项目</h3>
+    <p>获取安装包 → 点击获取</p>
+    <p>项目报告 → 查看报告</p>
+  </div>
+
+  <div class="card">
+    <h3>《yellow 十七》计划</h3>
+    <p>与一中合作制作，包含班级相关文章</p>
+    <p>获取 PDF → 点击下载</p>
+  </div>
+
+  <div class="card">
+    <h3>《十七班野史》</h3>
+    <p>敬请期待……</p>
+  </div>
+</div>
+
+<!-- 独立 AI 对话区域（和搜索完全分开） -->
+<div class="ai-section">
+  <div class="ai-title">工作室本地 AI</div>
+  <div class="chat-box" id="chatBox"></div>
+  <div class="ai-input-row">
+    <input class="ai-input" id="aiInput" placeholder="输入你想问的问题...">
+    <button class="ai-send" id="sendBtn">发送</button>
+  </div>
+</div>
+
+<footer>© 2026 十七班MAD工作室</footer>
+
+<script>
+// ====================== 搜索功能 ======================
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.card');
+
+searchInput.addEventListener('input', function(){
+  const key = this.value.toLowerCase().trim();
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if(text.includes(key)){
+      card.style.display = 'block';
+      card.classList.add('highlight');
+    }else{
+      card.style.display = 'block';
+      card.classList.remove('highlight');
+    }
+  });
+});
+
+// ====================== 本地离线AI ======================
+const aiInput = document.getElementById('aiInput');
+const sendBtn = document.getElementById('sendBtn');
+const chatBox = document.getElementById('chatBox');
+
+// AI知识库（你可以无限加）
+const aiData = [
+  { keywords:['你好','哈喽','hi'], ans:'你好！我是MAD工作室专属AI～' },
+  { keywords:['工作室','干嘛的','介绍'], ans:'我们是阜新十一中十七班MAD工作室，做网站、项目、文档、文创。' },
+  { keywords:['邮箱','联系','email'], ans:'邮箱都在页面上方卡片里，可以直接复制。' },
+  { keywords:['gal十七','项目','yellow十七'], ans:'目前有《gal十七》《yellow十七》《野史》等项目。' },
+  { keywords:['作者','谁做的','网站'], ans:'本网站由十七班MAD工作室独立制作。' },
+  { keywords:['谢谢','厉害','牛逼'], ans:'不客气！有问题随时问我～' },
+];
+
+function sendMsg(){
+  const text = aiInput.value.trim();
+  if(!text) return;
+
+  // 加入用户消息
+  chatBox.innerHTML += `<div class="msg user">${text}</div>`;
+  aiInput.value = '';
+
+  // AI回答
+  let reply = '我还不太懂这个问题，你可以换个说法哦！';
+  for(let item of aiData){
+    for(let kw of item.keywords){
+      if(text.includes(kw) || kw.includes(text)){
+        reply = item.ans;
+        break;
+      }
+    }
+  }
+
+  setTimeout(()=>{
+    chatBox.innerHTML += `<div class="msg ai">${reply}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  },600);
+}
+
+sendBtn.onclick = sendMsg;
+aiInput.addEventListener('keypress', e=>{
+  if(e.key === 'Enter') sendMsg();
+});
+</script>
+</body>
+</html>
