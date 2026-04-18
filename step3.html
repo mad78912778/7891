@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>步骤 3：安全验证</title>
+    <style>
+        body { font-family: sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 420px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; margin-bottom: 25px; color: #333; }
+        .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .label { color: #666; }
+        .value { font-weight: 500; }
+        .verify-box { height: 120px; border: 2px dashed #1a73e8; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px 0; background: #f8f9fa; gap: 15px; }
+        .verify-tip { color: #666; }
+        .verify-btn { padding: 12px 25px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        .verify-btn:hover { background: #1558d0; }
+        .verify-btn.success { background: #1e8e3e; }
+        .btn { width: 100%; padding: 12px; background: #6c757d; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .btn:hover { background: #5a6268; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>步骤 3 / 3：安全验证</h2>
+    
+    <div style="margin-bottom: 20px;">
+        <div class="info-row"><span class="label">电子邮箱：</span><span class="value" id="view-email"></span></div>
+        <div class="info-row"><span class="label">地区：</span><span class="value" id="view-region"></span></div>
+        <div class="info-row"><span class="label">姓名：</span><span class="value" id="view-name"></span></div>
+        <div class="info-row"><span class="label">出生日期：</span><span class="value" id="view-birth"></span></div>
+        <div class="info-row"><span class="label">性别：</span><span class="value" id="view-gender"></span></div>
+    </div>
+
+    <div class="verify-box">
+        <p class="verify-tip">点击下方按钮，完成安全验证</p>
+        <button class="verify-btn" id="verifyBtn">点击验证</button>
+    </div>
+
+    <button class="btn" onclick="finish()">完成注册</button>
+    <button class="btn" onclick="history.back()">返回上一步</button>
+</div>
+
+<script>
+// 读取所有数据
+document.getElementById('view-email').textContent = localStorage.getItem('reg_email') || '-';
+document.getElementById('view-region').textContent = localStorage.getItem('reg_region') || '-';
+document.getElementById('view-name').textContent = localStorage.getItem('reg_name') || '-';
+document.getElementById('view-birth').textContent = localStorage.getItem('reg_birth') || '-';
+document.getElementById('view-gender').textContent = localStorage.getItem('reg_gender') || '-';
+
+// 人机验证逻辑
+document.getElementById('verifyBtn').addEventListener('click', function() {
+    const btn = this;
+    btn.textContent = '验证中...';
+    btn.disabled = true;
+    btn.style.background = '#6c757d';
+
+    // 模拟验证延迟
+    setTimeout(() => {
+        btn.textContent = '✓ 验证成功';
+        btn.classList.add('success');
+        document.querySelector('.verify-tip').textContent = '验证已完成！';
+        document.querySelector('.btn').disabled = false; // 启用完成按钮
+        document.querySelector('.btn').style.background = '#1e8e3e';
+    }, 1500);
+});
+
+function finish() {
+    // 检查是否完成验证
+    if(!document.getElementById('verifyBtn').classList.contains('success')) {
+        alert('请先完成安全验证！');
+        return;
+    }
+
+    alert('🎉 注册成功！\n欢迎加入 Mad 工作室！');
+    
+    // 清除缓存
+    localStorage.clear();
+    
+    // 跳转至工作室首页（替换为你的地址）
+    // window.location.href = "https://你的工作室首页.com";
+}
+</script>
+
+</body>
+</html>
