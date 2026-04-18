@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 确认信息</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: white; padding: 28px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { color: #202124; margin-top: 0; font-size: 24px; font-weight: 600; }
+        .info-item { margin: 16px 0; font-size: 16px; color: #202124; }
+        .label { color: #5f6368; font-weight: 500; margin-right: 8px; }
+        button { width: 100%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 500; cursor: pointer; margin-top: 24px; }
+        button:active { background: #1557b0; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>确认你的信息</h2>
+    <div class="info-item"><span class="label">邮箱:</span> <span id="emailDisplay"></span></div>
+    <div class="info-item"><span class="label">国家/地区:</span> <span id="regionDisplay"></span></div>
+    
+    <button onclick="goToStep4()">确认并继续</button>
+</div>
+
+<script>
+window.onload = function() {
+    const data = JSON.parse(localStorage.getItem('regData'));
+    if (data) {
+        document.getElementById('emailDisplay').textContent = data.email;
+        document.getElementById('regionDisplay').textContent = data.region;
+    } else {
+        window.location.href = 'step2.html';
+    }
+}
+
+function goToStep4() {
+    window.location.href = 'step4.html';
+}
+</script>
+</body>
+</html>
