@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全验证 - 拦截</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: white; padding: 28px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; max-width: 380px; width: 100%; }
+        .icon { font-size: 48px; color: #d93025; margin-bottom: 20px; }
+        h3 { color: #202124; margin: 0 0 12px 0; }
+        .tips { color: #5f6368; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+        .msg { color: #d93025; font-size: 15px; font-weight: 500; margin: 16px 0; }
+        .loading { color: #1a73e8; font-size: 14px; margin-top: 24px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="icon">⚠️</div>
+    <h3>安全验证未通过</h3>
+    <div class="tips">系统检测到当前操作存在异常风险</div>
+    <div class="msg">您可能是自动程式，请尝试其他验证方式</div>
+    <div class="loading">正在为您跳转至注册流程...</div>
+</div>
+
+<script>
+    setTimeout(() => {
+        window.location.href = 'step2.html';
+    }, 2000);
+</script>
+</body>
+</html>
