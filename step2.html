@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 基本信息</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: white; padding: 28px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { color: #202124; margin-top: 0; font-size: 24px; font-weight: 600; }
+        .sub-title { color: #5f6368; font-size: 14px; margin-bottom: 24px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 6px; font-size: 14px; color: #202124; font-weight: 500; }
+        input, select { width: 100%; padding: 12px 14px; border: 1px solid #dadce0; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+        input:focus, select:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2); }
+        button { width: 100%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 500; cursor: pointer; margin-top: 8px; }
+        button:active { background: #1557b0; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>创建账号</h2>
+    <div class="sub-title">请填写你的基本信息</div>
+    
+    <div class="form-group">
+        <label>电子邮箱</label>
+        <input type="email" id="email" placeholder="example@domain.com" required>
+    </div>
+
+    <div class="form-group">
+        <label>所在国家/地区</label>
+        <select id="region" required>
+            <option value="">请选择国家/地区</option>
+            <optgroup label="亚洲">
+                <option value="China">中国</option>
+                <option value="Japan">日本</option>
+                <option value="Republic of Korea">韩国</option>
+                <option value="Singapore">新加坡</option>
+                <!-- 更多亚洲国家/地区 -->
+            </optgroup>
+            <optgroup label="欧洲">
+                <option value="Albania">阿尔巴尼亚</option>
+                <option value="Andorra">安道尔</option>
+                <option value="Austria">奥地利</option>
+                <!-- 更多欧洲国家 -->
+            </optgroup>
+            <optgroup label="非洲">
+                <option value="Algeria">阿尔及利亚</option>
+                <option value="Angola">安哥拉</option>
+                <!-- 更多非洲国家 -->
+            </optgroup>
+            <optgroup label="北美洲">
+                <option value="Antigua and Barbuda">安提瓜和巴布达</option>
+                <option value="Bahamas">巴哈马</option>
+                <!-- 更多北美洲国家 -->
+            </optgroup>
+            <optgroup label="南美洲">
+                <option value="Argentina">阿根廷</option>
+                <option value="Bolivia">玻利维亚</option>
+                <!-- 更多南美洲国家 -->
+            </optgroup>
+        </select>
+    </div>
+
+    <button onclick="goToStep3()">下一步</button>
+</div>
+
+<script>
+function goToStep3() {
+    const email = document.getElementById('email').value;
+    const region = document.getElementById('region').value;
+    if (email && region) {
+        // 存储信息供后续页面使用
+        localStorage.setItem('regData', JSON.stringify({ email, region }));
+        window.location.href = 'step3.html';
+    } else {
+        alert('请填写完整信息');
+    }
+}
+</script>
+</body>
+</html>
+
+
