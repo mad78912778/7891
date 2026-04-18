@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账号系统 - 首页</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 28px 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        h2 { margin-top: 0; color: #202124; }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background 0.2s;
+        }
+        .btn-login { background: #1a73e8; color: white; }
+        .btn-login:hover { background: #1558d6; }
+        .btn-register { background: white; color: #1a73e8; border: 1px solid #1a73e8; }
+        .btn-register:hover { background: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>账号系统</h2>
+        <p>请选择你要进行的操作</p>
+        <button class="btn btn-login" onclick="goToLogin()">登录</button>
+        <button class="btn btn-register" onclick="goToRegister()">注册</button>
+    </div>
+
+    <script>
+        function goToLogin() {
+            window.location.href = "login.html";
+        }
+        function goToRegister() {
+            window.location.href = "register.html";
+        }
+    </script>
+</body>
+</html>
+
