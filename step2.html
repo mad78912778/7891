@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>步骤 2：基本信息</title>
+    <style>
+        body { font-family: sans-serif; background: #f5f5f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 420px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; margin-bottom: 25px; color: #333; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; color: #555; }
+        input { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        input:focus { outline: none; border-color: #1a73e8; }
+        .gender-options { display: flex; flex-direction: column; gap: 10px; }
+        .gender-option { padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; }
+        .gender-option:hover { background: #f8f9fa; }
+        .gender-option.selected { border-color: #1a73e8; background: #e8f0fe; color: #1a73e8; }
+        .btn { width: 100%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 20px; }
+        .btn:hover { background: #1558d0; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>步骤 2 / 3：基本信息</h2>
+    
+    <div class="form-group">
+        <label>电子邮箱（已填）</label>
+        <p id="showEmail" style="padding: 12px; background: #f8f9fa; border-radius: 8px;"></p>
+    </div>
+    <div class="form-group">
+        <label>所在地区（已填）</label>
+        <p id="showRegion" style="padding: 12px; background: #f8f9fa; border-radius: 8px;"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="name">姓名</label>
+        <input type="text" id="name" placeholder="输入您的姓名">
+    </div>
+
+    <div class="form-group">
+        <label for="birth">出生日期</label>
+        <input type="date" id="birth">
+    </div>
+
+    <div class="form-group">
+        <label>性别</label>
+        <div class="gender-options" id="genders">
+            <div class="gender-option" data-val="男">男</div>
+            <div class="gender-option" data-val="女">女</div>
+            <div class="gender-option" data-val="自定义">自定义</div>
+        </div>
+    </div>
+
+    <button class="btn" onclick="toStep3()">下一步</button>
+</div>
+
+<script>
+// 显示上一页数据
+document.getElementById('showEmail').textContent = localStorage.getItem('reg_email') || '未填写';
+document.getElementById('showRegion').textContent = localStorage.getItem('reg_region') || '未填写';
+
+// 性别选择
+document.querySelectorAll('.gender-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+        document.querySelectorAll('.gender-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+    });
+});
+
+function toStep3() {
+    const name = document.getElementById('name').value.trim();
+    const birth = document.getElementById('birth').value;
+    const genderEl = document.querySelector('.gender-option.selected');
+    
+    if (!name || !birth) {
+        alert('请填写姓名和出生日期！');
+        return;
+    }
+
+    let gender = '';
+    if (genderEl) {
+        gender = genderEl.dataset.val;
+        if (gender === '自定义') {
+            const customVal = prompt('请输入自定义性别：');
+            if (!customVal) return;
+            gender = customVal;
+        }
+    } else {
+        alert('请选择性别！');
+        return;
+    }
+
+    // 存储数据
+    localStorage.setItem('reg_name', name);
+    localStorage.setItem('reg_birth', birth);
+    localStorage.setItem('reg_gender', gender);
+    
+    // 跳转至第三页
+    window.location.href = 'step3.html';
+}
+</script>
+
+</body>
+</html>
