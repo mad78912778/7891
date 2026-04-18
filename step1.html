@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一步：拦截提示</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 28px 32px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 420px; text-align: center; }
+        h2 { color: #202124; margin-top: 0; }
+        .tips { color: #5f6368; font-size: 14px; margin: 12px 0 20px; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; background: #1a73e8; color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn:hover { background: #1558d6; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>安全验证中...</h2>
+        <p class="tips">系统正在检测你的操作环境</p>
+        <p>点击继续，进入下一步</p>
+        <button class="btn" onclick="window.location.href='step2.html'">继续</button>
+    </div>
+</body>
+</html>
+
