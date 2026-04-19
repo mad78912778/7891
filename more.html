@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十七班MAD工作室</title>
+<style>
+  *{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
+  body{background:#f7f8fa;color:#202124}
+  header{background:#4285f4;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+  .logo{font-weight:500}
+  .nav a{color:#e8f0fe;margin-left:16px;text-decoration:none;font-size:14px;cursor:pointer}
+  .search{max-width:800px;margin:20px auto;padding:0 20px}
+  .search input{width:100%;height:44px;border-radius:22px;border:1px solid #dadce0;padding:0 16px}
+  .container{max-width:800px;margin:0 auto;padding:0 20px}
+  .card{background:#fff;border-radius:10px;padding:20px;margin-bottom:14px;border:1px solid #dadce0}
+  .card h3{margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #eee}
+
+  /* AI 弹窗样式 */
+  .ai-modal{position:fixed;bottom:20px;right:20px;width:380px;height:600px;background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.2);overflow:hidden;display:none}
+  .ai-header{background:#4285f4;color:#fff;padding:14px;font-weight:500}
+  .ai-close{float:right;background:none;border:none;color:#fff;font-size:16px;cursor:pointer}
+  .ai-body{width:100%;height:calc(100% - 52px);border:none}
+  .open-btn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:#4285f4;color:#fff;font-size:24px;border:none;box-shadow:0 4px 12px rgba(0,0,0,0.2);cursor:pointer}
+
+  footer{text-align:center;padding:30px;color:#888;font-size:13px}
+  @media(max-width:500px){.ai-modal{width:100%;height:100%;bottom:0;right:0;border-radius:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">十七班MAD工作室</div>
+  <div class="nav">
+    <a>首页</a>
+    <a>项目</a>
+    <a>文档</a>
+    <a onclick="openAI()">AI 助手</a>
+  </div>
+</header>
+
+<div class="search">
+  <input placeholder="搜索..." id="search">
+</div>
+
+<div class="container">
+  <div class="card"><h3>十七班历史</h3></div>
+  <div class="card"><h3>跨学科融合项目</h3></div>
+  <div class="card"><h3>double tong's story</h3></div>
+  <div class="card"><h3>十七班野史</h3><p>敬请期待</p></div>
+</div>
+
+<!-- 内嵌 Gemma AI 窗口 -->
+<div class="ai-modal" id="aiModal">
+  <div class="ai-header">
+    madAI · Gemma 助手
+    <button class="ai-close" onclick="closeAI()">×</button>
+  </div>
+  <iframe class="ai-body" src="https://huggingface.co/chat/google/gemma-2b-it?embed=true"></iframe>
+</div>
+
+<button class="open-btn" onclick="openAI()">AI</button>
+
+<footer>© 2026 十七班MAD工作室</footer>
+
+<script>
+  // 搜索
+  document.getElementById('search').oninput = e => {
+    document.querySelectorAll('.card').forEach(c => {
+      c.style.display = c.textContent.toLowerCase().includes(e.target.value.toLowerCase())?'block':'none'
+    })
+  }
+
+  // AI 弹窗控制
+  function openAI(){ document.getElementById('aiModal').style.display='block' }
+  function closeAI(){ document.getElementById('aiModal').style.display='none' }
+</script>
+
+</body>
+</html>
+
