@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAD App | Edge AI 聚合平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #202124;
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        /* 头部 */
+        .header {
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 4px;
+        }
+        .header p {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        /* 谷歌风格搜索框（全网搜索） */
+        .search-box-wrap {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #dadce0;
+            border-radius: 24px;
+            background: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .search-input:focus {
+            border-color: #4285f4;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+        .search-btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            justify-content: center;
+        }
+        .search-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #f1f3f4;
+            color: #202124;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-btn:active {
+            background: #e8eaed;
+        }
+
+        /* 文库搜索框（新增） */
+        .library-search-wrap {
+            margin-bottom: 20px;
+        }
+        .library-search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 20px;
+            background: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .library-search-input:focus {
+            border-color: #4285f4;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+
+        /* 网格布局 */
+        .grid-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        /* Google AI Edge Gallery 原版卡片 */
+        .gallery-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e8eaed;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .gallery-card:active {
+            background-color: #e8eaed;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #4285f4;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 6px;
+        }
+        .card-desc {
+            font-size: 13px;
+            color: #5f6368;
+            line-height: 1.4;
+        }
+
+        /* 分区标题 */
+        .section-title {
+            font-size: 15px;
+            color: #5f6368;
+            margin: 30px 0 12px;
+            padding-left: 4px;
+        }
+
+        .footer-note {
+            margin-top: 48px;
+            font-size: 12px;
+            color: #5f6368;
+            text-align: center;
+        }
+        .sub-deco {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MAD App</h1>
+        <p>Edge AI · 聚合工具箱</p>
+    </div>
+
+    <!-- 全网搜索框（Bing + Google） -->
+    <div class="search-box-wrap">
+        <input type="text" class="search-input" id="searchVal" placeholder="全网搜索...">
+        <div class="search-btn-group">
+            <button class="search-btn" onclick="goBing()">Bing 搜索</button>
+            <button class="search-btn" onclick="goGoogle()">Google 搜索</button>
+        </div>
+    </div>
+
+    <!-- AI 服务 -->
+    <div class="section-title">AI 服务</div>
+    <div class="grid-wrap">
+        <div class="gallery-card" onclick="openEdgeGallery()">
+            <div class="card-icon">💬</div>
+            <div class="card-title">AI Chat</div>
+            <div class="card-desc">Google AI Edge Gallery</div>
+        </div>
+    </div>
+
+    <!-- 文库资料 + 文库搜索框（新增） -->
+    <div class="section-title">文库资料</div>
+    
+    <!-- 文库搜索栏（实时过滤） -->
+    <div class="library-search-wrap">
+        <input
+            type="text"
+            class="library-search-input"
+            id="librarySearch"
+            placeholder="搜索文库（sqb0001～sqb0014）..."
+            oninput="filterLibrary()"
+        >
+    </div>
+
+    <!-- 文库卡片网格 -->
+    <div class="grid-wrap" id="libraryGrid">
+        <div class="gallery-card" onclick="openSQB0001()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0001</div>
+            <div class="card-desc">丝绸之路的开通与单细胞生物</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0002()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0002</div>
+            <div class="card-desc">我的乌鸦（周子轩）</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0003()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0003</div>
+            <div class="card-desc">再塑秋天的怀念</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0004()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0004</div>
+            <div class="card-desc">回忆秋天的怀念</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0005()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0005</div>
+            <div class="card-desc">杞人忧地球运动</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0006()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0006</div>
+            <div class="card-desc">记念王琳皓</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0007()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0007</div>
+            <div class="card-desc">赵胖施威降大能</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0008()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0008</div>
+            <div class="card-desc">诫子书</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0009()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0009</div>
+            <div class="card-desc">世说方程二则</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0010()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0010</div>
+            <div class="card-desc">秦汉时期的一元一次方程与文化</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0011()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0011</div>
+            <div class="card-desc">西晋的短暂统一与在集体中成长</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0012()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0012</div>
+            <div class="card-desc">从东晋南朝政治到江南地区开发</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0013()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0013</div>
+            <div class="card-desc">三国两晋南北朝时期的藻类植物的课程分析和生命的啊</div>
+        </div>
+        <div class="gallery-card" onclick="openSQB0014()">
+            <div class="card-icon">📚</div>
+            <div class="card-title">sqb0014</div>
+            <div class="card-desc">灿烂的文化</div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        MAD Studio · Google Edge 简洁风格
+    </div>
+    <div class="sub-deco"></div>
+
+    <script>
+        // 跳转 Google AI Edge Gallery
+        function openEdgeGallery(){
+            window.location.href = "https://ai.google.dev/edge/gallery";
+        }
+
+        // 跳转文库页面
+        function openSQB0001(){window.location.href = "sqb0001.html";}
+        function openSQB0002(){window.location.href = "sqb0002.html";}
+        function openSQB0003(){window.location.href = "sqb0003.html";}
+        function openSQB0004(){window.location.href = "sqb0004.html";}
+        function openSQB0005(){window.location.href = "sqb0005.html";}
+        function openSQB0006(){window.location.href = "sqb0006.html";}
+        function openSQB0007(){window.location.href = "sqb0007.html";}
+        function openSQB0008(){window.location.href = "sqb0008.html";}
+        function openSQB0009(){window.location.href = "sqb0009.html";}
+        function openSQB0010(){window.location.href = "sqb0010.html";}
+        function openSQB0011(){window.location.href = "sqb0011.html";}
+        function openSQB0012(){window.location.href = "sqb0012.html";}
+        function openSQB0013(){window.location.href = "sqb0013.html";}
+        function openSQB0014(){window.location.href = "sqb0014.html";}
+
+        // Bing搜索
+        function goBing(){
+            let key = document.getElementById("searchVal").value.trim();
+            let url = key ? `https://www.bing.com/search?q=${key}` : "https://www.bing.com";
+            window.open(url);
+        }
+
+        // Google搜索
+        function goGoogle(){
+            let key = document.getElementById("searchVal").value.trim();
+            let url = key ? `https://www.google.com/search?q=${key}` : "https://www.google.com";
+            window.open(url);
+        }
+
+        // ==============================================
+        // 文库搜索过滤（新增核心功能）
+        // ==============================================
+        function filterLibrary() {
+            let input = document.getElementById('librarySearch');
+            let filterText = input.value.toLowerCase().trim();
+            let grid = document.getElementById('libraryGrid');
+            let cards = grid.getElementsByClassName('gallery-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getElementsByClassName('card-title')[0].textContent.toLowerCase();
+                let desc  = cards[i].getElementsByClassName('card-desc')[0].textContent.toLowerCase();
+                
+                // 标题或描述包含关键词就显示
+                if (title.includes(filterText) || desc.includes(filterText)) {
+                    cards[i].style.display = '';
+                } else {
+                    cards[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
