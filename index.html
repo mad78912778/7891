@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAD App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            background: #fff;
+            margin-bottom: 20px;
+        }
+        .search-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .search-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 20px;
+            background: #f0f0f0;
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+        }
+        .ai-section-title {
+            font-size: 24px;
+            color: #666;
+            margin: 30px 0 20px;
+        }
+        .ai-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .ai-card h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .ai-card p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .ai-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 20px;
+            background: #0066ff;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .ai-btn.secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .service-title {
+            font-size: 24px;
+            color: #666;
+            margin: 30px 0 20px;
+        }
+        .service-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            max-width: 280px;
+        }
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        .service-name {
+            font-size: 24px;
+            font-weight: 500;
+        }
+        .lib-title {
+            font-size: 24px;
+            color: #666;
+            margin: 30px 0 20px;
+        }
+        .gallery-wrap {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .gallery-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .gallery-card:hover {
+            background-color: #eef6ff;
+            transform: translateY(-2px);
+        }
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .card-desc {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.4;
+        }
+        .footer-note {
+            text-align: center;
+            margin: 50px 0 10px;
+            color: #666;
+            font-size: 18px;
+        }
+        .sub-deco {
+            height: 4px;
+            background: linear-gradient(to right, #0066ff, #00ccff, #00ff66, #ffcc00, #ff6600, #ff0066, #9900ff);
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 2px;
+        }
+        .search-results {
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .search-result-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            color: #0066cc;
+        }
+        .search-result-item:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 热点统一卡片 -->
+    <div class="gallery-card" onclick="openSQB0006()">
+        <div class="card-icon">🔥</div>
+        <div class="card-title">迫害王琳皓---纪念王琳皓</div>
+        <div class="card-desc">sqb0006</div>
+    </div>
+
+    <h1>MAD App</h1>
+
+    <input id="searchInput" type="text" class="search-box" placeholder="输入内容搜索，回车快速查询">
+    <div class="search-buttons">
+        <button class="search-btn" onclick="innerSearch()">站内搜索</button>
+        <button class="search-btn" onclick="bingSearch()">Bing搜索</button>
+        <button class="search-btn" onclick="googleSearch()">Google搜索</button>
+    </div>
+
+    <div id="searchResults" class="search-results"></div>
+
+    <!-- AI 改成跳转 Google AI Edge Gallery -->
+    <div class="ai-section-title">AI 对话（Google AI Edge Gallery）</div>
+    <div class="ai-card">
+        <h2>Google AI Edge Gallery</h2>
+        <p>设备端离线AI，本地运行大模型</p>
+        <button class="ai-btn" onclick="openGalleryApp()">打开应用</button>
+        <button class="ai-btn secondary" onclick="downloadGallery()">下载应用</button>
+    </div>
+
+    <div class="service-title">AI 服务</div>
+    <div class="service-card">
+        <div class="service-icon">💬</div>
+        <div class="service-name">AI Edge Gallery</div>
+    </div>
+
+    <div class="lib-title">文库资料</div>
+
+    <div class="gallery-wrap">
+        <div class="gallery-card" onclick="openSQB0001()"><div class="card-icon">📚</div><div class="card-title">sqb0001</div><div class="card-desc">丝绸之路的开通与单细胞生物</div></div>
+        <div class="gallery-card" onclick="openSQB0002()"><div class="card-icon">📚</div><div class="card-title">sqb0002</div><div class="card-desc">我的乌鸦（周子轩）</div></div>
+        <div class="gallery-card" onclick="openSQB0003()"><div class="card-icon">📚</div><div class="card-title">sqb0003</div><div class="card-desc">再塑秋天的怀念</div></div>
+        <div class="gallery-card" onclick="openSQB0004()"><div class="card-icon">📚</div><div class="card-title">sqb0004</div><div class="card-desc">回忆秋天的怀念</div></div>
+        <div class="gallery-card" onclick="openSQB0005()"><div class="card-icon">📚</div><div class="card-title">sqb0005</div><div class="card-desc">杞人忧地球运动</div></div>
+        <div class="gallery-card" onclick="openSQB0006()"><div class="card-icon">📚</div><div class="card-title">sqb0006</div><div class="card-desc">记念王琳皓</div></div>
+        <div class="gallery-card" onclick="openSQB0007()"><div class="card-icon">📚</div><div class="card-title">sqb0007</div><div class="card-desc">赵胖施威降大能</div></div>
+        <div class="gallery-card" onclick="openSQB0008()"><div class="card-icon">📚</div><div class="card-title">sqb0008</div><div class="card-desc">诫子书</div></div>
+        <div class="gallery-card" onclick="openSQB0009()"><div class="card-icon">📚</div><div class="card-title">sqb0009</div><div class="card-desc">世说方程二则</div></div>
+        <div class="gallery-card" onclick="openSQB0010()"><div class="card-icon">📚</div><div class="card-title">sqb0010</div><div class="card-desc">秦汉时期的一元一次方程与文化</div></div>
+        <div class="gallery-card" onclick="openSQB0011()"><div class="card-icon">📚</div><div class="card-title">sqb0011</div><div class="card-desc">西晋的短暂统一与在集体中成长</div></div>
+        <div class="gallery-card" onclick="openSQB0012()"><div class="card-icon">📚</div><div class="card-title">sqb0012</div><div class="card-desc">东晋南朝政治与江南开发</div></div>
+        <div class="gallery-card" onclick="openSQB0013()"><div class="card-icon">📚</div><div class="card-title">sqb0013</div><div class="card-desc">三国两晋南北朝藻类与生命</div></div>
+        <div class="gallery-card" onclick="openSQB0014()"><div class="card-icon">📚</div><div class="card-title">sqb0014</div><div class="card-desc">灿烂的文化</div></div>
+        <div class="gallery-card" onclick="openSQB0015()"><div class="card-icon">📚</div><div class="card-title">sqb0015</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0016()"><div class="card-icon">📚</div><div class="card-title">sqb0016</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0017()"><div class="card-icon">📚</div><div class="card-title">sqb0017</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0018()"><div class="card-icon">📚</div><div class="card-title">sqb0018</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0019()"><div class="card-icon">📚</div><div class="card-title">sqb0019</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0020()"><div class="card-icon">📚</div><div class="card-title">sqb0020</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0021()"><div class="card-icon">📚</div><div class="card-title">sqb0021</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0022()"><div class="card-icon">📚</div><div class="card-title">sqb0022</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0023()"><div class="card-icon">📚</div><div class="card-title">sqb0023</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0024()"><div class="card-icon">📚</div><div class="card-title">sqb0024</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0025()"><div class="card-icon">📚</div><div class="card-title">sqb0025</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0026()"><div class="card-icon">📚</div><div class="card-title">sqb0026</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0027()"><div class="card-icon">📚</div><div class="card-title">sqb0027</div><div class="card-desc">待完善文档</div></div>
+        <div class="gallery-card" onclick="openSQB0028()"><div class="card-icon">📚</div><div class="card-title">sqb0028</div><div class="card-desc">待完善文档</div></div>
+    </div>
+
+    <div class="footer-note">MAD Studio · Google Edge 简洁风格</div>
+    <div class="sub-deco"></div>
+
+<script>
+// 文库数据
+const docs = [
+    {id:'0001',title:'sqb0001 丝绸之路的开通与单细胞生物'},
+    {id:'0002',title:'sqb0002 我的乌鸦（周子轩）'},
+    {id:'0003',title:'sqb0003 再塑秋天的怀念'},
+    {id:'0004',title:'sqb0004 回忆秋天的怀念'},
+    {id:'0005',title:'sqb0005 杞人忧地球运动'},
+    {id:'0006',title:'sqb0006 记念王琳皓'},
+    {id:'0007',title:'sqb0007 赵胖施威降大能'},
+    {id:'0008',title:'sqb0008 诫子书'},
+    {id:'0009',title:'sqb0009 世说方程二则'},
+    {id:'0010',title:'sqb0010 秦汉时期的一元一次方程与文化'},
+    {id:'0011',title:'sqb0011 西晋的短暂统一与在集体中成长'},
+    {id:'0012',title:'sqb0012 东晋南朝政治与江南开发'},
+    {id:'0013',title:'sqb0013 三国两晋南北朝藻类与生命'},
+    {id:'0014',title:'sqb0014 灿烂的文化'},
+    {id:'0015',title:'sqb0015 待完善文档'},
+    {id:'0016',title:'sqb0016 待完善文档'},
+    {id:'0017',title:'sqb0017 待完善文档'},
+    {id:'0018',title:'sqb0018 待完善文档'},
+    {id:'0019',title:'sqb0019 待完善文档'},
+    {id:'0020',title:'sqb0020 待完善文档'},
+    {id:'0021',title:'sqb0021 待完善文档'},
+    {id:'0022',title:'sqb0022 待完善文档'},
+    {id:'0023',title:'sqb0023 待完善文档'},
+    {id:'0024',title:'sqb0024 待完善文档'},
+    {id:'0025',title:'sqb0025 待完善文档'},
+    {id:'0026',title:'sqb0026 待完善文档'},
+    {id:'0027',title:'sqb0027 待完善文档'},
+    {id:'0028',title:'sqb0028 待完善文档'}
+];
+
+// 站内搜索
+function innerSearch(){
+    let kw = document.getElementById('searchInput').value.trim().toLowerCase();
+    let resBox = document.getElementById('searchResults');
+    resBox.innerHTML = '';
+    if(!kw){
+        resBox.style.display = 'none';
+        return;
+    }
+    let result = docs.filter(d=>d.title.toLowerCase().includes(kw));
+    if(result.length === 0){
+        resBox.innerHTML = '<div style="padding:10px;">未找到相关文档</div>';
+    }else{
+        result.forEach(d=>{
+            let item = document.createElement('div');
+            item.className = 'search-result-item';
+            item.innerText = d.title;
+            item.onclick = ()=>location.href = `sqb${d.id}.html`;
+            resBox.appendChild(item);
+        });
+    }
+    resBox.style.display = 'block';
+}
+
+// 必应搜索（国内稳定 cn.bing.com）
+function bingSearch(){
+    let q = document.getElementById('searchInput').value.trim();
+    if(!q) q = "MAD Studio";
+    window.open(`https://cn.bing.com/search?q=${encodeURIComponent(q)}`,"_blank");
+}
+
+// 谷歌搜索（国内可用镜像）
+function googleSearch(){
+    let q = document.getElementById('searchInput').value.trim();
+    if(!q) q = "MAD Studio";
+    window.open(`https://g.sousousou.xyz/search?q=${encodeURIComponent(q)}`,"_blank");
+}
+
+// 回车触发站内搜索
+document.getElementById('searchInput').addEventListener('keydown',function(e){
+    if(e.key === 'Enter') innerSearch();
+});
+
+// ---------- Google AI Edge Gallery 跳转/下载 ----------
+// 已安装则直接打开应用（Android intent）
+function openGalleryApp(){
+    // Android 应用跳转协议
+    window.location.href = "intent://com.google.ai.edge.gallery/#Intent;package=com.google.ai.edge.gallery;scheme=https;end";
+    // 若未安装，会跳转到商店/下载页
+}
+
+// 下载链接（GitHub Releases，官方最新版APK）
+function downloadGallery(){
+    window.open("https://github.com/google-ai-edge/gallery/releases/latest","_blank");
+}
+
+// 独立跳转函数
+function openSQB0001(){location.href="sqb0001.html";}
+function openSQB0002(){location.href="sqb0002.html";}
+function openSQB0003(){location.href="sqb0003.html";}
+function openSQB0004(){location.href="sqb0004.html";}
+function openSQB0005(){location.href="sqb0005.html";}
+function openSQB0006(){location.href="sqb0006.html";}
+function openSQB0007(){location.href="sqb0007.html";}
+function openSQB0008(){location.href="sqb0008.html";}
+function openSQB0009(){location.href="sqb0009.html";}
+function openSQB0010(){location.href="sqb0010.html";}
+function openSQB0011(){location.href="sqb0011.html";}
+function openSQB0012(){location.href="sqb0012.html";}
+function openSQB0013(){location.href="sqb0013.html";}
+function openSQB0014(){location.href="sqb0014.html";}
+function openSQB0015(){location.href="sqb0015.html";}
+function openSQB0016(){location.href="sqb0016.html";}
+function openSQB0017(){location.href="sqb0017.html";}
+function openSQB0018(){location.href="sqb0018.html";}
+function openSQB0019(){location.href="sqb0019.html";}
+function openSQB0020(){location.href="sqb0020.html";}
+function openSQB0021(){location.href="sqb0021.html";}
+function openSQB0022(){location.href="sqb0022.html";}
+function openSQB0023(){location.href="sqb0023.html";}
+function openSQB0024(){location.href="sqb0024.html";}
+function openSQB0025(){location.href="sqb0025.html";}
+function openSQB0026(){location.href="sqb0026.html";}
+function openSQB0027(){location.href="sqb0027.html";}
+function openSQB0028(){location.href="sqb0028.html";}
+</script>
+
+</body>
+</html>
