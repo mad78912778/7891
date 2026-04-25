@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>API Proxy</title>
+</head>
+<body>
+<script>
+    const target = "https://api.vectorengine.ai/v1/chat/completions";
+    window.addEventListener('message', async (event) => {
+        if (event.data && event.data.type === 'api-request') {
+            try {
+                const response = await fetch(target, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${event.data.key}`
+                    },
+                    body: JSON.stringify(event.data.body)
+                });
+                const data = await response.json();
+                event.source.postMessage({ type: 'api-response', data }, '*');
+            } catch (err) {
+                event.source.postMessage({ type: 'api-error', error: err.message }, '*');
+            }
+        }
+    });
+</script>
+</body>
+</html>
+
