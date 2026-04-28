@@ -9,7 +9,7 @@
 body{background:#f5f7fa;padding:15px}
 h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 #splash-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#121212;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000'%3E%3Cpath fill='%231a1a2e' fill-opacity='0.3' d='M100 200c100-100 200-100 300 0s200 100 300 0 200-100 300 0 200 100 300 0 200-100 300 0v200c-100 100-200 100-300 0s-200-100-300 0-200 100-300 0-200-100-300 0V200z'/%3E%3C/svg%3E");opacity:0.2;pointer-events:none}
+.splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000'%3E%3Cpath fill='%231a1a2e' fill-opacity='0.3' d='M100 200c100-100 200-100 300 0s200 100 300 0 200-100 300 0 200 100 300 0 200-100 300 0v200c-100 100-200 100-300 0s-200-100-300 0-200 100-300 0V200z'/%3E%3C/svg%3E");opacity:0.2;pointer-events:none}
 .splash-main{font-size:42px;font-weight:300;color:#e0e7ff;text-align:center;line-height:1.4;z-index:1}
 .splash-footer{position:absolute;bottom:80px;font-size:28px;color:#c7d2fe;z-index:1}
 .download-wrap{text-align:center;margin:30px 0 15px}
@@ -23,7 +23,7 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 .chat-box{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1);min-height:260px;max-height:420px;overflow-y:auto;margin-bottom:15px}
 .msg-user{background:#e8f0fe;border-radius:18px 18px 4px 18px;padding:12px 16px;margin:10px 0;max-width:92%;margin-left:auto;line-height:1.6}
 .msg-ai{background:#f1f3f4;border-radius:18px 18px 18px 4px;padding:12px 16px;margin:10px 0;max-width:92%;line-height:1.6}
-.msg-error{background:#ffeaea;color:#d93025;border-radius:18px 18px 18px 4px;padding:12px 16px;margin:10px 0}
+.msg-error{background:#ffeaea;color:#d93025;border-radius:18px 18px 18px 4px;padding:12px 0px}
 .empty-tip{text-align:center;color:#9aa0a6;padding:70px 20px}
 .ai-input-wrap{display:flex;gap:10px;align-items:center;margin-bottom:40px}
 .ai-input{flex:1;padding:14px 20px;border:1px solid #dadce0;border-radius:24px;font-size:15px;background:#fff;outline:none}
@@ -38,11 +38,14 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 .card-title{font-size:16px;font-weight:500;margin-bottom:4px}
 .card-desc{font-size:13px;color:#666}
 .footer-note{text-align:center;margin:0 0 10px;color:#5f6368;font-size:13px}
+/* 模型下载进度条 */
+.progress-bar{width:100%;height:8px;background:#eee;border-radius:4px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:#1a73e8;width:0%;transition:.2s}
 </style>
 </head>
 <body>
 
-<!-- 开屏（已修复：必关，不卡死） -->
+<!-- 开屏 -->
 <div id="splash-screen">
 <div class="splash-bg"></div>
 <div class="splash-main">Made by Mad<br>Workroom</div>
@@ -65,14 +68,14 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 </div>
 <div id="globalResult" class="search-results"></div>
 
-<!-- 离线AI（正常可用） -->
+<!-- 离线AI核心库 -->
 <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/transformers.min.js"></script>
-<div class="ai-title">离线AI（Transformers.js）</div>
+<div class="ai-title">离线AI（本地模型·断网可用）</div>
 <div class="chat-box" id="chatBox">
-<div class="empty-tip">首次加载需下载模型，之后离线可用</div>
+<div class="empty-tip">首次打开自动下载离线模型<br>下载完成后永久离线使用</div>
 </div>
 <div class="ai-input-wrap">
-<input id="aiInput" type="text" class="ai-input" placeholder="输入消息...">
+<input id="aiInput" type="text" class="ai-input" placeholder="输入消息，回车发送...">
 <button class="ai-send-btn" id="sendBtn" onclick="sendMessage()">发送</button>
 </div>
 
@@ -115,63 +118,109 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 <div class="footer-note">MAD Studio | 离线AI | 完整文库</div>
 
 <script>
-// ==============================================
-// 修复开屏：不管模型是否加载，1.5秒强制关闭！
-// ==============================================
+// 强制关闭开屏 1.5s
 setTimeout(() => {
 const splash = document.getElementById("splash-screen");
 if (splash) splash.style.display = "none";
 }, 1500);
 
-// ==============================================
-// 离线AI（稳定版，不影响开屏）
-// ==============================================
-let pipeline;
+// 离线AI 全局变量
+let pipeline = null;
 const chatBox = document.getElementById("chatBox");
 const aiInput = document.getElementById("aiInput");
 const sendBtn = document.getElementById("sendBtn");
 
-window.transformers.env.backends.onnx.runtime = "wasm";
-window.transformers.env.useBrowserCache = true;
+// 开启浏览器缓存+轻量化WASM
+window.transformers.env = {
+useBrowserCache: true,
+backends: { onnx: { runtime: "wasm" } }
+};
 
+// 初始化轻量离线对话模型
 async function initModel() {
 try {
-pipeline = await window.transformers.pipeline("text-generation", "Xenova/Qwen1.5-0.5B-Chat", { quantized: true });
-chatBox.innerHTML = '<div class="empty-tip">离线AI就绪！</div>';
-} catch (e) {
-chatBox.innerHTML = '<div class="msg-error">模型加载失败</div>';
+chatBox.innerHTML = `
+<div style="padding:20px;text-align:center">
+<div>正在首次下载离线模型...</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div id="progressText">0%</div>
+</div>
+`;
+// 超轻量Qwen 0.5B 聊天模型，体积小、手机友好
+pipeline = await window.transformers.pipeline(
+"text-generation",
+"Xenova/Qwen1.5-0.5B-Chat",
+{
+quantized: true,
+progress_callback: (data) => {
+const p = Math.round(data.progress * 100);
+document.getElementById("progressFill").style.width = p + "%";
+document.getElementById("progressText").innerText = p + "%";
+}
+}
+);
+chatBox.innerHTML = '<div class="empty-tip">✅ 离线AI加载完成，断网即可使用</div>';
+} catch (err) {
+chatBox.innerHTML = '<div class="msg-error">❌ 模型加载失败，请刷新重试</div>';
+console.error(err);
 }
 }
 
+// 发送消息
 async function sendMessage() {
 const text = aiInput.value.trim();
-if (!text || !pipeline) return;
-aiInput.value = ""; sendBtn.disabled = true;
-chatBox.innerHTML = chatBox.innerHTML.replace(/<div class="empty-tip[\s\S]*?<\/div>/, "");
+if (!text) return;
+if (!pipeline) {
+chatBox.innerHTML = '<div class="msg-error">⚠️ 模型还未加载完成，请稍等</div>' + chatBox.innerHTML;
+return;
+}
+
+aiInput.value = "";
+sendBtn.disabled = true;
+// 清空初始提示
+chatBox.querySelector(".empty-tip")?.remove();
+
+// 用户消息
 addMsg("你", text, "user");
 const loading = addMsg("AI", "思考中...", "ai");
+
 try {
-const out = await pipeline(text, { max_new_tokens: 256, temperature: 0.7 });
-loading.remove(); addMsg("AI", out[0].generated_text.replace(text, "").trim(), "ai");
-} catch (e) { loading.remove(); addMsg("AI", "出错", "error"); }
+const res = await pipeline(text, {
+max_new_tokens: 300,
+temperature: 0.6,
+do_sample: true
+});
+loading.remove();
+const reply = res[0].generated_text.replace(text, "").trim();
+addMsg("AI", reply, "ai");
+} catch (e) {
+loading.remove();
+addMsg("AI", "生成失败，请重试", "error");
+}
 sendBtn.disabled = false;
 }
 
+// 添加聊天气泡
 function addMsg(who, text, role) {
 const div = document.createElement("div");
-div.className = role === "user" ? "msg-user" : role === "error" ? "msg-error" : "msg-ai";
+if(role === "user") div.className = "msg-user";
+else if(role === "error") div.className = "msg-error";
+else div.className = "msg-ai";
 div.innerText = who + "：" + text;
 chatBox.appendChild(div);
 chatBox.scrollTop = chatBox.scrollHeight;
 return div;
 }
 
-aiInput.addEventListener("keydown", e => e.key === "Enter" && sendMessage());
+// 回车发送
+aiInput.addEventListener("keydown", e => {
+if(e.key === "Enter") sendMessage();
+});
+
+// 页面加载自动拉取离线模型
 initModel();
 
-// ==============================================
-// 你原来的所有功能，原样保留
-// ==============================================
+// ========== 你原有全部功能 完全保留 ==========
 const docList = [
 {id:'0001',title:'sqb0001 丝绸之路的开通与单细胞生物'},
 {id:'0002',title:'sqb0002 我的乌鸦（周子轩）'},
@@ -264,4 +313,5 @@ function openSQB0028(){location.href="sqb0028.html"}
 </script>
 </body>
 </html>
+
 
