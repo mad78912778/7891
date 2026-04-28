@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gemma 离线对话 | MAD Studio</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, Roboto, "Noto Sans SC", sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #202124;
+  line-height: 1.6;
+}
+
+/* 顶部导航栏 Gemma 风格 */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f3f4;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+}
+
+.back-btn {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: #5f6368;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+.back-btn:hover {
+  background: #f1f3f4;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #202124;
+}
+
+/* ========== Gemini 同款入场加载动画 ========== */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+.gemini-dots {
+  display: flex;
+  gap: 10px;
+}
+.gemini-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4285f4;
+  opacity: 0.6;
+  animation: geminiPulse 1.5s ease-in-out infinite;
+}
+.gemini-dots span:nth-child(2) {animation-delay: 0.2s;}
+.gemini-dots span:nth-child(3) {animation-delay: 0.4s;}
+@keyframes geminiPulse {
+  0%, 100% {transform: scale(0.8); opacity: 0.5;}
+  50% {transform: scale(1.25); opacity: 1;}
+}
+.load-text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #5f6368;
+}
+
+/* 主聊天容器 Gemma 原版布局 */
+.chat-container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  padding-bottom: 120px;
+}
+
+.welcome-card {
+  text-align: center;
+  margin-top: 60px;
+  color: #5f6368;
+}
+.welcome-card h2 {
+  font-size: 26px;
+  font-weight: 400;
+  color: #202124;
+  margin-bottom: 12px;
+}
+.welcome-card p {
+  font-size: 15px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* 消息气泡 Gemma 样式 */
+.msg-wrap {
+  margin: 24px 0;
+}
+.msg-user {
+  display: flex;
+  justify-content: flex-end;
+}
+.msg-ai {
+  display: flex;
+  justify-content: flex-start;
+}
+.msg-bubble-user {
+  background: #e8f0fe;
+  color: #202124;
+  padding: 14px 18px;
+  border-radius: 20px 20px 4px 20px;
+  max-width: 85%;
+  font-size: 15px;
+}
+.msg-bubble-ai {
+  background: #f8f9fa;
+  color: #202124;
+  padding: 14px 18px;
+  border-radius: 20px 20px 20px 4px;
+  max-width: 85%;
+  font-size: 15px;
+  border: 1px solid #f1f3f4;
+}
+
+/* AI 思考中三点动画 */
+.typing-box {
+  padding: 14px 18px;
+  background: #f8f9fa;
+  border-radius: 20px 20px 20px 4px;
+  border: 1px solid #f1f3f4;
+  display: flex;
+  gap: 6px;
+}
+.typing-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4285f4;
+  opacity: 0.6;
+  animation: geminiPulse 1.4s infinite ease-in-out;
+}
+.typing-dot:nth-child(2){animation-delay:0.15s;}
+.typing-dot:nth-child(3){animation-delay:0.3s;}
+
+/* 底部输入栏 Gemma 固定样式 */
+.input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 16px;
+  background: #fff;
+  border-top: 1px solid #f1f3f4;
+}
+.input-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.chat-input {
+  flex: 1;
+  min-height: 48px;
+  max-height: 120px;
+  padding: 14px 20px;
+  border-radius: 24px;
+  border: 1px solid #dadce0;
+  background: #f8f9fa;
+  outline: none;
+  font-size: 15px;
+  resize: none;
+  transition: border 0.2s;
+}
+.chat-input:focus {
+  border-color: #4285f4;
+}
+.send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #4285f4;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.send-btn:disabled {
+  background: #c6dafc;
+  cursor: not-allowed;
+}
+
+/* 功能按钮 */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.act-btn {
+  padding: 8px 16px;
+  border-radius: 18px;
+  border: 1px solid #dadce0;
+  background: #fff;
+  color: #5f6368;
+  font-size: 14px;
+  cursor: pointer;
+}
+.act-btn.primary {
+  border-color: #4285f4;
+  color: #4285f4;
+}
+
+/* 进度条 */
+.progress-wrap {
+  width: 100%;
+  height: 6px;
+  background: #f1f3f4;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #4285f4;
+  transition: width 0.2s;
+}
+</style>
+</head>
+<body>
+
+<!-- Gemini 同款全屏入场加载 -->
+<div class="page-loader" id="pageLoader">
+  <div class="gemini-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="load-text">Gemma 正在准备</div>
+</div>
+
+<!-- 顶部导航 -->
+<div class="header-bar">
+  <button class="back-btn" onclick="history.back()">← 返回</button>
+  <div class="page-title">Gemma 离线对话</div>
+  <div style="width:60px;"></div>
+</div>
+
+<!-- 功能按钮 -->
+<div class="action-buttons">
+  <button class="act-btn primary" id="loadModelBtn">下载离线模型</button>
+  <button class="act-btn" id="clearCacheBtn">清空缓存</button>
+</div>
+
+<!-- 聊天区域 -->
+<div class="chat-container" id="chatContainer">
+  <div class="welcome-card" id="welcomeView">
+    <h2>你好，我是 Gemma</h2>
+    <p>本地离线运行 · 保护隐私 · 无需联网<br>点击下方按钮加载模型即可开始对话</p>
+  </div>
+</div>
+
+<!-- 底部输入框 -->
+<div class="input-bar">
+  <div class="input-inner">
+    <textarea class="chat-input" id="chatInput" placeholder="输入消息..." rows="1"></textarea>
+    <button class="send-btn" id="sendBtn" disabled>➤</button>
+  </div>
+</div>
+
+<script>
+// 入场动画淡出
+setTimeout(() => {
+  const loader = document.getElementById("pageLoader");
+  loader.style.opacity = "0";
+  setTimeout(() => loader.style.display = "none", 500);
+}, 1300);
+
+let pipeline = null;
+let modelLoaded = false;
+const chatContainer = document.getElementById("chatContainer");
+const welcomeView = document.getElementById("welcomeView");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const loadModelBtn = document.getElementById("loadModelBtn");
+const clearCacheBtn = document.getElementById("clearCacheBtn");
+
+// 国内镜像环境
+window.transformers = { env: {} };
+window.transformers.env = {
+  useBrowserCache: true,
+  remoteHost: "https://hf-mirror.com",
+  backends: { onnx: { runtime: "cpu", useWasm: false } }
+};
+
+// 清空缓存
+clearCacheBtn.addEventListener("click", async () => {
+  if(!confirm("确定清空模型缓存？需要重新下载")) return;
+  await caches.delete("transformers-cache");
+  localStorage.removeItem("gemmaLocalReady");
+  location.reload();
+});
+
+// 加载模型
+loadModelBtn.addEventListener("click", async () => {
+  if(modelLoaded) return;
+  loadModelBtn.disabled = true;
+  loadModelBtn.innerText = "正在下载...";
+
+  // 移除欢迎页
+  welcomeView.style.display = "none";
+
+  // 进度条容器
+  const progressHtml = `
+    <div style="max-width:480px;margin:30px auto;text-align:center;">
+      <div>正在拉取 Gemma 量化模型</div>
+      <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+      <div id="progressText">0%</div>
+    </div>
+  `;
+  chatContainer.innerHTML = progressHtml;
+
+  // 加载依赖
+  await new Promise(resolve => {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js";
+    s.onload = resolve;
+    document.head.appendChild(s);
+  });
+
+  // 加载模型
+  try {
+    pipeline = await transformers.pipeline("text-generation",
+      "Xenova/gemma-2b-it-q4_k_m",
+      {
+        progress_callback: (opt) => {
+          const p = Math.round(opt.progress * 100);
+          document.getElementById("progressFill").style.width = p + "%";
+          document.getElementById("progressText").innerText = p + "%";
+        }
+      }
+    );
+    modelLoaded = true;
+    sendBtn.disabled = false;
+    loadModelBtn.innerText = "模型已就绪";
+    localStorage.setItem("gemmaLocalReady", "1");
+    chatContainer.innerHTML = "";
+  } catch (err) {
+    chatContainer.innerHTML = `<div style="text-align:center;color:#d93025;padding:30px;">模型下载失败，请重试</div>`;
+    loadModelBtn.disabled = false;
+    loadModelBtn.innerText = "重新下载";
+  }
+});
+
+// 发送消息
+const sendMsg = async () => {
+  const text = chatInput.value.trim();
+  if(!text || !modelLoaded) return;
+  chatInput.value = "";
+
+  // 用户消息
+  chatContainer.innerHTML += `
+    <div class="msg-wrap msg-user">
+      <div class="msg-bubble-user">${escapeHtml(text)}</div>
+    </div>
+  `;
+  window.scrollTo(0, document.body.scrollHeight);
+
+  // AI思考中三点动画
+  const typingId = "typing-" + Date.now();
+  chatContainer.innerHTML += `
+    <div class="msg-wrap msg-ai" id="${typingId}">
+      <div class="typing-box">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+  `;
+  window.scrollTo(0, document.body.scrollHeight);
+
+  // 推理
+  const res = await pipeline(text, {
+    max_new_tokens: 350,
+    temperature: 0.6,
+    do_sample: true
+  });
+  let answer = res[0].generated_text.replace(text, "").trim();
+
+  // 移除加载
+  document.getElementById(typingId).remove();
+
+  // AI回复
+  chatContainer.innerHTML += `
+    <div class="msg-wrap msg-ai">
+      <div class="msg-bubble-ai">${escapeHtml(answer)}</div>
+    </div>
+  `;
+  window.scrollTo(0, document.body.scrollHeight);
+};
+
+sendBtn.addEventListener("click", sendMsg);
+chatInput.addEventListener("keydown", (e) => {
+  if(e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMsg();
+  }
+});
+
+// 简单转义
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
+// 缓存自动检测
+if(localStorage.getItem("gemmaLocalReady")) {
+  welcomeView.style.display = "none";
+  loadModelBtn.innerText = "已缓存 · 点击载入";
+}
+</script>
+</body>
+</html>
