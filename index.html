@@ -8,30 +8,57 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Roboto,sans-serif}
 body{background:#f5f7fa;padding:15px}
 h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
-/* 完整保留原版开屏 完全不动 */
+
+/* 开屏 + 简约加载动画 */
 #splash-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#121212;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.6s ease;}
-.splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000'%3E%3Cpath fill='%231a1a2e' fill-opacity='0.3' d='M100 200c100-100 200-100 300 0s200 100 300 0 200-100 300 0 200 100 300 0 200-100 300 0v200c-100 100-200 100-300 0s-200-100-300 0-200 100-300 0V200z'/%3E%3C/svg%3E");opacity:0.2;pointer-events:none}
+.splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.15;pointer-events:none}
 .splash-main{font-size:42px;font-weight:300;color:#e0e7ff;text-align:center;line-height:1.4;z-index:1}
 .splash-footer{position:absolute;bottom:80px;font-size:28px;color:#c7d2fe;z-index:1}
+/* 简约转圈加载 */
+.loader{width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#1a73e8;border-radius:500px;animation:spin 1s linear infinite;margin-top:20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 .download-wrap{text-align:center;margin:30px 0 15px}
 .download-btn{display:inline-block;padding:12px 28px;background:#121212;color:#fff;border-radius:24px;text-decoration:none;font-size:15px;font-weight:500}
 .search-top{width:100%;padding:14px 20px;border:1px solid #dadce0;border-radius:24px;font-size:15px;background:#fff;margin-bottom:15px;outline:none}
-.search-buttons{display:flex;gap:12px;margin-bottom:35px;flex-wrap:wrap}
+.search-buttons{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .search-btn{padding:10px 24px;border:none;border-radius:18px;background:#e8eaed;font-size:14px;color:#202124;cursor:pointer}
+
+/* 放大的AI入口卡片样式（完美还原你的图标） */
+.ai-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: .2s;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.ai-card:hover {
+    background: #eef6ff;
+}
+.ai-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='10' y='10' width='80' height='80' rx='20' fill='none' stroke='%231a73e8' stroke-width='3'/%3E%3Cpath d='M20 20 L80 20 L80 80 L20 80 Z' fill='none' stroke='%231a73e8' stroke-width='1.5' opacity='0.6'/%3E%3Cpath d='M20 50 L80 50 M50 20 L50 80' fill='none' stroke='%231a73e8' stroke-width='1.5' opacity='0.6'/%3E%3Cpath d='M30 30 L70 70 M70 30 L30 70' fill='none' stroke='%231a73e8' stroke-width='1' opacity='0.4'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%231a73e8' stroke-width='1.5' stroke-dasharray='4 4' opacity='0.6'/%3E%3Cpath d='M50 30 C60 40, 60 60, 50 70 C40 60, 40 40, 50 30' fill='%231a73e8'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.ai-card-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #202124;
+    margin-bottom: 5px;
+}
+.ai-card-desc {
+    font-size: 14px;
+    color: #5f6368;
+}
+
 .search-results{margin-top:10px;background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.1);display:none}
 .search-result-item{padding:8px 0;border-bottom:1px solid #eee;cursor:pointer;color:#1a73e8}
-.ai-title{font-size:20px;color:#5f6368;margin:40px 0 15px}
-.chat-box{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1);min-height:260px;max-height:420px;overflow-y:auto;margin-bottom:15px}
-.msg-user{background:#e8f0fe;border-radius:18px 18px 4px 18px;padding:12px 16px;margin:10px 0;max-width:92%;margin-left:auto;line-height:1.6}
-.msg-ai{background:#f1f3f4;border-radius:18px 18px 18px 4px;padding:12px 16px;margin:10px 0;max-width:92%;line-height:1.6}
-.msg-error{background:#ffeaea;color:#d93025;border-radius:18px 18px 18px 4px;padding:12px 16px;margin:10px 0}
-.empty-tip{text-align:center;color:#9aa0a6;padding:70px 20px}
-.ai-input-wrap{display:flex;gap:10px;align-items:center;margin-bottom:40px}
-.ai-input{flex:1;padding:14px 20px;border:1px solid #dadce0;border-radius:24px;font-size:15px;background:#fff;outline:none}
-.ai-send-btn{padding:14px 26px;border:none;border-radius:24px;background:#34A853;color:#fff;font-size:15px;cursor:pointer;white-space:nowrap}
-.ai-send-btn:disabled{background:#81C995;cursor:not-allowed}
-.model-btn{padding:12px 20px;border:none;border-radius:24px;background:#1a73e8;color:#fff;font-size:15px;cursor:pointer;margin-bottom:15px}
-.model-btn:disabled{background:#81B4F5;cursor:not-allowed}
 .lib-title{font-size:20px;color:#5f6368;margin:30px 0 15px}
 .lib-search{width:100%;padding:12px 18px;border:1px solid #dadce0;border-radius:24px;font-size:14px;background:#fff;margin-bottom:20px;outline:none}
 .gallery-wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
@@ -40,18 +67,17 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 .card-icon{font-size:30px;margin-bottom:10px}
 .card-title{font-size:16px;font-weight:500;margin-bottom:4px}
 .card-desc{font-size:13px;color:#666}
-.footer-note{text-align:center;margin:0 0 10px;color:#5f6368;font-size:13px}
-.progress-bar{width:100%;height:8px;background:#eee;border-radius:4px;margin:8px 0;overflow:hidden}
-.progress-fill{height:100%;background:#1a73e8;width:0%;transition:.2s}
+.footer-note{text-align:center;margin:40px 0 10px;color:#5f6368;font-size:13px}
 </style>
 </head>
 <body>
 
-<!-- 原版完整开屏 100%保留 -->
+<!-- 带简约加载动画的开屏 -->
 <div id="splash-screen">
-<div class="splash-bg"></div>
-<div class="splash-main">Made by Mad<br>Workroom</div>
-<div class="splash-footer">Supported by GitHub</div>
+    <div class="splash-bg"></div>
+    <div class="splash-main">Made by Mad<br>Workroom</div>
+    <div class="loader"></div>
+    <div class="splash-footer">Supported by GitHub</div>
 </div>
 
 <div class="gallery-card" onclick="openSQB0006()">
@@ -62,6 +88,13 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 
 <h1>MAD App</h1>
 
+<!-- 放大的AI入口卡片（完美还原你的图标） -->
+<div class="ai-card" onclick="location.href='ai.html'">
+    <div class="ai-icon"></div>
+    <div class="ai-card-title">进入离线AI聊天</div>
+    <div class="ai-card-desc">Gemma 离线模型 · 断网仍可用</div>
+</div>
+
 <input id="globalSearch" type="text" class="search-top" placeholder="站内搜索 | Bing搜索 | Google搜索">
 <div class="search-buttons">
 <button class="search-btn" onclick="innerSearch()">站内检索</button>
@@ -69,17 +102,6 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 <button class="search-btn" onclick="googleSearch()">Google 搜索</button>
 </div>
 <div id="globalResult" class="search-results"></div>
-
-<div class="ai-title">离线AI｜Gemma 原版模型</div>
-<button id="modelBtn" class="model-btn" onclick="downloadModel()">📥 下载离线模型</button>
-
-<div class="chat-box" id="chatBox">
-<div class="empty-tip">点击上方按钮下载模型<br>下载完成后断网可用</div>
-</div>
-<div class="ai-input-wrap">
-<input id="aiInput" type="text" class="ai-input" placeholder="输入问题，回车发送">
-<button class="ai-send-btn" id="sendBtn" onclick="sendMessage()" disabled>发送</button>
-</div>
 
 <div class="lib-title">文库资料</div>
 <input id="libSearch" type="text" class="lib-search" placeholder="搜索文库 sqb编号 / 文档名称">
@@ -117,110 +139,17 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 <div class="download-wrap">
 <a href="https://github.com/mad78912778/Mad-app" target="_blank" class="download-btn">📥 下载移动端 MAD App</a>
 </div>
-<div class="footer-note">MAD Studio | 离线AI | 完整文库</div>
+<div class="footer-note">MAD app</div>
 
 <script>
-// 【1】保留原版开屏延时关闭 不秒删、不破坏动画
+// 开屏延时淡出
 setTimeout(() => {
     let splash = document.getElementById("splash-screen");
     splash.style.opacity = "0";
     setTimeout(()=>splash.style.display = "none", 600);
-}, 1500);
+}, 1800);
 
-// 【2】AI 全部隔离 开屏0加载、0请求
-let pipeline = null;
-let tfLoaded = false;
-const chatBox = document.getElementById("chatBox");
-const aiInput = document.getElementById("aiInput");
-const sendBtn = document.getElementById("sendBtn");
-const modelBtn = document.getElementById("modelBtn");
-
-// 仅点击按钮才加载AI依赖+Gemma
-async function downloadModel() {
-    if(tfLoaded) return;
-    tfLoaded = true;
-
-    // 动态引入，开屏完全不加载
-    await new Promise(res=>{
-        let s = document.createElement("script");
-        s.src = "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.16.0/dist/transformers.min.js";
-        s.onload = res;
-        document.head.appendChild(s);
-    });
-
-    // 极简稳定配置，不冲突不开WASM
-    window.transformers.env = {
-        useBrowserCache: true,
-        backends: { onnx: { runtime: "cpu" } }
-    };
-
-    modelBtn.disabled = true;
-    modelBtn.innerText = "下载中...";
-    chatBox.innerHTML = `
-    <div style="padding:20px;text-align:center">
-    <div>正在下载 Gemma 原版量化模型</div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div id="progressText">0%</div>
-    </div>
-    `;
-
-    try {
-        pipeline = await window.transformers.pipeline(
-            "text-generation",
-            "Xenova/gemma-2b-it-q4_k_m",
-            {
-                progress_callback: (opt) => {
-                    let p = Math.round(opt.progress * 100);
-                    document.getElementById("progressFill").style.width = p + "%";
-                    document.getElementById("progressText").innerText = p + "%";
-                }
-            }
-        );
-        chatBox.innerHTML = '<div class="empty-tip">✅ Gemma离线模型就绪，可用</div>';
-        modelBtn.innerText = "✅ 已下载";
-        sendBtn.disabled = false;
-        localStorage.setItem("gemmaOk","1");
-    } catch (err) {
-        chatBox.innerHTML = '<div class="msg-error">❌ 模型下载失败</div>';
-        modelBtn.innerText = "📥 下载离线模型";
-        modelBtn.disabled = false;
-        tfLoaded = false;
-    }
-}
-
-// 聊天功能
-async function sendMessage() {
-    let text = aiInput.value.trim();
-    if(!text || !pipeline) return;
-    aiInput.value = "";
-    sendBtn.disabled = true;
-    chatBox.querySelector(".empty-tip")?.remove();
-    addMsg("你",text,"user");
-    let tip = addMsg("AI","思考中...","ai");
-    let res = await pipeline(text,{max_new_tokens:280,temperature:0.6});
-    tip.remove();
-    let ans = res[0].generated_text.replace(text,"").trim();
-    addMsg("Gemma",ans,"ai");
-    sendBtn.disabled = false;
-}
-
-function addMsg(who,txt,type){
-    let d = document.createElement("div");
-    d.className = type==="user"?"msg-user":"msg-ai";
-    d.innerText = who+"："+txt;
-    chatBox.appendChild(d);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    return d;
-}
-
-aiInput.addEventListener("keydown",e=>e.key==="Enter"&&sendMessage());
-
-// 缓存标记
-if(localStorage.getItem("gemmaOk")){
-    modelBtn.innerText = "✅ 已缓存";
-}
-
-// 以下所有功能完全原封不动
+// 全部文库&搜索逻辑 原样保留
 const docList = [
 {id:'0001',title:'sqb0001 丝绸之路的开通与单细胞生物'},
 {id:'0002',title:'sqb0002 我的乌鸦（周子轩）'},
@@ -313,6 +242,7 @@ function openSQB0028(){location.href="sqb0028.html"}
 </script>
 </body>
 </html>
+
 
 
 
