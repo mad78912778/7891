@@ -1,22 +1,385 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>注册</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: white; padding: 28px 32px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 420px; text-align: center; }
-        h2 { color: #202124; margin-top: 0; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; background: #1a73e8; color: white; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; }
-        .btn:hover { background: #1558d6; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>注册 - MAD App</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Roboto,sans-serif}
+
+/* 整页纯白背景 */
+body{background:#ffffff;padding:30px 20px;min-height:100vh}
+
+h2{
+    text-align:center;
+    margin-bottom:10px;
+    color:#202124;
+    font-weight:500;
+    font-size:36px;
+}
+.subtitle{
+    text-align:center;
+    color:#444;
+    font-size:24px;
+    margin-bottom:40px;
+}
+
+.step{display:none}
+.step.active{display:block}
+
+/* 输入框纯直角方框 */
+.input-row{
+    display:flex;
+    gap:12px;
+    margin-bottom:20px;
+}
+.input-item{
+    flex:1;
+}
+.input-item input,.input-item select{
+    width:100%;
+    padding:16px;
+    border:1px solid #dadce0;
+    border-radius:0;
+    font-size:20px;
+    outline:none;
+    background:#fff;
+}
+/* 生日+性别页的性别选择 */
+.select-full{
+    width:100%;
+    margin-top:10px;
+}
+
+/* 账号信息确认页 */
+.info-card{
+    border:1px solid #dadce0;
+    border-radius:0;
+    padding:20px;
+    margin:30px 0;
+}
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+    font-size:16px;
+}
+.info-row:last-child{border-bottom:none}
+.info-label{color:#555}
+.info-value{color:#202124;font-weight:500}
+
+/* 按钮右下角小尺寸 */
+.btn-wrap{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    margin-top:40px;
+}
+.btn{
+    padding:8px 18px;
+    border:none;
+    border-radius:0;
+    background:#1a73e8;
+    color:#fff;
+    font-size:14px;
+    cursor:pointer;
+}
+.btn.gray{background:#888888}
+
+/* 用户协议纯白底方框 */
+.agreement{
+    max-height:240px;
+    overflow-y:auto;
+    border:1px solid #dadce0;
+    border-radius:0;
+    padding:16px;
+    font-size:14px;
+    line-height:1.8;
+    color:#444;
+    background:#fff;
+}
+
+.msg{
+    text-align:center;
+    margin:12px 0;
+    color:#d93025;
+    font-size:14px;
+}
+.tip{
+    text-align:center;
+    margin-top:40px;
+    font-size:14px;
+    color:#5f6368
+}
+.tip a{color:#1a73e8;text-decoration:none}
+.back-home{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#1a73e8;
+    text-decoration:none;
+    font-size:14px;
+}
+</style>
 </head>
 <body>
-    <div class="card">
-        <h2>账号注册</h2>
-        <p>点击下方按钮，进入注册流程</p>
-        <button class="btn" onclick="window.location.href='step1.html'">开始注册</button>
+
+<h2>基本信息</h2>
+<div class="subtitle">输入您的生日和性别</div>
+<div class="msg" id="msg"></div>
+
+<!-- 第1步 邮箱 -->
+<div class="step active" id="step1">
+    <div class="input-item">
+        <input type="email" id="email" placeholder="请输入注册邮箱">
     </div>
+    <div class="btn-wrap">
+        <button class="btn" onclick="nextStep(1)">下一步</button>
+    </div>
+</div>
+
+<!-- 第2步 密码 -->
+<div class="step" id="step2">
+    <div class="input-item">
+        <input type="password" id="pwd" placeholder="设置登录密码">
+    </div>
+    <div class="input-item">
+        <input type="password" id="pwd2" placeholder="再次确认密码">
+    </div>
+    <div class="btn-wrap">
+        <button class="btn gray" onclick="prevStep(2)">上一步</button>
+        <button class="btn" onclick="nextStep(2)">下一步</button>
+    </div>
+</div>
+
+<!-- 第3步 生日 + 性别（和截图完全同款） -->
+<div class="step" id="step3">
+    <div class="input-row">
+        <div class="input-item">
+            <input type="text" id="birthYear" placeholder="年">
+        </div>
+        <div class="input-item">
+            <select id="birthMonth">
+                <option value="">月</option>
+                <option value="1">1月</option>
+                <option value="2">2月</option>
+                <option value="3">3月</option>
+                <option value="4">4月</option>
+                <option value="5">5月</option>
+                <option value="6">6月</option>
+                <option value="7">7月</option>
+                <option value="8">8月</option>
+                <option value="9">9月</option>
+                <option value="10">10月</option>
+                <option value="11">11月</option>
+                <option value="12">12月</option>
+            </select>
+        </div>
+        <div class="input-item">
+            <input type="text" id="birthDay" placeholder="日">
+        </div>
+    </div>
+    <div class="input-item">
+        <select id="gender" class="select-full">
+            <option value="">性别</option>
+            <option value="男">男</option>
+            <option value="女">女</option>
+            <option value="不愿透露">不愿透露</option>
+            <option value="沃尔玛购物袋">沃尔玛购物袋</option>
+            <option value="武装直升机">武装直升机</option>
+        </select>
+    </div>
+    <div style="text-align:left;margin-top:10px;">
+        <a href="problems.html" style="color:#1a73e8;text-decoration:none;font-size:16px;">我们为什么要求您提供生日和性别信息</a>
+    </div>
+    <div class="btn-wrap">
+        <button class="btn gray" onclick="prevStep(3)">上一步</button>
+        <button class="btn" onclick="nextStep(3)">下一步</button>
+    </div>
+</div>
+
+<!-- 第4步 姓名 -->
+<div class="step" id="step4">
+    <div class="input-item">
+        <input type="text" id="firstName" placeholder="输入姓氏">
+    </div>
+    <div class="input-item">
+        <input type="text" id="lastName" placeholder="输入名字">
+    </div>
+    <div class="btn-wrap">
+        <button class="btn gray" onclick="prevStep(4)">上一步</button>
+        <button class="btn" onclick="nextStep(4)">下一步</button>
+    </div>
+</div>
+
+<!-- 第5步 查看账号信息（新增） -->
+<div class="step" id="step5">
+    <h2>查看您的账号信息</h2>
+    <div class="subtitle">日后您可以使用该电子邮件地址进行登录</div>
+    <div class="info-card">
+        <div class="info-row">
+            <span class="info-label">电子邮件地址</span>
+            <span class="info-value" id="previewEmail"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">姓名</span>
+            <span class="info-value" id="previewName"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">生日</span>
+            <span class="info-value" id="previewBirth"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">性别</span>
+            <span class="info-value" id="previewGender"></span>
+        </div>
+    </div>
+    <div class="btn-wrap">
+        <button class="btn gray" onclick="prevStep(5)">上一步</button>
+        <button class="btn" onclick="nextStep(5)">下一步</button>
+    </div>
+</div>
+
+<!-- 第6步 用户协议 -->
+<div class="step" id="step6">
+    <div class="agreement">
+<strong>MAD Workroom 最终用户许可协议</strong><br><br>
+欢迎您注册、登录并使用MAD Workroom（以下简称“本平台”）提供的各项服务。本协议由您与MAD Workroom运营主体（以下简称“我方/平台”）共同订立，规范您注册、登录、访问及使用本平台全部服务、功能、内容、文档库、AI工具及相关衍生服务的全部权利与义务。<br><br>
+在您点击“同意并注册”、完成账号注册、登录或实际使用本平台任何服务前，请您认真、完整阅读本协议全部条款。您确认已具备完全民事行为能力，能够独立承担法律责任；若为未成年人，必须由法定监护人陪同阅读并代为同意，监护人对其使用行为承担全部监管与法律责任。您一旦完成注册、登录及使用行为，即视为已自愿阅读、理解并无条件接受本协议全部条款，自愿受本协议及中华人民共和国相关法律法规约束。若您不认可任意条款，请立即停止注册及使用本平台所有服务。<br><br>
+<strong>第一条 适用范围与使用地域限制</strong><br>
+1. 本协议适用于本平台全部网页、功能模块、内容资源、AI生成服务、文库资料、用户交互服务及后续迭代更新的全部服务范围。<br>
+2. 本平台服务仅限常驻及网络归属地为中华人民共和国中国大陆地区用户合法注册与使用。中国香港、中国澳门、中国台湾及所有境外地区用户，均不得注册、登录、访问及使用本平台任何服务。<br>
+3. 用户不得以VPN、网络代理、虚拟定位、伪装IP、中转节点等任何技术手段绕过地域限制、篡改网络归属地、隐瞒实际所在地区。一经平台后台风控系统识别或人工核查确认存在规避地域限制行为，我方有权不经提前告知、无需用户申诉，直接采取永久封禁账号、清空账号所有数据、限制设备准入等处置措施，并保留依法追究相关法律责任的权利。<br>
+4. 用户承诺本人常用登录地点、网络IP、设备归属均长期稳定在中国大陆境内，若实际居住、工作、网络归属发生跨地区变更，必须主动向平台报备，未主动报备并继续使用的，视为恶意违规行为。<br><br>
+<strong>第二条 账号注册、使用与权属规则</strong><br>
+1. 用户注册时须提供真实、准确、完整、有效的电子邮箱、姓名、性别、出生日期等个人信息，不得伪造、虚构、冒用他人身份信息注册账号。若个人信息发生变更，应及时自行更新；因信息虚假、失效、未更新造成账号异常、权益损失的，全部责任由用户自行承担。<br>
+2. 本平台账号知识产权及运营权属归 MAD Workroom 所有，用户仅获得在遵守本协议前提下的个人非独占、不可转让、仅限本人使用的有限使用权。<br>
+3. 用户严格禁止以任何形式转让、出售、出租、出借、赠予、共享、倒卖账号，禁止将账号用于商业交易、代注册、代登录、批量养号等牟利行为。任何账号私下交易、共享使用行为均属严重违规，一经查实，我方有权直接永久封禁账号，所有交易后果由交易双方自行承担，我方不承担任何连带责任。<br>
+4. 用户有义务妥善保管账号邮箱、登录密码、登录设备及验证信息，对账号下所有操作行为、发布内容、生成记录负全部责任。因自身保管不善、泄露密码、转借设备导致账号被盗、被冒用、产生违规行为的，由用户自行承担全部后果，平台无义务协助找回、赔付及免责。<br><br>
+<strong>第三条 用户自愿保密义务</strong><br>
+1. 用户自愿对本平台内部资料、未公开文档、文库专属内容、平台运营规则、技术架构、后台数据、其他用户隐私信息及商业秘密承担永久保密义务。<br>
+2. 用户不得擅自截图、录制、转发、外传、公开、售卖平台内部未公开内容、私密资料、专属资源，不得向任何第三方泄露平台非公开信息。<br>
+3. 若用户违反保密义务，造成平台信息外泄、商业利益受损、名誉侵害、其他用户隐私泄露等后果，我方有权永久封禁账号，并依法追究民事赔偿、行政责任乃至刑事责任。<br>
+4. 保密义务不因账号注销、停止使用、服务终止而失效，永久对用户具有约束力。<br><br>
+<strong>第四条 用户行为规范与内容责任</strong><br>
+1. 用户使用本平台必须严格遵守《中华人民共和国网络安全法》《中华人民共和国国家安全法》《中华人民共和国个人信息保护法》《互联网信息服务管理办法》等法律法规，恪守社会公序良俗，不得从事任何危害网络安全、公共利益及国家安全的行为。<br>
+2. 用户不得利用本平台AI生成、编辑、发布、储存、传播下列各类不当及违法内容：危害国家主权、分裂国家、破坏民族团结、泄露国家秘密、煽动极端言论、宣扬邪教迷信、暴力恐怖、淫秽色情、人身攻击、造谣诽谤、侵犯他人知识产权及隐私、诱导违法犯罪以及任何违反法律法规与公序良俗的信息与内容。<br>
+3. 凡用户利用本平台生成、制作、发布、传播违规有害、危害国家安全类内容，我方有权完整留存账号日志、IP记录、操作痕迹、内容原始数据及设备信息，并有权直接上报国家安全机关、公安机关及相关监管部门，全力配合调查取证，所有法律责任由用户独立承担，与 MAD Workroom 无关。<br>
+4. 用户理解并同意平台有权对发布内容、生成记录、登录行为进行合规监测与风险审核，用户不得拒绝、规避、干扰平台正常风控与内容审核机制。<br><br>
+<strong>第五条 平台服务权限与违规处置</strong><br>
+1. 我方有权根据法律法规、运营需要、安全风控要求，随时对平台功能、界面、服务内容、开放权限进行调整、升级、下线或临时维护，无需单独向用户通知。<br>
+2. 针对存在地域违规、账号倒卖、共享转借、违反保密义务、发布违规内容、恶意攻击平台、利用漏洞牟利等行为的用户，我方有权采取包括但不限于：警告、功能限制、禁止发帖、禁止使用AI功能、临时冻结、永久封禁账号、设备黑名单、永久限制注册等处置措施。<br>
+3. 一经永久封禁的账号，不接受任何申诉、不恢复数据、不恢复账号权限、不作任何形式补偿，用户自愿认可平台处置结果为最终结论。<br>
+4. 平台不承诺服务永久无中断、数据永久无丢失，因服务器维护、网络故障、政策监管、第三方攻击、不可抗力等因素造成服务暂停、数据临时无法访问的，平台不承担赔偿责任。<br><br>
+<strong>第六条 知识产权与内容归属</strong><br>
+1. 用户在本平台创作、生成、上传的所有文字、资料、文案及衍生内容，仅可个人非商用使用，不得私自商用、二次转售、对外授权。<br>
+2. 平台整体界面、代码、架构、文案设计、文库编排、标识LOGO等知识产权均归 MAD Workroom 独家所有，未经书面许可，任何人不得复制、模仿、盗用、二次分发。<br><br>
+<strong>第七条 协议修改与法律适用</strong><br>
+1. 我方有权根据法律政策及运营需要修订本协议，修订后将在平台公示即生效，用户继续使用服务视为自动接受更新后协议条款。<br>
+2. 本协议的订立、履行、解释及争议解决，均适用中华人民共和国中国大陆地区法律。<br>
+3. 因本协议产生纠纷，双方优先友好协商；协商不成，可向我方运营主体所在地有管辖权的人民法院提起诉讼。<br><br>
+<strong>第八条 其他约定</strong><br>
+1. 本协议条款标题仅为阅读方便，不影响条款本身法律效力。<br>
+2. 若本协议任一条款被认定部分无效，不影响其余条款完整效力。<br>
+3. 用户确认已完整阅读、充分理解、自愿遵守本协议全部约定，自愿承担所有使用风险与相应法律责任。
+    </div>
+    <div class="btn-wrap">
+        <button class="btn gray" onclick="prevStep(6)">返回修改</button>
+        <button class="btn" onclick="doRegister()">同意协议并注册</button>
+    </div>
+</div>
+
+<div class="tip">已有账号？<a href="login.html">去登录</a></div>
+<a href="problems.html" class="back-home">遇到问题？</a>
+
+<script>
+let nowStep = 1;
+function showStep(s){
+    document.querySelectorAll(".step").forEach(el=>el.classList.remove("active"));
+    document.getElementById("step"+s).classList.add("active");
+    document.getElementById("msg").innerText = "";
+
+    // 进入账号信息页时，自动填充预览数据
+    if(s === 5){
+        document.getElementById("previewEmail").innerText = document.getElementById("email").value;
+        document.getElementById("previewName").innerText = document.getElementById("firstName").value + document.getElementById("lastName").value;
+        document.getElementById("previewBirth").innerText = document.getElementById("birthYear").value + "年" + document.getElementById("birthMonth").value + "月" + document.getElementById("birthDay").value + "日";
+        document.getElementById("previewGender").innerText = document.getElementById("gender").value;
+    }
+}
+function nextStep(s){
+    let msg = document.getElementById("msg");
+    if(s===1){
+        let val = document.getElementById("email").value.trim();
+        if(!val){msg.innerText="请输入邮箱";return}
+        nowStep=2;showStep(2);
+    }
+    if(s===2){
+        let p1 = document.getElementById("pwd").value.trim();
+        let p2 = document.getElementById("pwd2").value.trim();
+        if(!p1||!p2){msg.innerText="请填写密码";return}
+        if(p1!==p2){msg.innerText="两次密码不一致";return}
+        nowStep=3;showStep(3);
+    }
+    if(s===3){
+        let year = document.getElementById("birthYear").value.trim();
+        let month = document.getElementById("birthMonth").value;
+        let day = document.getElementById("birthDay").value.trim();
+        let gender = document.getElementById("gender").value;
+        if(!year || !month || !day || !gender){
+            msg.innerText="请填写完整生日和性别";
+            return;
+        }
+        nowStep=4;showStep(4);
+    }
+    if(s===4){
+        let xing = document.getElementById("firstName").value.trim();
+        let ming = document.getElementById("lastName").value.trim();
+        if(!xing||!ming){msg.innerText="请填写完整姓名";return}
+        nowStep=5;showStep(5);
+    }
+    if(s===5){
+        nowStep=6;showStep(6);
+    }
+}
+function prevStep(s){
+    nowStep = s-1;
+    showStep(nowStep);
+}
+function doRegister(){
+    let email = document.getElementById("email").value.trim();
+    let pwd = document.getElementById("pwd").value.trim();
+    let birthYear = document.getElementById("birthYear").value.trim();
+    let birthMonth = document.getElementById("birthMonth").value;
+    let birthDay = document.getElementById("birthDay").value.trim();
+    let gender = document.getElementById("gender").value;
+    let firstName = document.getElementById("firstName").value.trim();
+    let lastName = document.getElementById("lastName").value.trim();
+
+    let userList = JSON.parse(localStorage.getItem("userList")||"[]");
+    let has = userList.find(item=>item.email===email);
+    if(has){
+        document.getElementById("msg").innerText = "该邮箱已注册";
+        return;
+    }
+    // 存入完整用户信息（含生日）
+    let newUser = {
+        email,
+        pwd,
+        birthYear,
+        birthMonth,
+        birthDay,
+        gender,
+        firstName,
+        lastName
+    };
+    userList.push(newUser);
+    localStorage.setItem("userList",JSON.stringify(userList));
+    localStorage.setItem("loginUser",JSON.stringify(newUser));
+    location.href = "index.html";
+}
+</script>
 </body>
 </html>
+
