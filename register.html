@@ -121,9 +121,55 @@ h2{
     text-decoration:none;
     font-size:14px;
 }
+
+/* 全屏加载遮罩 */
+.loading-overlay{
+    position:fixed;
+    top:0;left:0;
+    width:100vw;height:100vh;
+    background:#fff;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+.loading-icon{
+    width:48px;
+    height:48px;
+    margin-bottom:20px;
+    color:#1a73e8;
+}
+.loading-text{
+    font-size:22px;
+    color:#202124;
+    margin-bottom:60px;
+}
+/* 底部蓝色圆弧旋转动画 */
+.circle-loader{
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    border:10px solid #e8f0fe;
+    border-top:10px solid #1a73e8;
+    animation: roundSpin 1s linear infinite;
+}
+@keyframes roundSpin{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
 </style>
 </head>
 <body>
+
+<!-- 全屏加载动画层 -->
+<div class="loading-overlay" id="loadingOverlay">
+    <svg class="loading-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2v20M2 12h20"/>
+    </svg>
+    <div class="loading-text">正在核对信息...</div>
+    <div class="circle-loader"></div>
+</div>
 
 <h2>基本信息</h2>
 <div class="subtitle">输入您的生日和性别</div>
@@ -153,7 +199,7 @@ h2{
     </div>
 </div>
 
-<!-- 第3步 生日 + 性别（和截图完全同款） -->
+<!-- 第3步 生日 + 性别 -->
 <div class="step" id="step3">
     <div class="input-row">
         <div class="input-item">
@@ -213,7 +259,7 @@ h2{
     </div>
 </div>
 
-<!-- 第5步 查看账号信息（新增） -->
+<!-- 第5步 查看账号信息 -->
 <div class="step" id="step5">
     <h2>查看您的账号信息</h2>
     <div class="subtitle">日后您可以使用该电子邮件地址进行登录</div>
@@ -263,13 +309,13 @@ h2{
 3. 若用户违反保密义务，造成平台信息外泄、商业利益受损、名誉侵害、其他用户隐私泄露等后果，我方有权永久封禁账号，并依法追究民事赔偿、行政责任乃至刑事责任。<br>
 4. 保密义务不因账号注销、停止使用、服务终止而失效，永久对用户具有约束力。<br><br>
 <strong>第四条 用户行为规范与内容责任</strong><br>
-1. 用户使用本平台必须严格遵守《中华人民共和国网络安全法》《中华人民共和国国家安全法》《中华人民共和国个人信息保护法》《互联网信息服务管理办法》等法律法规，恪守社会公序良俗，不得从事任何危害网络安全、公共利益及国家安全的行为。<br>
-2. 用户不得利用本平台AI生成、编辑、发布、储存、传播下列各类不当及违法内容：危害国家主权、分裂国家、破坏民族团结、泄露国家秘密、煽动极端言论、宣扬邪教迷信、暴力恐怖、淫秽色情、人身攻击、造谣诽谤、侵犯他人知识产权及隐私、诱导违法犯罪以及任何违反法律法规与公序良俗的信息与内容。<br>
-3. 凡用户利用本平台生成、制作、发布、传播违规有害、危害国家安全类内容，我方有权完整留存账号日志、IP记录、操作痕迹、内容原始数据及设备信息，并有权直接上报国家安全机关、公安机关及相关监管部门，全力配合调查取证，所有法律责任由用户独立承担，与 MAD Workroom 无关。<br>
+1. 用户使用本平台必须严格遵守《中华人民共和国网络安全法》《中华人民共和国国家安全法》《中华人民共和国个人信息保护法》《互联网信息服务管理办法》等法律法规，恪守社会公序良俗，不得从事任何危害网络安全、公共利益及国家安全的行为。<br><br>
+2. 用户不得利用本平台AI生成、编辑、发布、储存、传播下列各类不当及违法内容：危害国家主权、分裂国家、破坏民族团结、泄露国家秘密、煽动极端言论、宣扬邪教迷信、暴力恐怖、淫秽色情、人身攻击、造谣诽谤、侵犯他人知识产权及隐私、诱导违法犯罪以及任何违反法律法规与公序良俗的信息与内容。<br><br>
+3. 凡用户利用本平台生成、制作、发布、传播违规有害、危害国家安全类内容，我方有权完整留存账号日志、IP记录、操作痕迹、内容原始数据及设备信息，并有权直接上报国家安全机关、公安机关及相关监管部门，全力配合调查取证，所有法律责任由用户独立承担，与 MAD Workroom 无关。<br><br>
 4. 用户理解并同意平台有权对发布内容、生成记录、登录行为进行合规监测与风险审核，用户不得拒绝、规避、干扰平台正常风控与内容审核机制。<br><br>
 <strong>第五条 平台服务权限与违规处置</strong><br>
 1. 我方有权根据法律法规、运营需要、安全风控要求，随时对平台功能、界面、服务内容、开放权限进行调整、升级、下线或临时维护，无需单独向用户通知。<br>
-2. 针对存在地域违规、账号倒卖、共享转借、违反保密义务、发布违规内容、恶意攻击平台、利用漏洞牟利等行为的用户，我方有权采取包括但不限于：警告、功能限制、禁止发帖、禁止使用AI功能、临时冻结、永久封禁账号、设备黑名单、永久限制注册等处置措施。<br>
+2. 针对存在地域违规、账号倒卖、共享转借、违反保密义务、发布违规内容、恶意攻击平台、利用漏洞牟利等行为的用户，我方有权采取包括但不限于：警告、功能限制、禁止发帖、禁止使用AI功能、临时冻结、永久封禁账号、设备黑名单、永久限制注册等处置措施。<br><br>
 3. 一经永久封禁的账号，不接受任何申诉、不恢复数据、不恢复账号权限、不作任何形式补偿，用户自愿认可平台处置结果为最终结论。<br>
 4. 平台不承诺服务永久无中断、数据永久无丢失，因服务器维护、网络故障、政策监管、第三方攻击、不可抗力等因素造成服务暂停、数据临时无法访问的，平台不承担赔偿责任。<br><br>
 <strong>第六条 知识产权与内容归属</strong><br>
@@ -300,7 +346,6 @@ function showStep(s){
     document.getElementById("step"+s).classList.add("active");
     document.getElementById("msg").innerText = "";
 
-    // 进入账号信息页时，自动填充预览数据
     if(s === 5){
         document.getElementById("previewEmail").innerText = document.getElementById("email").value;
         document.getElementById("previewName").innerText = document.getElementById("firstName").value + document.getElementById("lastName").value;
@@ -347,6 +392,8 @@ function prevStep(s){
     nowStep = s-1;
     showStep(nowStep);
 }
+
+// 已改好的 doRegister 完整版
 function doRegister(){
     let email = document.getElementById("email").value.trim();
     let pwd = document.getElementById("pwd").value.trim();
@@ -363,7 +410,6 @@ function doRegister(){
         document.getElementById("msg").innerText = "该邮箱已注册";
         return;
     }
-    // 存入完整用户信息（含生日）
     let newUser = {
         email,
         pwd,
@@ -377,7 +423,14 @@ function doRegister(){
     userList.push(newUser);
     localStorage.setItem("userList",JSON.stringify(userList));
     localStorage.setItem("loginUser",JSON.stringify(newUser));
-    location.href = "index.html";
+
+    // 弹出正在核对信息全屏加载
+    document.getElementById("loadingOverlay").style.display = "flex";
+
+    // 10秒后跳转主页
+    setTimeout(()=>{
+        location.href = "index.html";
+    },10000);
 }
 </script>
 </body>
