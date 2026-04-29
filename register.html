@@ -201,13 +201,23 @@ h2{
     </div>
 </div>
 
-<!-- 第4步 姓名 -->
+<!-- 新增：性取向页面 原代码完全不动 只追加 -->
 <div class="step" id="step4">
+    <h2>个人偏好</h2>
+    <div class="subtitle">请选择您的性取向</div>
     <div class="input-item">
-        <input type="text" id="firstName" placeholder="输入姓氏">
+        <select id="orientation" class="select-full">
+            <option value="">请选择</option>
+            <option value="正常">正常</option>
+            <option value="gay">gay</option>
+            <option value="lesbian">lesbian</option>
+            <option value="跨性别者（女）">跨性别者（女）</option>
+            <option value="跨性别者（男）">跨性别者（男）</option>
+            <option value="双性恋">双性恋</option>
+        </select>
     </div>
-    <div class="input-item">
-        <input type="text" id="lastName" placeholder="输入名字">
+    <div style="text-align:left;margin-top:10px;">
+        <a href="problems.html" style="color:#1a73e8;text-decoration:none;font-size:16px;">我们为什么要知道您的性取向？</a>
     </div>
     <div class="btn-wrap">
         <button class="btn gray" onclick="prevStep(4)">上一步</button>
@@ -215,8 +225,22 @@ h2{
     </div>
 </div>
 
-<!-- 第5步 查看账号信息 -->
+<!-- 第4步 姓名 -->
 <div class="step" id="step5">
+    <div class="input-item">
+        <input type="text" id="firstName" placeholder="输入姓氏">
+    </div>
+    <div class="input-item">
+        <input type="text" id="lastName" placeholder="输入名字">
+    </div>
+    <div class="btn-wrap">
+        <button class="btn gray" onclick="prevStep(5)">上一步</button>
+        <button class="btn" onclick="nextStep(5)">下一步</button>
+    </div>
+</div>
+
+<!-- 第5步 查看账号信息 -->
+<div class="step" id="step6">
     <h2>查看您的账号信息</h2>
     <div class="subtitle">日后您可以使用该电子邮件地址进行登录</div>
     <div class="info-card">
@@ -236,15 +260,19 @@ h2{
             <span class="info-label">性别</span>
             <span class="info-value" id="previewGender"></span>
         </div>
+        <div class="info-row">
+            <span class="info-label">性取向</span>
+            <span class="info-value" id="previewOrientation"></span>
+        </div>
     </div>
     <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(5)">上一步</button>
-        <button class="btn" onclick="nextStep(5)">下一步</button>
+        <button class="btn gray" onclick="prevStep(6)">上一步</button>
+        <button class="btn" onclick="nextStep(6)">下一步</button>
     </div>
 </div>
 
 <!-- 第6步 协议单独最后一页 -->
-<div class="step" id="step6">
+<div class="step" id="step7">
     <h2>用户许可协议</h2>
     <div class="subtitle">请阅读并同意全部条款</div>
     <div class="agreement">
@@ -259,15 +287,15 @@ h2{
 四、用户行为准则与内容发布合规要求<br>
 所有用户必须严格遵守国家安全法、网络安全法、治安管理处罚法、互联网信息管理办法等国家法律法规，坚守网络公序良俗，文明合规使用平台服务。禁止利用账号发布、生成、存储、传播危害国家安全、分裂国家、破坏民族团结、造谣诽谤、暴力血腥、低俗色情、邪教迷信、恐怖极端、人身辱骂、侵权抄袭、恶意引战、违法诱导等任何不良违规内容。禁止利用AI工具制作伪造信息、虚假证据、恶意图文、危害社会稳定内容。平台全程自动审核内容、记录登录日志、IP地址、操作轨迹、设备信息，所有违规内容均可永久留存追溯。若用户行为触犯法律法规，平台将无条件配合公安机关调查取证，所有违法责任由用户独自承担，与平台运营方无关。用户不得干扰、绕过、屏蔽平台安全审核机制，不得恶意刷量、恶意提交、恶意占用服务器资源影响正常服务运行。<br><br>
 五、服务调整权限与违规处罚规则<br>
-平台可根据政策要求、运营优化、安全防护、功能升级需求，随时调整界面样式、关闭部分功能、更新服务规则、临时系统维护，无需逐一单独通知用户。对于违规地域登录、账号交易转借、泄露内部资料、发布违法内容、恶意攻击平台、滥用系统漏洞、多次违规操作的用户，平台有权采取警告提醒、功能限制、账号冻结、限时封禁、永久拉黑、设备禁止注册等多级处罚。所有永久封禁账号一律不接受申诉、不恢复数据、不解封账号、不作任何补偿退款，用户注册即自愿认可该最终处置规则。网络波动、服务器维护、自然灾害、第三方攻击、政策管控等不可抗力造成服务短暂中断、数据临时异常，平台不承担任何违约与经济赔偿责任。<br><br>
+平台可根据政策要求、运营优化、安全防护、功能升级需求，随时调整界面样式、关闭部分功能、更新服务规则、临时系统维护，无需逐一单独通知用户。对于违规地域登录、账号交易转借、泄露内部资料、发布违法内容、恶意攻击平台、滥用系统漏洞、多次违规操作的用户，平台有权采取警告提醒、功能限制、账号冻结、限时封禁、无需永久拉黑、设备禁止注册等多级处罚。所有永久封禁账号一律不接受申诉、不恢复数据、不解锁账号、不作任何补偿退款，用户注册即自愿认可该最终处置规则。网络波动、服务器维护、自然灾害、第三方攻击、政策管控等不可抗力造成服务短暂中断、数据临时异常，平台不承担任何违约与经济赔偿责任。<br><br>
 六、知识产权归属与内容使用权限<br>
-平台整体页面设计、LOGO标识、代码架构、文案排版、文库体系、AI逻辑规则全部知识产权独家归属MAD Workroom，未经官方书面授权，任何个人与团体不得复制、抄袭、模仿、搬运、二次分发商用。用户在平台生成、编辑、上传的个人内容仅限本人日常学习查阅、私人非商业使用，禁止批量商用，对外售卖、授权盈利、二次转载牟利。因用户侵权使用内容产生法律纠纷，全部由用户自行负责。<br><br>
+平台整体页面设计、LOGO标识、知识产权、文案排版、文库体系、AI逻辑规则全部知识产权独家归属MAD Workroom，未经官方书面授权，任何个人与团体不得复制、抄袭、模仿、搬运、二次分发商用。用户在平台生成、编辑、上传的个人内容仅限本人日常学习查阅、私人非商业使用，禁止批量商用，对外售卖、授权盈利、二次转载牟利。因用户侵权使用内容产生法律纠纷，全部由用户自行负责。<br><br>
 七、协议更新与争议法律管辖<br>
 平台有权根据国家法律法规变化、互联网政策调整不定期修订完善本用户协议，更新内容在平台公示后即刻生效，用户继续登录使用即视为同意新版协议。本协议所有约定均适用中华人民共和国大陆地区法律。双方产生任何纠纷争议，优先友好协商沟通解决；协商无法达成一致时，交由平台所在地人民法院诉讼处理。本协议条款标题仅方便阅读，不影响条款本身法律效力。任意单项条款无效，不影响其余所有条款正常生效执行。<br><br>
 用户已完整阅读、全面理解、自愿遵守以上全部协议条款，自愿承担账号所有使用风险、操作责任与对应法律后果，自愿接受平台所有风控管理与违规处罚约定。
     </div>
     <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(6)">返回修改</button>
+        <button class="btn gray" onclick="prevStep(7)">返回修改</button>
         <button class="btn" onclick="doRegister()">同意协议并注册</button>
     </div>
 </div>
@@ -282,11 +310,12 @@ function showStep(s){
     document.getElementById("step"+s).classList.add("active");
     document.getElementById("msg").innerText = "";
 
-    if(s === 5){
+    if(s === 6){
         document.getElementById("previewEmail").innerText = document.getElementById("email").value;
         document.getElementById("previewName").innerText = document.getElementById("firstName").value + document.getElementById("lastName").value;
         document.getElementById("previewBirth").innerText = document.getElementById("birthYear").value + "年" + document.getElementById("birthMonth").value + "月" + document.getElementById("birthDay").value + "日";
         document.getElementById("previewGender").innerText = document.getElementById("gender").value;
+        document.getElementById("previewOrientation").innerText = document.getElementById("orientation").value;
     }
 }
 function nextStep(s){
@@ -315,13 +344,18 @@ function nextStep(s){
         nowStep=4;showStep(4);
     }
     if(s===4){
-        let xing = document.getElementById("firstName").value.trim();
-        let ming = document.getElementById("lastName").value.trim();
-        if(!xing||!ming){msg.innerText="请填写完整姓名";return}
+        let ori = document.getElementById("orientation").value;
+        if(!ori){msg.innerText="请选择性取向";return}
         nowStep=5;showStep(5);
     }
     if(s===5){
+        let xing = document.getElementById("firstName").value.trim();
+        let ming = document.getElementById("lastName").value.trim();
+        if(!xing||!ming){msg.innerText="请填写完整姓名";return}
         nowStep=6;showStep(6);
+    }
+    if(s===6){
+        nowStep=7;showStep(7);
     }
 }
 function prevStep(s){
@@ -337,6 +371,7 @@ function doRegister(){
     let birthMonth = document.getElementById("birthMonth").value;
     let birthDay = document.getElementById("birthDay").value.trim();
     let gender = document.getElementById("gender").value;
+    let orientation = document.getElementById("orientation").value;
     let firstName = document.getElementById("firstName").value.trim();
     let lastName = document.getElementById("lastName").value.trim();
 
@@ -353,6 +388,7 @@ function doRegister(){
         birthMonth,
         birthDay,
         gender,
+        orientation,
         firstName,
         lastName
     };
@@ -360,11 +396,11 @@ function doRegister(){
     localStorage.setItem("userList",JSON.stringify(userList));
     localStorage.setItem("loginUser",JSON.stringify(newUser));
 
-    // 跳转独立加载页面 loading.html
     location.href = "loading.html";
 }
 </script>
 </body>
 </html>
+
 
 
