@@ -6,15 +6,48 @@
 <title>MAD App</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Roboto,sans-serif}
-body{background:#f5f7fa;padding:15px}
+body{background:#f5f7fa;padding:15px;padding-top:60px}
 h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
+
+/* 左上角菜单按钮 */
+.menu-btn{
+    position:fixed;
+    top:15px;
+    left:15px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 1px 4px rgba(0,0,0,0.15);
+    border:none;
+    font-size:22px;
+    z-index:9999;
+    cursor:pointer;
+}
+/* 右上角用户信息 */
+.user-info{
+    position:fixed;
+    top:18px;
+    right:15px;
+    z-index:9999;
+    font-size:15px;
+    color:#202124;
+    background:#fff;
+    padding:6px 12px;
+    border-radius:16px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.1);
+}
+.user-info a{
+    color:#1a73e8;
+    text-decoration:none;
+    margin-left:8px;
+}
 
 /* 开屏 + 简约加载动画 */
 #splash-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#121212;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.6s ease;}
 .splash-bg{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.15;pointer-events:none}
 .splash-main{font-size:42px;font-weight:300;color:#e0e7ff;text-align:center;line-height:1.4;z-index:1}
 .splash-footer{position:absolute;bottom:80px;font-size:28px;color:#c7d2fe;z-index:1}
-/* 简约转圈加载 */
 .loader{width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#1a73e8;border-radius:500px;animation:spin 1s linear infinite;margin-top:20px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -24,7 +57,6 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 .search-buttons{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .search-btn{padding:10px 24px;border:none;border-radius:18px;background:#e8eaed;font-size:14px;color:#202124;cursor:pointer}
 
-/* 放大的AI入口卡片样式（完美还原你的图标） */
 .ai-card {
     background: #fff;
     border-radius: 16px;
@@ -35,27 +67,14 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
     text-align: center;
     margin-bottom: 30px;
 }
-.ai-card:hover {
-    background: #eef6ff;
-}
+.ai-card:hover{background:#eef6ff}
 .ai-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 15px;
+    width: 80px;height: 80px;margin: 0 auto 15px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='10' y='10' width='80' height='80' rx='20' fill='none' stroke='%231a73e8' stroke-width='3'/%3E%3Cpath d='M20 20 L80 20 L80 80 L20 80 Z' fill='none' stroke='%231a73e8' stroke-width='1.5' opacity='0.6'/%3E%3Cpath d='M20 50 L80 50 M50 20 L50 80' fill='none' stroke='%231a73e8' stroke-width='1.5' opacity='0.6'/%3E%3Cpath d='M30 30 L70 70 M70 30 L30 70' fill='none' stroke='%231a73e8' stroke-width='1' opacity='0.4'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%231a73e8' stroke-width='1.5' stroke-dasharray='4 4' opacity='0.6'/%3E%3Cpath d='M50 30 C60 40, 60 60, 50 70 C40 60, 40 40, 50 30' fill='%231a73e8'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-size: contain;background-repeat: no-repeat;
 }
-.ai-card-title {
-    font-size: 18px;
-    font-weight: 500;
-    color: #202124;
-    margin-bottom: 5px;
-}
-.ai-card-desc {
-    font-size: 14px;
-    color: #5f6368;
-}
+.ai-card-title {font-size: 18px;font-weight: 500;color: #202124;margin-bottom: 5px;}
+.ai-card-desc {font-size: 14px;color: #5f6368;}
 
 .search-results{margin-top:10px;background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.1);display:none}
 .search-result-item{padding:8px 0;border-bottom:1px solid #eee;cursor:pointer;color:#1a73e8}
@@ -68,11 +87,67 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 .card-title{font-size:16px;font-weight:500;margin-bottom:4px}
 .card-desc{font-size:13px;color:#666}
 .footer-note{text-align:center;margin:40px 0 10px;color:#5f6368;font-size:13px}
+
+/* 弹窗样式 */
+.popup-mask{
+    position:fixed;top:0;left:0;width:100vw;height:100vh;
+    background:rgba(0,0,0,0.6);z-index:999999;
+    display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.popup-box{
+    background:#fff;border-radius:20px;padding:30px 25px;
+    max-width:400px;width:100%;text-align:center;
+}
+.popup-box p{font-size:15px;color:#333;line-height:1.8;margin-bottom:20px;}
+.popup-btn{
+    padding:10px 30px;background:#1a73e8;color:#fff;
+    border:none;border-radius:20px;font-size:15px;cursor:pointer;margin:0 5px;
+    text-decoration:none;display:inline-block;
+}
+.popup-btn.gray{background:#999;}
 </style>
 </head>
 <body>
 
-<!-- 带简约加载动画的开屏 -->
+<button class="menu-btn" onclick="openLoginPopup()">☰</button>
+
+<!-- 右上角用户栏 -->
+<div class="user-info" id="userBar">
+    <span id="userName">游客</span>
+    <a href="login.html" id="loginLink">登录</a>
+    <a href="#" id="logoutLink" style="display:none" onclick="logout()">退出</a>
+</div>
+
+<!-- 地区提示弹窗 -->
+<div class="popup-mask" id="visitPopup">
+    <div class="popup-box">
+        <p>致其他地区的朋友们<br><br>
+        我们加强了网站检测，这意味您将无法访问我们的网站观看王琳皓的美文。<br>
+        同时很遗憾，出于部分地区政策原因，<br>
+        我暂时无法在你们的地区提供服务。<br><br>
+        但我始终相信，<br>
+        每一次访问，都是在让世界更好一点。<br><br>
+        感谢你们的理解与支持。<br>
+        期待未来，我们能在更开放的环境中相见。
+        </p>
+        <button class="popup-btn" onclick="closeVisitPopup()">我已知晓</button>
+    </div>
+</div>
+
+<!-- 登录提示弹窗 -->
+<div class="popup-mask" id="loginPopup" style="display:none;">
+    <div class="popup-box">
+        <p>请登录账号<br><br>
+        登录后解锁完整文库、隐藏美文、离线AI全部功能<br>
+        获得更多专属内容与权限
+        </p>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+            <a href="login.html" class="popup-btn">立即登录</a>
+            <button class="popup-btn gray" onclick="closeLoginPopup()">稍后再说</button>
+        </div>
+    </div>
+</div>
+
 <div id="splash-screen">
     <div class="splash-bg"></div>
     <div class="splash-main">Made by Mad<br>Workroom</div>
@@ -88,11 +163,10 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 
 <h1>MAD App</h1>
 
-<!-- 放大的AI入口卡片（完美还原你的图标） -->
 <div class="ai-card" onclick="location.href='ai.html'">
     <div class="ai-icon"></div>
     <div class="ai-card-title">进入离线AI聊天</div>
-    <div class="ai-card-desc">Gemma 离线模型 · 断网仍可用</div>
+    <div class="ai-card-desc">Gemma 离线模型 · 国内加速下载 · 断网可用</div>
 </div>
 
 <input id="globalSearch" type="text" class="search-top" placeholder="站内搜索 | Bing搜索 | Google搜索">
@@ -139,17 +213,44 @@ h1{font-size:32px;font-weight:500;margin-bottom:20px;color:#202124}
 <div class="download-wrap">
 <a href="https://github.com/mad78912778/Mad-app" target="_blank" class="download-btn">📥 下载移动端 MAD App</a>
 </div>
-<div class="footer-note">MAD app</div>
+<div class="footer-note">MAD Studio | 离线AI独立页面 | 完整文库</div>
 
 <script>
-// 开屏延时淡出
+// 登录状态渲染
+function renderUser(){
+    let user = JSON.parse(localStorage.getItem("loginUser")||"null");
+    if(user){
+        document.getElementById("userName").innerText = user.firstName + user.lastName;
+        document.getElementById("loginLink").style.display = "none";
+        document.getElementById("logoutLink").style.display = "inline";
+    }else{
+        document.getElementById("userName").innerText = "游客";
+        document.getElementById("loginLink").style.display = "inline";
+        document.getElementById("logoutLink").style.display = "none";
+    }
+}
+// 退出登录
+function logout(){
+    localStorage.removeItem("loginUser");
+    renderUser();
+}
+
+function closeVisitPopup(){
+    document.getElementById("visitPopup").style.display = "none";
+}
+function openLoginPopup(){
+    document.getElementById("loginPopup").style.display = "flex";
+}
+function closeLoginPopup(){
+    document.getElementById("loginPopup").style.display = "none";
+}
+
 setTimeout(() => {
     let splash = document.getElementById("splash-screen");
     splash.style.opacity = "0";
     setTimeout(()=>splash.style.display = "none", 600);
 }, 1800);
 
-// 全部文库&搜索逻辑 原样保留
 const docList = [
 {id:'0001',title:'sqb0001 丝绸之路的开通与单细胞生物'},
 {id:'0002',title:'sqb0002 我的乌鸦（周子轩）'},
@@ -239,9 +340,13 @@ function openSQB0025(){location.href="sqb0025.html"}
 function openSQB0026(){location.href="sqb0026.html"}
 function openSQB0027(){location.href="sqb0027.html"}
 function openSQB0028(){location.href="sqb0028.html"}
+
+// 初始化
+renderUser();
 </script>
 </body>
 </html>
+
 
 
 
