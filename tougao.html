@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档投稿 - MAD Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Roboto, system-ui, sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #202124;
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+        .header {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .back-btn {
+            color: #4285f4;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 400;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #e8eaed;
+            margin-bottom: 16px;
+        }
+        .tip-title{
+            font-size:16px;
+            font-weight:500;
+            color:#4285f4;
+            margin-bottom:8px;
+        }
+        .tip-text{
+            font-size:14px;
+            line-height:1.7;
+            color:#5f6368;
+            margin-bottom:20px;
+        }
+        input,textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0 16px;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+        }
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .sub-deco {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg,#4285F4,#EA4335,#FBBC05,#34A853);
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <a href="index.html" class="back-btn">← 返回首页</a>
+    <h1>文档投稿</h1>
+</div>
+
+<!-- 投稿须知 -->
+<div class="card">
+    <div class="tip-title">📜 MAD文库 投稿须知</div>
+    <div class="tip-text">
+        1.  投稿内容仅限段子、作文、梗图文案、趣味短文，禁止涉政、色情(占文章总字数文章超过7%)、暴力、违规敏感内容
+        <br>2.  文档编号将由管理员统一分配sqb序列编号，请勿自行填写编号
+        <br>3.  投稿内容一经提交，自动授权MAD工作室收录进公开文库，不做隐私保留
+        <br>4.  恶意重复投稿、恶意灌水、不良内容，将直接驳回不予收录
+        <br>5.  审核周期1-30天，通过后自动更新至文库列表，无需单独通知
+        <br>6.  禁止搬运他人原创内容，侵权内容一切责任由投稿人自行承担
+    </div>
+</div>
+
+<!-- 投稿表单 -->
+<div class="card">
+    <label>文档标题</label>
+    <input type="text" id="title" placeholder="请输入文档标题，例如：止战之殇">
+
+    <label>投稿正文内容</label>
+    <textarea id="content" placeholder="粘贴你要投稿的完整文案、作文、梗内容即可"></textarea>
+
+    <button class="btn" onclick="submitTougao()">提交投稿</button>
+</div>
+
+<script>
+// 纯本地简易后台：所有投稿存在浏览器本地localStorage，永久保存不丢失
+function submitTougao(){
+    let title = document.getElementById('title').value
+    let content = document.getElementById('content').value
+    if(!title || !content){
+        alert('请填写完整标题和内容！')
+        return
+    }
+    // 读取已有投稿
+    let list = JSON.parse(localStorage.getItem('tougaoList') || '[]')
+    // 新增投稿
+    list.push({
+        标题: title,
+        内容: content,
+        投稿时间: new Date().toLocaleString()
+    })
+    // 存进本地后台
+    localStorage.setItem('tougaoList', JSON.stringify(list))
+    alert('投稿成功！已存入后台待审核~')
+    location.href = 'admin.html'
+}
+</script>
+
+<div class="sub-deco"></div>
+</body>
+</html>
