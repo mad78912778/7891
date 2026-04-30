@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正在核对信息 - MAD App</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:#ffffff;
+    min-height:100vh;
+    font-family:system-ui,-apple-system,Roboto,sans-serif;
+}
+
+/* 阶段1：转圈加载页面 */
+.load-page{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+}
+.icon{
+    width:48px;
+    height:48px;
+    margin-bottom:20px;
+    color:#1a73e8;
+}
+.text{
+    font-size:32px;
+    color:#202124;
+    margin-bottom:80px;
+}
+.loader{
+    width:280px;
+    height:280px;
+    position:relative;
+}
+.circle{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:12px solid #e8f0fe;
+    border-top-color:#1a73e8;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 阶段2：错误页面（和截图1:1还原，无按钮） */
+.error-page{
+    display:none;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:60px 30px;
+    min-height:100vh;
+}
+.error-icon{
+    width:48px;
+    height:48px;
+    margin-bottom:20px;
+    color:#1a73e8;
+}
+.error-title{
+    font-size:42px;
+    color:#202124;
+    margin-bottom:10px;
+}
+.error-desc{
+    font-size:26px;
+    color:#202124;
+}
+</style>
+</head>
+<body>
+
+<!-- 阶段1：转圈加载 -->
+<div class="load-page" id="loadPage">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+        <line x1="12" y1="8" x2="12" y2="14"></line>
+        <polyline points="9 11 12 14 15 11"></polyline>
+    </svg>
+    <div class="text">正在核对信息...</div>
+    <div class="loader">
+        <div class="circle"></div>
+    </div>
+</div>
+
+<!-- 阶段2：错误页（无按钮，和截图完全一致） -->
+<div class="error-page" id="errorPage">
+    <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+        <line x1="12" y1="8" x2="12" y2="14"></line>
+        <polyline points="9 11 12 14 15 11"></polyline>
+    </svg>
+    <div class="error-title">出了点问题</div>
+    <div class="error-desc">请返回并重试。</div>
+</div>
+
+<script>
+// 10秒加载后分流
+setTimeout(() => {
+    // 隐藏加载页
+    document.getElementById("loadPage").style.display = "none";
+
+    // 70% 错误，30% 正常进主页
+    if(Math.random() < 0.7){
+        // 错误分支：显示无按钮错误页
+        document.getElementById("errorPage").style.display = "flex";
+    }else{
+        // 成功分支：跳 index.html
+        location.href = "index.html";
+    }
+}, 10000);
+</script>
+
+</body>
+</html>
