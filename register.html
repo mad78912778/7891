@@ -1,367 +1,227 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>注册 - MAD App</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Roboto,sans-serif}
-
-/* 整页纯白背景 */
-body{background:#ffffff;padding:30px 20px;min-height:100vh}
-
-h2{
-    text-align:center;
-    margin-bottom:10px;
-    color:#202124;
-    font-weight:500;
-    font-size:36px;
-}
-.subtitle{
-    text-align:center;
-    color:#444;
-    font-size:24px;
-    margin-bottom:40px;
-}
-
-.step{display:none}
-.step.active{display:block}
-
-/* 输入框纯直角方框 */
-.input-row{
-    display:flex;
-    gap:12px;
-    margin-bottom:20px;
-}
-.input-item{
-    flex:1;
-}
-.input-item input,.input-item select{
-    width:100%;
-    padding:16px;
-    border:1px solid #dadce0;
-    border-radius:0;
-    font-size:20px;
-    outline:none;
-    background:#fff;
-}
-/* 生日+性别页的性别选择 */
-.select-full{
-    width:100%;
-    margin-top:10px;
-}
-
-/* 账号信息确认页 */
-.info-card{
-    border:1px solid #dadce0;
-    border-radius:0;
-    padding:20px;
-    margin:30px 0;
-}
-.info-row{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid #eee;
-    font-size:16px;
-}
-.info-row:last-child{border-bottom:none}
-.info-label{color:#555}
-.info-value{color:#202124;font-weight:500}
-
-/* 按钮右下角小尺寸 */
-.btn-wrap{
-    display:flex;
-    justify-content:flex-end;
-    gap:12px;
-    margin-top:40px;
-}
-.btn{
-    padding:8px 18px;
-    border:none;
-    border-radius:0;
-    background:#1a73e8;
-    color:#fff;
-    font-size:14px;
-    cursor:pointer;
-}
-.btn.gray{background:#888888}
-
-/* 用户协议纯白底方框 */
-.agreement{
-    max-height:520px;
-    overflow-y:auto;
-    border:1px solid #dadce0;
-    border-radius:0;
-    padding:16px;
-    font-size:14px;
-    line-height:1.8;
-    color:#444;
-    background:#fff;
-}
-
-.msg{
-    text-align:center;
-    margin:12px 0;
-    color:#d93025;
-    font-size:14px;
-}
-.tip{
-    text-align:center;
-    margin-top:40px;
-    font-size:14px;
-    color:#5f6368
-}
-.tip a{color:#1a73e8;text-decoration:none}
-.back-home{
-    display:block;
-    text-align:center;
-    margin-top:20px;
-    color:#1a73e8;
-    text-decoration:none;
-    font-size:14px;
-}
-
-/* 加载页无需本页遮罩 */
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAD App 注册</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 480px;
+            padding: 32px;
+        }
+        .step { display: none; }
+        .step.active { display: block; }
+        h2 {
+            font-size: 24px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+        .input-item { margin-bottom: 16px; }
+        .input-full, .select-full {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .btn-wrap {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #1a73e8;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn.gray {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .agreement {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 16px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-
-<h2>基本信息</h2>
-<div class="subtitle">输入您的生日和性别</div>
-<div class="msg" id="msg"></div>
-
-<!-- 第1步 邮箱 -->
-<div class="step active" id="step1">
-    <div class="input-item">
-        <input type="email" id="email" placeholder="请输入注册邮箱">
-    </div>
-    <div class="btn-wrap">
-        <button class="btn" onclick="nextStep(1)">下一步</button>
-    </div>
-</div>
-
-<!-- 第2步 密码 -->
-<div class="step" id="step2">
-    <div class="input-item">
-        <input type="password" id="pwd" placeholder="设置登录密码">
-    </div>
-    <div class="input-item">
-        <input type="password" id="pwd2" placeholder="再次确认密码">
-    </div>
-    <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(2)">上一步</button>
-        <button class="btn" onclick="nextStep(2)">下一步</button>
-    </div>
-</div>
-
-<!-- 第3步 生日 + 性别 -->
-<div class="step" id="step3">
-    <div class="input-row">
-        <div class="input-item">
-            <input type="text" id="birthYear" placeholder="年">
+    <div class="container">
+        <div class="step active" id="step1">
+            <h2>创建账户</h2>
+            <div class="subtitle">请输入邮箱</div>
+            <div class="input-item">
+                <input type="email" id="email" class="input-full" placeholder="xxx@qq.com">
+            </div>
+            <div class="btn-wrap">
+                <button class="btn" onclick="checkEmailNext()">下一步</button>
+            </div>
         </div>
-        <div class="input-item">
-            <select id="birthMonth">
-                <option value="">月</option>
-                <option value="1">1月</option>
-                <option value="2">2月</option>
-                <option value="3">3月</option>
-                <option value="4">4月</option>
-                <option value="5">5月</option>
-                <option value="6">6月</option>
-                <option value="7">7月</option>
-                <option value="8">8月</option>
-                <option value="9">9月</option>
-                <option value="10">10月</option>
-                <option value="11">11月</option>
-                <option value="12">12月</option>
-            </select>
-        </div>
-        <div class="input-item">
-            <input type="text" id="birthDay" placeholder="日">
-        </div>
-    </div>
-    <div class="input-item">
-        <select id="gender" class="select-full">
-            <option value="">性别</option>
-            <option value="男">男</option>
-            <option value="女">女</option>
-            <option value="不愿透露">不愿透露</option>
-            <option value="沃尔玛购物袋">沃尔玛购物袋</option>
-            <option value="武装直升机">武装直升机</option>
-        </select>
-    </div>
-    <div style="text-align:left;margin-top:10px;">
-        <a href="problem.html" style="color:#1a73e8;text-decoration:none;font-size:16px;">我们为什么要求您提供生日和性别信息</a>
-    </div>
-    <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(3)">上一步</button>
-        <button class="btn" onclick="nextStep(3)">下一步</button>
-    </div>
-</div>
 
-<!-- 新增：性取向页面 原代码完全不动 只追加 -->
-<div class="step" id="step4">
-    <h2>个人偏好</h2>
-    <div class="subtitle">请选择您的性取向</div>
-    <div class="input-item">
-        <select id="orientation" class="select-full">
-            <option value="">请选择</option>
-            <option value="正常">正常</option>
-            <option value="gay">gay</option>
-            <option value="lesbian">lesbian</option>
-            <option value="跨性别者（女）">跨性别者（女）</option>
-            <option value="跨性别者（男）">跨性别者（男）</option>
-            <option value="双性恋">双性恋</option>
-        </select>
-    </div>
-    <div style="text-align:left;margin-top:10px;">
-        <a href="problem.html" style="color:#1a73e8;text-decoration:none;font-size:16px;">我们为什么要知道您的性取向？</a>
-    </div>
-    <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(4)">上一步</button>
-        <button class="btn" onclick="nextStep(4)">下一步</button>
-    </div>
-</div>
+        <div class="step" id="step2">
+            <h2>设置密码</h2>
+            <div class="subtitle">至少8位，含大小写+数字</div>
+            <div class="input-item">
+                <input type="password" id="pwd" class="input-full" placeholder="设置密码">
+            </div>
+            <div class="btn-wrap">
+                <button class="btn gray" onclick="prevStep(2)">上一步</button>
+                <button class="btn" onclick="nextStep(2)">下一步</button>
+            </div>
+        </div>
 
-<!-- 第4步 姓名 -->
-<div class="step" id="step5">
-    <div class="input-item">
-        <input type="text" id="firstName" placeholder="输入姓氏">
-    </div>
-    <div class="input-item">
-        <input type="text" id="lastName" placeholder="输入名字">
-    </div>
-    <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(5)">上一步</button>
-        <button class="btn" onclick="nextStep(5)">下一步</button>
-    </div>
-</div>
+        <div class="step" id="step3">
+            <h2>邮箱验证</h2>
+            <div class="subtitle">演示版直接点下一步即可</div>
+            <div class="input-item">
+                <input type="text" class="input-full" placeholder="验证码（演示可随意填）">
+            </div>
+            <div class="btn-wrap">
+                <button class="btn gray" onclick="prevStep(3)">上一步</button>
+                <button class="btn" onclick="nextStep(3)">下一步</button>
+            </div>
+        </div>
 
-<!-- 第5步 查看账号信息 -->
-<div class="step" id="step6">
-    <h2>查看您的账号信息</h2>
-    <div class="subtitle">日后您可以使用该电子邮件地址进行登录</div>
-    <div class="info-card">
-        <div class="info-row">
-            <span class="info-label">电子邮件地址</span>
-            <span class="info-value" id="previewEmail"></span>
+        <div class="step" id="step4">
+            <h2>选择性别</h2>
+            <div class="subtitle">常规 & 抽象趣味性别</div>
+            <div class="input-item">
+                <select id="gender" class="select-full">
+                    <option value="">请选择性别</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                    <option value="不愿透露">不愿透露</option>
+                    <option value="我不是人类">我不是人类</option>
+                    <option value="沃尔玛购物袋">沃尔玛购物袋</option>
+                    <option value="武装直升机">武装直升机</option>
+                    <option value="土豆生命体">土豆生命体</option>
+                    <option value="星际浮游生物">星际浮游生物</option>
+                    <option value="路边野生牛马">路边野生牛马</option>
+                    <option value="抽象大气层">抽象大气层</option>
+                    <option value="阴间普通居民">阴间普通居民</option>
+                    <option value="AI人工智障">AI人工智障</option>
+                    <option value="地表野生摆烂怪">地表野生摆烂怪</option>
+                    <option value="顶级乐子人">顶级乐子人</option>
+                    <option value="精神状态良好">精神状态良好</option>
+                    <option value="纯种网络游魂">纯种网络游魂</option>
+                    <option value="熬夜常驻选手">熬夜常驻选手</option>
+                    <option value="摆烂一级运动员">摆烂一级运动员</option>
+                    <option value="互联网难民">互联网难民</option>
+                    <option value="野生抽象大师">野生抽象大师</option>
+                    <option value="人间凑数嘉宾">人间凑数嘉宾</option>
+                    <option value="随缘存活选手">随缘存活选手</option>
+                </select>
+            </div>
+            <div class="btn-wrap">
+                <button class="btn gray" onclick="prevStep(4)">上一步</button>
+                <button class="btn" onclick="nextStep(4)">下一步</button>
+            </div>
         </div>
-        <div class="info-row">
-            <span class="info-label">姓名</span>
-            <span class="info-value" id="previewName"></span>
+
+        <div class="step" id="step5">
+            <h2>出生日期</h2>
+            <div class="subtitle">建议选18岁以上</div>
+            <div class="input-item">
+                <input type="date" class="input-full">
+            </div>
+            <div class="btn-wrap">
+                <button class="btn gray" onclick="prevStep(5)">上一步</button>
+                <button class="btn" onclick="nextStep(5)">下一步</button>
+            </div>
         </div>
-        <div class="info-row">
-            <span class="info-label">生日</span>
-            <span class="info-value" id="previewBirth"></span>
+
+        <div class="step" id="step6">
+            <h2>个人偏好</h2>
+            <div class="subtitle">请选择性取向</div>
+            <div class="input-item">
+                <select class="select-full">
+                    <option value="">请选择</option>
+                    <option value="正常">正常</option>
+                    <option value="gay">gay</option>
+                    <option value="lesbian">lesbian</option>
+                    <option value="跨性别者（女）">跨性别者（女）</option>
+                    <option value="跨性别者（男）">跨性别者（男）</option>
+                    <option value="双性恋">双性恋</option>
+                </select>
+            </div>
+            <div class="btn-wrap">
+                <button class="btn gray" onclick="prevStep(6)">上一步</button>
+                <button class="btn" onclick="nextStep(6)">下一步</button>
+            </div>
         </div>
-        <div class="info-row">
-            <span class="info-label">性别</span>
-            <span class="info-value" id="previewGender"></span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">性取向</span>
-            <span class="info-value" id="previewOrientation"></span>
+
+        <div class="step" id="step7">
+            <h2>用户许可协议</h2>
+            <div class="subtitle">请阅读并同意条款</div>
+            <div class="agreement">
+<strong>MAD Workroom 最终用户许可协议</strong><br><br>
+欢迎使用本站服务，注册即代表同意以上全部规则，遵守网络规范，文明使用平台所有功能。
+            </div>
+            <div class="btn-wrap">
+                <button class="btn gray" onclick="prevStep(7)">返回修改</button>
+                <button class="btn" onclick="alert('注册成功！')">同意协议并注册</button>
+            </div>
         </div>
     </div>
-    <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(6)">上一步</button>
-        <button class="btn" onclick="nextStep(6)">下一步</button>
-    </div>
-</div>
 
-<!-- 第6步 协议单独最后一页 -->
-<div class="step" id="step7">
-    <h2>用户许可协议</h2>
-    <div class="subtitle">请阅读并同意全部条款</div>
-    <div class="agreement">
-<strong>MAD Workroom 最终用户许可协议（完整版）</strong><br><br>
-欢迎您注册、登录并正式使用MAD Workroom旗下所有应用、网页平台、AI智能工具、文档文库资源、账号管理系统及各项在线服务。本用户许可协议由平台运营方与账号注册用户双方自愿签署，具备完整民事法律效力，用以明确双方权利、义务、使用规范、责任划分、隐私保护、违规约束及相关法律约定。在您点击同意注册、提交账号信息、进入平台首页或使用任意功能之前，请务必完整、仔细阅读本协议全部条款，充分理解每一项约定含义。您年满法定成年年龄、具备独立完全民事行为能力，可自主签署协议并承担全部法律后果。若使用者为未成年人，必须由法定监护人知情、同意并全程监管，监护人将对未成年人所有账号操作、内容发布、行为后果承担无限连带责任。一旦您完成账号注册、登录操作，即代表您已无条件阅读、认可、接受并严格遵守本协议所有内容，同时自愿遵从中华人民共和国网络安全相关法律法规、互联网管理条例、个人信息保护规定及平台全部后台规则。若您不认同任意条款，请立即停止注册、退出页面，不得继续使用本平台任何服务。<br><br>
-一、服务适用范围与地域使用约束<br>
-本协议覆盖MAD Workroom全部网页端、移动端页面、账号体系、AI生成模块、资料查阅功能、用户互动内容、云端数据存储、后台风控校验、系统更新迭代及后续新增所有衍生服务。平台严格执行国内网络属地管理规定，所有账号、服务、权限仅限中国大陆境内合法用户正常注册使用。港澳台地区、海外境外所有IP、网络节点均无权注册、登录、访问平台服务。用户严禁使用VPN代理、虚拟IP、网络跳板、伪装定位、跨境节点等任何技术手段绕过地域风控限制，篡改自身真实网络归属地区。平台拥有全自动实时IP检测、设备指纹校验、登录行为风控系统，一经识别异地违规登录、规避地区限制、跨境外网访问等行为，无需提前通知、无需用户申诉辩解，可直接执行账号永久封禁、本地数据清空、设备拉黑限制、禁止再次注册等严厉处置。同时平台保留向公安、网信部门上报违规线索、追究用户民事及行政法律责任的全部权利。用户长期变更居住地址、常用网络环境时，必须主动向平台报备登记，隐瞒信息继续使用一律按恶意违规处理。<br><br>
-二、账号注册规范与账号所有权归属<br>
-用户注册时必须填写真实、有效、完整、合法的个人邮箱、姓名、出生日期、性别信息，严禁伪造身份、盗用他人信息、冒用他人证件、批量虚假注册账号。所有账号密码、绑定信息、个人资料由用户自行妥善保管，因个人泄露密码、共享账号、丢失设备、随意授权导致账号被盗、信息泄露、财产损失、违规处罚，全部责任由用户自行承担，平台不承担赔偿、找回、免责相关责任。平台账号所有权、知识产权、后台管理权、服务归属权永久归MAD Workroom所有，用户仅获得个人私密、非商用、不可转让、仅限本人使用的临时账号使用权。严格禁止账号买卖、出租、转借、共享、代挂、批量养号、商用倒卖等一切交易行为，私下账号交易不受法律保护，出现纠纷平台不予处理。多人共用同一账号属于严重违规行为，极易造成数据错乱、安全风险、违规连带责任，一经核查立即永久封号且永不解封。<br><br>
-三、个人隐私保护与平台保密责任<br>
-平台严格遵守国家个人信息保护相关法律，合法收集、存储、使用用户注册基础信息，绝不私自泄露、售卖、外传、共享用户个人隐私资料。所有本地账号数据仅存储于用户自身设备浏览器缓存，不上传公开服务器，充分保障账号安全与信息私密。同时用户对平台内部未公开文档、专属文库内容、系统底层规则、界面源码逻辑、后台风控策略、其他用户私密信息负有永久保密义务。不得随意截图录屏、转发外传、公开分享、二次传播、倒卖售卖平台内部资源，不得拆解、反编译、破解平台程序，不得恶意攻击服务器、篡改页面数据、漏洞牟利。违反保密条款严重损害平台权益的，平台有权无限期封禁账号，并依法追究相应民事赔偿责任，该保密义务不因账号注销、停用、过期而失效。<br><br>
-四、用户行为准则与内容发布合规要求<br>
-所有用户必须严格遵守国家安全法、网络安全法、治安管理处罚法、互联网信息管理办法等国家法律法规，坚守网络公序良俗，文明合规使用平台服务。禁止利用账号发布、生成、存储、传播危害国家安全、分裂国家、破坏民族团结、造谣诽谤、暴力血腥、低俗色情、邪教迷信、恐怖极端、人身辱骂、侵权抄袭、恶意引战、违法诱导等任何不良违规内容。禁止利用AI工具制作伪造信息、虚假证据、恶意图文、危害社会稳定内容。平台全程自动审核内容、记录登录日志、IP地址、操作轨迹、设备信息，所有违规内容均可永久留存追溯。若用户行为触犯法律法规，平台将无条件配合公安机关调查取证，所有违法责任由用户独自承担，与平台运营方无关。用户不得干扰、绕过、屏蔽平台安全审核机制，不得恶意刷量、恶意提交、恶意占用服务器资源影响正常服务运行。<br><br>
-五、服务调整权限与违规处罚规则<br>
-平台可根据政策要求、运营优化、安全防护、功能升级需求，随时调整界面样式、关闭部分功能、更新服务规则、临时系统维护，无需逐一单独通知用户。对于违规地域登录、账号交易转借、泄露内部资料、发布违法内容、恶意攻击平台、滥用系统漏洞、多次违规操作的用户，平台有权采取警告提醒、功能限制、账号冻结、限时封禁、无需永久拉黑、设备禁止注册等多级处罚。所有永久封禁账号一律不接受申诉、不恢复数据、不解锁账号、不作任何补偿退款，用户注册即自愿认可该最终处置规则。网络波动、服务器维护、自然灾害、第三方攻击、政策管控等不可抗力造成服务短暂中断、数据临时异常，平台不承担任何违约与经济赔偿责任。<br><br>
-六、知识产权归属与内容使用权限<br>
-平台整体页面设计、LOGO标识、知识产权、文案排版、文库体系、AI逻辑规则全部知识产权独家归属MAD Workroom，未经官方书面授权，任何个人与团体不得复制、抄袭、模仿、搬运、二次分发商用。用户在平台生成、编辑、上传的个人内容仅限本人日常学习查阅、私人非商业使用，禁止批量商用，对外售卖、授权盈利、二次转载牟利。因用户侵权使用内容产生法律纠纷，全部由用户自行负责。<br><br>
-七、协议更新与争议法律管辖<br>
-平台有权根据国家法律法规变化、互联网政策调整不定期修订完善本用户协议，更新内容在平台公示后即刻生效，用户继续登录使用即视为同意新版协议。本协议所有约定均适用中华人民共和国大陆地区法律。双方产生任何纠纷争议，优先友好协商沟通解决；协商无法达成一致时，交由平台所在地人民法院诉讼处理。本协议条款标题仅方便阅读，不影响条款本身法律效力。任意单项条款无效，不影响其余所有条款正常生效执行。<br><br>
-用户已完整阅读、全面理解、自愿遵守以上全部协议条款，自愿承担账号所有使用风险、操作责任与对应法律后果，自愿接受平台所有风控管理与违规处罚约定。
-    </div>
-    <div class="btn-wrap">
-        <button class="btn gray" onclick="prevStep(7)">返回修改</button>
-        <button class="btn" onclick="doRegister()">同意协议并注册</button>
-    </div>
-</div>
-
-<div class="tip">已有账号？<a href="login.html">去登录</a></div>
-<a href="problems.html" class="back-home">遇到问题？</a>
-
-<script>
-let nowStep = 1;
-function showStep(s){
-    document.querySelectorAll(".step").forEach(el=>el.classList.remove("active"));
-    document.getElementById("step"+s).classList.add("active");
-    document.getElementById("msg").innerText = "";
-
-    if(s === 6){
-        document.getElementById("previewEmail").innerText = document.getElementById("email").value;
-        document.getElementById("previewName").innerText = document.getElementById("firstName").value + document.getElementById("lastName").value;
-        document.getElementById("previewBirth").innerText = document.getElementById("birthYear").value + "年" + document.getElementById("birthMonth").value + "月" + document.getElementById("birthDay").value + "日";
-        document.getElementById("previewGender").innerText = document.getElementById("gender").value;
-        document.getElementById("previewOrientation").innerText = document.getElementById("orientation").value;
-    }
-}
-function nextStep(s){
-    let msg = document.getElementById("msg");
-    if(s===1){
-        let val = document.getElementById("email").value.trim();
-        if(!val){msg.innerText="请输入邮箱";return}
-        nowStep=2;showStep(2);
-    }
-    if(s===2){
-        let p1 = document.getElementById("pwd").value.trim();
-        let p2 = document.getElementById("pwd2").value.trim();
-        if(!p1||!p2){msg.innerText="请填写密码";return}
-        if(p1!==p2){msg.innerText="两次密码不一致";return}
-        nowStep=3;showStep(3);
-    }
-    if(s===3){
-        let year = document.getElementById("birthYear").value.trim();
-        let month = document.getElementById("birthMonth").value;
-        let day = document.getElementById("birthDay").value.trim();
-        let gender = document.getElementById("gender").value;
-        if(!year || !month || !day || !gender){
-            msg.innerText="请填写完整生日和性别";
-            return;
+    <script>
+        let currentStep = 1;
+        const maxStep = 7;
+        function showStep(s){
+            document.querySelectorAll('.step').forEach(el=>el.classList.remove('active'));
+            document.getElementById('step'+s).classList.add('active');
+            currentStep = s;
         }
-        nowStep=4;showStep(4);
-    }
-    if(s===4){
-        let ori = document.getElementById("orientation").value;
-        if(!ori){msg.innerText="请选择性取向";return}
-        nowStep=5;showStep(5);
-    }
-    if(s===5){
-        let xing = document.getElementById("firstName").value.trim();
-        let ming = document.getElementById("lastName").value.trim();
-        if(!xing||!ming){msg.innerText="请填写完整姓名";return}
-        nowStep=6;showStep(6);
-    }
-    if(s===6){
-        nowStep=7;showStep(7);
-    }
-}
-function prevStep(s){
-    nowStep = s-1;
-    showStep(nowStep);
-}
+        function nextStep(f){if(f===currentStep&&f<maxStep)showStep(f+1);}
+        function prevStep(f){if(f===currentStep&&f>1)showStep(f-1);}
+
+        function checkEmailFormat(e){
+            return /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(e);
+        }
+        function checkEmailNext(){
+            let e = document.getElementById('email').value.trim();
+            if(!e)return alert('请输入邮箱');
+            if(!checkEmailFormat(e))return alert('邮箱格式错误');
+            nextStep(1);
+        }
+    </script>
+</body>
+</html>
+
 
 // 注册后直接跳转到 loading.html
 function doRegister(){
