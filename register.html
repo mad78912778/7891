@@ -223,44 +223,4 @@
 </html>
 
 
-// 注册后直接跳转到 loading.html
-function doRegister(){
-    let email = document.getElementById("email").value.trim();
-    let pwd = document.getElementById("pwd").value.trim();
-    let birthYear = document.getElementById("birthYear").value.trim();
-    let birthMonth = document.getElementById("birthMonth").value;
-    let birthDay = document.getElementById("birthDay").value.trim();
-    let gender = document.getElementById("gender").value;
-    let orientation = document.getElementById("orientation").value;
-    let firstName = document.getElementById("firstName").value.trim();
-    let lastName = document.getElementById("lastName").value.trim();
-
-    let userList = JSON.parse(localStorage.getItem("userList")||"[]");
-    let has = userList.find(item=>item.email===email);
-    if(has){
-        document.getElementById("msg").innerText = "该邮箱已注册";
-        return;
-    }
-    let newUser = {
-        email,
-        pwd,
-        birthYear,
-        birthMonth,
-        birthDay,
-        gender,
-        orientation,
-        firstName,
-        lastName
-    };
-    userList.push(newUser);
-    localStorage.setItem("userList",JSON.stringify(userList));
-    localStorage.setItem("loginUser",JSON.stringify(newUser));
-
-    location.href = "loading.html";
-}
-</script>
-</body>
-</html>
-
-
 
